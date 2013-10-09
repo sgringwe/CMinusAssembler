@@ -298,6 +298,28 @@ WhileToken  : WHILE
 
 IOStatement     : READ LPAREN Variable RPAREN SEMICOLON
         {
+            // movq $_gp,%rbx
+            // addq $4, %rbx
+            // movl $.int_rformat, %edi
+            // movl %ebx, %esi
+            // movl $0, %eax
+            // call scanf
+            int offset = getValue($3);
+
+            emit("movq", "$_gp", "%rbx");
+
+            char temp[80];
+            sprintf(temp, "$%d", offset);
+            emit("addq", temp, "%rbx");
+            emit("movl", "$_int_rformat", "%edi");
+            emit("movl", "%ebx", "%esi");
+            emit("movl", "$0", "%eax");
+            buffer("call scanf\n");
+
+            int reg = loadFromMemory(offset);
+            emit("movl", "%eax", register_names[reg]);
+
+            $$ = reg;
             //printf("<IOStatement> -> <READ> <LP> <Variable> <RP> <SC>\n");
         }
                 | WRITE LPAREN Expr RPAREN SEMICOLON
