@@ -206,9 +206,9 @@ char statements[99999]; // TODO: FIX
 char printfs[9999]; // List of printf options
 
 // Register management
-int REGISTER_COUNT = 10; // eax esi and edi are reserved for calls. ebx is reserved for lots of ops
-char *register_names[10] = { "%ecx", "%edx", "%r8d", "%r9d", "%r10d", "%r11d", "%r12d", "%r13d", "%r14d", "%r15d" };
-int register_taken[10];
+int REGISTER_COUNT = 9; // eax edx esi and edi are reserved for calls. ebx is reserved for lots of ops
+char *register_names[9] = { "%ecx", "%r8d", "%r9d", "%r10d", "%r11d", "%r12d", "%r13d", "%r14d", "%r15d" };
+int register_taken[9];
 
 
 
@@ -560,8 +560,8 @@ static const yytype_uint16 yyrline[] =
      212,   216,   220,   224,   228,   234,   256,   260,   267,   273,
      280,   286,   292,   299,   303,   313,   332,   338,   344,   350,
      354,   360,   365,   373,   381,   394,   399,   418,   437,   456,
-     475,   494,   515,   520,   531,   544,   549,   558,   569,   580,
-     585,   589,   596,   601,   607,   614
+     475,   494,   515,   520,   531,   544,   549,   558,   574,   585,
+     590,   594,   601,   606,   612,   619
 };
 #endif
 
@@ -2093,7 +2093,7 @@ yyreduce:
   case 56:
 #line 550 "CminusParser.y"
     {
-            emit("imul", register_names[(yyvsp[(1) - (3)])], register_names[(yyvsp[(3) - (3)])]);
+            emit("imull", register_names[(yyvsp[(1) - (3)])], register_names[(yyvsp[(3) - (3)])]);
 
             freeRegister((yyvsp[(1) - (3)]));
 
@@ -2105,7 +2105,12 @@ yyreduce:
   case 57:
 #line 559 "CminusParser.y"
     {
-            emit("idiv", register_names[(yyvsp[(1) - (3)])], register_names[(yyvsp[(3) - (3)])]);
+            emit("movl", register_names[(yyvsp[(3) - (3)])], "%edx");
+            emit("movl", register_names[(yyvsp[(1) - (3)])], "%eax");
+            buffer("cdq");
+            emit("idivl", "%edx");
+
+            emit("movl", "%edx", register_names[(yyvsp[(3) - (3)])]);
 
             freeRegister((yyvsp[(1) - (3)]));
 
@@ -2115,7 +2120,7 @@ yyreduce:
     break;
 
   case 58:
-#line 570 "CminusParser.y"
+#line 575 "CminusParser.y"
     { 
             int offset = getValue((yyvsp[(1) - (1)]));
 
@@ -2129,7 +2134,7 @@ yyreduce:
     break;
 
   case 59:
-#line 581 "CminusParser.y"
+#line 586 "CminusParser.y"
     { 
             (yyval) = (yyvsp[(1) - (1)]);
             //printf("<Factor> -> <Constant>\n");
@@ -2137,14 +2142,14 @@ yyreduce:
     break;
 
   case 60:
-#line 586 "CminusParser.y"
+#line 591 "CminusParser.y"
     {   
             //printf("<Factor> -> <IDENTIFIER> <LP> <RP>\n");
         ;}
     break;
 
   case 61:
-#line 590 "CminusParser.y"
+#line 595 "CminusParser.y"
     {
             (yyval) = (yyvsp[(2) - (3)]);
             //printf("<Factor> -> <LP> <Expr> <RP>\n");
@@ -2152,7 +2157,7 @@ yyreduce:
     break;
 
   case 62:
-#line 597 "CminusParser.y"
+#line 602 "CminusParser.y"
     {
             (yyval) = (yyvsp[(1) - (1)]);
             //printf("<Variable> -> <IDENTIFIER>\n");
@@ -2160,14 +2165,14 @@ yyreduce:
     break;
 
   case 63:
-#line 602 "CminusParser.y"
+#line 607 "CminusParser.y"
     {
             //printf("<Variable> -> <IDENTIFIER> <LBK> <Expr> <RBK>\n");
                 ;}
     break;
 
   case 64:
-#line 608 "CminusParser.y"
+#line 613 "CminusParser.y"
     { 
                (yyval) = (yyvsp[(1) - (1)]);
             //printf("<StringConstant> -> <STRING>\n");
@@ -2175,7 +2180,7 @@ yyreduce:
     break;
 
   case 65:
-#line 615 "CminusParser.y"
+#line 620 "CminusParser.y"
     { 
             // load constant into a register
             int reg = allocateRegister();
@@ -2192,7 +2197,7 @@ yyreduce:
 
 
 /* Line 1267 of yacc.c.  */
-#line 2196 "CminusParser.c"
+#line 2201 "CminusParser.c"
       default: break;
     }
   YY_SYMBOL_PRINT ("-> $$ =", yyr1[yyn], &yyval, &yyloc);
@@ -2406,7 +2411,7 @@ yyreturn:
 }
 
 
-#line 629 "CminusParser.y"
+#line 634 "CminusParser.y"
 
 
 

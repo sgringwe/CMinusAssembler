@@ -57,9 +57,9 @@ char statements[99999]; // TODO: FIX
 char printfs[9999]; // List of printf options
 
 // Register management
-int REGISTER_COUNT = 10; // eax esi and edi are reserved for calls. ebx is reserved for lots of ops
-char *register_names[10] = { "%ecx", "%edx", "%r8d", "%r9d", "%r10d", "%r11d", "%r12d", "%r13d", "%r14d", "%r15d" };
-int register_taken[10];
+int REGISTER_COUNT = 9; // eax edx esi and edi are reserved for calls. ebx is reserved for lots of ops
+char *register_names[9] = { "%ecx", "%r8d", "%r9d", "%r10d", "%r11d", "%r12d", "%r13d", "%r14d", "%r15d" };
+int register_taken[9];
 
 %}
 
@@ -548,7 +548,7 @@ MulExpr     :  Factor
         }
                 |  MulExpr TIMES Factor
         {
-            emit("imul", register_names[$1], register_names[$3]);
+            emit("imull", register_names[$1], register_names[$3]);
 
             freeRegister($1);
 
@@ -557,7 +557,12 @@ MulExpr     :  Factor
         }
                 |  MulExpr DIVIDE Factor
         {
-            emit("idiv", register_names[$1], register_names[$3]);
+            emit("movl", register_names[$3], "%edx");
+            emit("movl", register_names[$1], "%eax");
+            buffer("cdq");
+            emit("idivl", "%edx");
+
+            emit("movl", "%edx", register_names[$3]);
 
             freeRegister($1);
 
