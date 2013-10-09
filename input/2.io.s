@@ -2,6 +2,7 @@
 .int_wformat: .string "%d\n"
 .str_wformat: .string "%s\n"
 .int_rformat: .string "%d"
+<VarDecl> -> <IDENTIFIER
 .string_const0:    .string "input an integer:"
   .comm _gp, 4, 4
  .text
@@ -17,20 +18,23 @@ main:   nop
  movq $_gp, %ebx
  addq $0, %ebx
  movl (%ebx), %ecx
- movl %ecx, %esi
+ movq $_gp, %ebx
+ addq $0, %ebx
+ movl (%ebx), %edx
+ movl %edx, %esi
  movl $0, %eax
- movl $.str_wformat, %edi
+ movl $.int_wformat, %edi
  call printf
  movl $1, %ebx
  movl %ebx, %esi
  movl $0, %eax
- movl $.str_wformat, %edi
+ movl $.int_wformat, %edi
  call printf
- movl $1, %edx
- movl $2, %r8d
- movl %r10d, %esi
+ movl $1, %r8d
+ movl $2, %r9d
+ movl %r12d, %esi
  movl $0, %eax
- movl $.str_wformat, %edi
+ movl $.int_wformat, %edi
  call printf
  leave
  ret

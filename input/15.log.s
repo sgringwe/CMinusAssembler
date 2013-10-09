@@ -2,6 +2,11 @@
 .int_wformat: .string "%d\n"
 .str_wformat: .string "%s\n"
 .int_rformat: .string "%d"
+<VarDecl> -> <IDENTIFIER
+<VarDecl> -> <IDENTIFIER
+<VarDecl> -> <IDENTIFIER
+<VarDecl> -> <IDENTIFIER
+<VarDecl> -> <IDENTIFIER
   .comm _gp, 20, 4
  .text
  .globl main
@@ -9,65 +14,80 @@
 main:   nop
  pushq %rbp
  movq %rsp, %rbp
+ movq $_gp, %ebx
+ addq $0, %ebx
+ movl (%ebx), %ecx
  movl $1, %ebx
- movl %ebx, (%ebx)
- movl $2, %ecx
- movl %ecx, (%ecx)
- movl $3, %edx
- movl %edx, (%edx)
- movl $4, %r8d
- movl %r8d, (%r8d)
+ movlaaa %ebx, (%ecx)
+ movq $_gp, %ebx
+ addq $4, %ebx
+ movl (%ebx), %ecx
+ movl $2, %ebx
+ movlaaa %ebx, (%ecx)
+ movq $_gp, %ebx
+ addq $8, %ebx
+ movl (%ebx), %ecx
+ movl $3, %ebx
+ movlaaa %ebx, (%ecx)
+ movq $_gp, %ebx
+ addq $12, %ebx
+ movl (%ebx), %ecx
+ movl $4, %ebx
+ movlaaa %ebx, (%ecx)
+ movq $_gp, %ebx
+ addq $16, %ebx
+ movl (%ebx), %ecx
+ movq $_gp, %ebx
+ addq $0, %ebx
+ movl (%ebx), %edx
+ movq $_gp, %ebx
+ addq $4, %ebx
+ movl (%ebx), %r8d
+ movlaaa %ecx, (%ecx)
+ movq $_gp, %ebx
+ addq $16, %ebx
+ movl (%ebx), %ecx
+ movl $1, %ebx
+ movl %ebx, %esi
+ movl $0, %eax
+ movl $.int_wformat, %edi
+ call printf
  movq $_gp, %r9d
- addq $0, %r9d
+ addq $12, %r9d
  movl (%r9d), %r10d
  movq $_gp, %r9d
- addq $4, %r9d
+ addq $8, %r9d
  movl (%r9d), %r11d
- movl %ecx, (%r9d)
+ movl %ebx, %esi
+ movl $0, %eax
+ movl $.int_wformat, %edi
+ call printf
  movq $_gp, %r9d
- addq $16, %r9d
+ addq $12, %r9d
  movl (%r9d), %r12d
- movl $1, %r9d
+ movq $_gp, %r9d
+ addq $8, %r9d
+ movl (%r9d), %r13d
+ movl %ecx, %esi
+ movl $0, %eax
+ movl $.int_wformat, %edi
+ call printf
+ movl $0, %r9d
+ movq $_gp, %r14d
+ addq $0, %r14d
+ movl (%r14d), (null)
+ movq $_gp, %r14d
+ addq $4, %r14d
+ movl (%r14d), (null)
+ movq $_gp, %r14d
+ addq $8, %r14d
+ movl (%r14d), (null)
+ movq $_gp, %r14d
+ addq $12, %r14d
+ movl (%r14d), (null)
  movl %r9d, %esi
  movl $0, %eax
- movl $.str_wformat, %edi
- call printf
- movq $_gp, %r13d
- addq $12, %r13d
- movl (%r13d), %r14d
- movq $_gp, %r13d
- addq $8, %r13d
- movl (%r13d), (null)
- movl %ecx, %esi
- movl $0, %eax
- movl $.str_wformat, %edi
- call printf
- movq $_gp, %r13d
- addq $12, %r13d
- movl (%r13d), (null)
- movq $_gp, %r13d
- addq $8, %r13d
- movl (%r13d), (null)
- movl %ecx, %esi
- movl $0, %eax
- movl $.str_wformat, %edi
- call printf
- movl $0, %r13d
- movq $_gp, (null)
- addq $0, (null)
- movl ((null)), (null)
- movq $_gp, (null)
- addq $4, (null)
- movl ((null)), (null)
- movq $_gp, (null)
- addq $8, (null)
- movl ((null)), (null)
- movq $_gp, (null)
- addq $12, (null)
- movl ((null)), (null)
- movl %r13d, %esi
- movl $0, %eax
- movl $.str_wformat, %edi
+ movl $.int_wformat, %edi
  call printf
  leave
  ret

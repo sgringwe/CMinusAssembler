@@ -187,7 +187,7 @@ VarDecl     : IDENTIFIER
         { 
             setValue($1, var_count * 4);
             ++var_count;
-            //printf("<VarDecl> -> <IDENTIFIER\n");
+            // printf("<VarDecl> -> <IDENTIFIER\n");
         }
         | IDENTIFIER LBRACKET INTCON RBRACKET
                 {
@@ -241,10 +241,14 @@ Assignment      : Variable ASSIGN Expr SEMICOLON
 
             // movl $5, %ecx // this is in constant rule
             // movl %ecx, (%rbx)
-
+            // printf("got regs %d %d\n", $1, $3);
             char temp[80];
             sprintf(temp, "(%s)", register_names[$1]);
-            emit("movl", register_names[$3], temp);
+            emit("movlaaa", register_names[$3], temp);
+
+            // printf("freeing both registers\n");
+            freeRegister($1);
+            freeRegister($3);
 
             // freeRegister(reg1);
 
@@ -451,25 +455,13 @@ MulExpr     :  Factor
                 
 Factor          : Variable
         { 
-            int offset = getValue($1);
-
-            int resultReg = loadFromMemory(offset);
-
-            $$ = resultReg;
+            $$ = $1;
 
             //printf("<Factor> -> <Variable>\n");
         }
                 | Constant
         { 
-            // load constant into a register
-            int reg = allocateRegister();
-
-            char temp[80];
-            sprintf(temp, "$%d", $1);
-
-            emit("movl", temp, register_names[reg]);
-
-            $$ = reg;
+            $$ = $1;
             //printf("<Factor> -> <Constant>\n");
         }
                 | IDENTIFIER LPAREN RPAREN
@@ -485,7 +477,12 @@ Factor          : Variable
 
 Variable        : IDENTIFIER
         {
-            $$ = $1;
+            int offset = getValue($1);
+
+            int resultReg = loadFromMemory(offset);
+
+            // printf("for variable: %d\n", resultReg);
+            $$ = resultReg;
             //printf("<Variable> -> <IDENTIFIER>\n");
         }
                 | IDENTIFIER LBRACKET Expr RBRACKET    
@@ -503,7 +500,15 @@ StringConstant  : STRING
 
 Constant        : INTCON
         { 
-            $$ = $1;
+            // load constant into a register
+            int reg = allocateRegister();
+
+            char temp[80];
+            sprintf(temp, "$%d", $1);
+
+            emit("movl", temp, register_names[reg]);
+            // printf("for const: %d\n", reg);
+            $$ = reg;
             //printf("<Constant> -> <INTCON>\n");
         }
                 ;

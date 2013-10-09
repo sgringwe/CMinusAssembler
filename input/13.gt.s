@@ -2,6 +2,10 @@
 .int_wformat: .string "%d\n"
 .str_wformat: .string "%s\n"
 .int_rformat: .string "%d"
+<VarDecl> -> <IDENTIFIER
+<VarDecl> -> <IDENTIFIER
+<VarDecl> -> <IDENTIFIER
+<VarDecl> -> <IDENTIFIER
   .comm _gp, 16, 4
  .text
  .globl main
@@ -9,53 +13,65 @@
 main:   nop
  pushq %rbp
  movq %rsp, %rbp
+ movq $_gp, %ebx
+ addq $0, %ebx
+ movl (%ebx), %ecx
  movl $1, %ebx
- movl %ebx, (%ebx)
- movl $2, %ecx
- movl %ecx, (%ecx)
- movl $3, %edx
- movl %edx, (%edx)
- movl $4, %r8d
- movl %r8d, (%r8d)
- movq $_gp, %r9d
- addq $0, %r9d
- movl (%r9d), %r10d
- movq $_gp, %r9d
- addq $4, %r9d
- movl (%r9d), %r11d
+ movlaaa %ebx, (%ecx)
+ movq $_gp, %ebx
+ addq $4, %ebx
+ movl (%ebx), %ecx
+ movl $2, %ebx
+ movlaaa %ebx, (%ecx)
+ movq $_gp, %ebx
+ addq $8, %ebx
+ movl (%ebx), %ecx
+ movl $3, %ebx
+ movlaaa %ebx, (%ecx)
+ movq $_gp, %ebx
+ addq $12, %ebx
+ movl (%ebx), %ecx
+ movl $4, %ebx
+ movlaaa %ebx, (%ecx)
+ movq $_gp, %ebx
+ addq $0, %ebx
+ movl (%ebx), %ecx
+ movq $_gp, %ebx
+ addq $4, %ebx
+ movl (%ebx), %edx
  movl %ebx, %esi
  movl $0, %eax
- movl $.str_wformat, %edi
+ movl $.int_wformat, %edi
  call printf
- movq $_gp, %r9d
- addq $0, %r9d
- movl (%r9d), %r12d
- movq $_gp, %r9d
- addq $0, %r9d
- movl (%r9d), %r13d
+ movq $_gp, %ebx
+ addq $0, %ebx
+ movl (%ebx), %r8d
+ movq $_gp, %ebx
+ addq $0, %ebx
+ movl (%ebx), %r9d
  movl %ebx, %esi
  movl $0, %eax
- movl $.str_wformat, %edi
+ movl $.int_wformat, %edi
  call printf
- movq $_gp, %r9d
- addq $12, %r9d
- movl (%r9d), %r14d
- movq $_gp, %r9d
- addq $8, %r9d
- movl (%r9d), (null)
- movl %ecx, %esi
+ movq $_gp, %ebx
+ addq $12, %ebx
+ movl (%ebx), %r10d
+ movq $_gp, %ebx
+ addq $8, %ebx
+ movl (%ebx), %r11d
+ movl %ebx, %esi
  movl $0, %eax
- movl $.str_wformat, %edi
+ movl $.int_wformat, %edi
  call printf
- movq $_gp, %r9d
- addq $4, %r9d
- movl (%r9d), (null)
- movq $_gp, %r9d
- addq $8, %r9d
- movl (%r9d), (null)
- movl %ecx, %esi
+ movq $_gp, %ebx
+ addq $4, %ebx
+ movl (%ebx), %r12d
+ movq $_gp, %ebx
+ addq $8, %ebx
+ movl (%ebx), %r13d
+ movl %ebx, %esi
  movl $0, %eax
- movl $.str_wformat, %edi
+ movl $.int_wformat, %edi
  call printf
  leave
  ret
