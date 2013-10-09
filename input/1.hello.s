@@ -11,8 +11,8 @@ main:   nop
  pushq %rbp
  movq %rsp, %rbp
  movl $.string_const0, %eax
- movl %eax, %ebx
- movl $0, %ecx
+ movl %eax, %esi
+ movl $0, %eax
  movl $.str_wformat, %edi
  call printf
  leave

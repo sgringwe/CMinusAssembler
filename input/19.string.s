@@ -14,23 +14,23 @@ main:   nop
  pushq %rbp
  movq %rsp, %rbp
  movl $.string_const0, %eax
- movl %eax, %ebx
- movl $0, %ecx
+ movl %eax, %esi
+ movl $0, %eax
  movl $.str_wformat, %edi
  call printf
- movl $.string_const1, %edx
- movl %edx, %esi
- movl $0, %edi
+ movl $.string_const1, %eax
+ movl %eax, %esi
+ movl $0, %eax
  movl $.str_wformat, %edi
  call printf
- movl $.string_const2, %r8d
- movl %r8d, %r9d
- movl $0, %r10d
+ movl $.string_const2, %eax
+ movl %eax, %esi
+ movl $0, %eax
  movl $.str_wformat, %edi
  call printf
- movl $.string_const3, %r11d
- movl %r11d, %r12d
- movl $0, %r13d
+ movl $.string_const3, %eax
+ movl %eax, %esi
+ movl $0, %eax
  movl $.str_wformat, %edi
  call printf
  leave

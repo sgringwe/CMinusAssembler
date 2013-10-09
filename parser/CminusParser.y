@@ -57,9 +57,9 @@ char statements[99999]; // TODO: FIX
 char printfs[9999]; // List of printf options
 
 // Register management
-int REGISTER_COUNT = 13;
-char *register_names[13] = { "%eax", "%ebx", "%ecx", "%edx", "%esi", "%edi", "%r8d", "%r9d", "%r10d", "%r11d", "%r12d", "%r13d", "%r14d", "%r15d" };
-int register_taken[13];
+int REGISTER_COUNT = 10; // eax esi and edi are reserved for calls
+char *register_names[10] = { "%ebx", "%ecx", "%edx", "%r8d", "%r9d", "%r10d", "%r11d", "%r12d", "%r13d", "%r14d", "%r15d" };
+int register_taken[10];
 
 %}
 
@@ -301,20 +301,20 @@ IOStatement     : READ LPAREN Variable RPAREN SEMICOLON
             // movl $0, %eax
             // movl $.str_wformat, %edi
             // call printf
-            int reg1 = allocateRegister();
+            // int reg1 = allocateRegister();
             // int reg2 = allocateRegister();
             // int reg3 = allocateRegister();
 
             char temp[80];
-            sprintf(temp, "movl $.string_const%d, %s\n", str_const_count, register_names[reg1]);
+            sprintf(temp, "movl $.string_const%d, %esi\n", str_const_count);
             buffer(temp);
 
-            emit("movl", register_names[reg1], "%esi");
+            // emit("movl", register_names[reg1], "%esi");
             emit("movl", "$0", "%eax");
             buffer("movl $.str_wformat, %edi\n"); // TODO: Pick correct string constant
             buffer("call printf\n");
 
-            freeRegister(reg1);
+            // freeRegister(reg1);
             // freeRegister(reg2);
             // freeRegister(reg3);
 
