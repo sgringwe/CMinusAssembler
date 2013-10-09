@@ -548,12 +548,20 @@ MulExpr     :  Factor
         }
                 |  MulExpr TIMES Factor
         {
-            $$ = $1 * $3;
+            emit("imul", register_names[$1], register_names[$3]);
+
+            freeRegister($1);
+
+            $$ = $3;
             //printf("<MulExpr> -> <MulExpr> <TIMES> <Factor> \n");
         }
                 |  MulExpr DIVIDE Factor
         {
-            $$ = $1 / $3;
+            emit("idiv", register_names[$1], register_names[$3]);
+
+            freeRegister($1);
+
+            $$ = $3;
             //printf("<MulExpr> -> <MulExpr> <DIVIDE> <Factor> \n");
         }       
                 ;
