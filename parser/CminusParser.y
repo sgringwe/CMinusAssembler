@@ -233,22 +233,20 @@ Statement   : Assignment
 
 Assignment      : Variable ASSIGN Expr SEMICOLON
         {
-            int reg1 = allocateRegister();
-            // movq $_gp,%rbx
+            // int reg1 = allocateRegister();
+            // movq $_gp,%rbx // this is invariable rule
             // addq $0, %rbx
 
             // Variable($1) = %rbx or other register for
 
-            // movl $5, %ecx
+            // movl $5, %ecx // this is in constant rule
             // movl %ecx, (%rbx)
-
-            emit("movl", register_names[$3], register_names[reg1]);
 
             char temp[80];
             sprintf(temp, "(%s)", register_names[$1]);
-            emit("movl", register_names[reg1], temp);
+            emit("movl", register_names[$3], temp);
 
-            freeRegister(reg1);
+            // freeRegister(reg1);
 
 
             // setValue($1, $3);
@@ -453,7 +451,6 @@ MulExpr     :  Factor
                 
 Factor          : Variable
         { 
-            $$ = getValue($1);
             int offset = getValue($1);
 
             int resultReg = loadFromMemory(offset);
@@ -464,7 +461,15 @@ Factor          : Variable
         }
                 | Constant
         { 
-            $$ = $1;
+            // load constant into a register
+            int reg = allocateRegister();
+
+            char temp[80];
+            sprintf(temp, "$%d", $1);
+
+            emit("movl", temp, register_names[reg]);
+
+            $$ = reg;
             //printf("<Factor> -> <Constant>\n");
         }
                 | IDENTIFIER LPAREN RPAREN

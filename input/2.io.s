@@ -14,15 +14,21 @@ main:   nop
  movl $0, %eax
  movl $.str_wformat, %edi
  call printf
- movl %ebx, %esi
- movl $0, %eax
- movl $.str_wformat, %edi
- call printf
+ movq $_gp, %ebx
+ addq $0, %ebx
+ movl (%ebx), %ecx
  movl %ecx, %esi
  movl $0, %eax
  movl $.str_wformat, %edi
  call printf
- movl %r8d, %esi
+ movl $1, %ebx
+ movl %ebx, %esi
+ movl $0, %eax
+ movl $.str_wformat, %edi
+ call printf
+ movl $1, %edx
+ movl $2, %r8d
+ movl %r10d, %esi
  movl $0, %eax
  movl $.str_wformat, %edi
  call printf

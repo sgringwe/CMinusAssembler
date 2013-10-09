@@ -34,18 +34,110 @@ main:   nop
  movl $0, %eax
  movl $.str_wformat, %edi
  call printf
- movl %r10d, %esi
+ movq $_gp, %ebx
+ addq $8, %ebx
+ movl (%ebx), %ecx
+ movq $_gp, %ebx
+ addq $4, %ebx
+ movl (%ebx), %edx
+ movq $_gp, %ebx
+ addq $12, %ebx
+ movl (%ebx), %r8d
+ movq $_gp, %ebx
+ addq $0, %ebx
+ movl (%ebx), %r9d
+ movq $_gp, %ebx
+ addq $8, %ebx
+ movl (%ebx), %r10d
+ movl %ebx, (%r10d)
+ movq $_gp, %ebx
+ addq $20, %ebx
+ movl (%ebx), %r11d
+ movl %r11d, %esi
  movl $0, %eax
  movl $.str_wformat, %edi
  call printf
+ movq $_gp, %ebx
+ addq $0, %ebx
+ movl (%ebx), %r12d
+ movq $_gp, %ebx
+ addq $12, %ebx
+ movl (%ebx), %r13d
+ movq $_gp, %ebx
+ addq $4, %ebx
+ movl (%ebx), %r14d
+ movq $_gp, %ebx
+ addq $8, %ebx
+ movl (%ebx), (null)
+ movl $1, %ebx
+ movq $_gp, (null)
+ addq $16, (null)
+ movl ((null)), (null)
  movl %ecx, %esi
  movl $0, %eax
  movl $.str_wformat, %edi
  call printf
+ movq $_gp, (null)
+ addq $8, (null)
+ movl ((null)), (null)
+ movq $_gp, (null)
+ addq $12, (null)
+ movl ((null)), (null)
+ movq $_gp, (null)
+ addq $4, (null)
+ movl ((null)), (null)
+ movq $_gp, (null)
+ addq $8, (null)
+ movl ((null)), (null)
+ movq $_gp, (null)
+ addq $12, (null)
+ movl ((null)), (null)
+ movq $_gp, (null)
+ addq $0, (null)
+ movl ((null)), (null)
+ movq $_gp, (null)
+ addq $4, (null)
+ movl ((null)), (null)
+ movq $_gp, (null)
+ addq $12, (null)
+ movl ((null)), (null)
+ movq $_gp, (null)
+ addq $20, (null)
+ movl ((null)), (null)
  movl %ebx, %esi
  movl $0, %eax
  movl $.str_wformat, %edi
  call printf
+ movq $_gp, (null)
+ addq $12, (null)
+ movl ((null)), (null)
+ movq $_gp, (null)
+ addq $4, (null)
+ movl ((null)), (null)
+ movq $_gp, (null)
+ addq $0, (null)
+ movl ((null)), (null)
+ movq $_gp, (null)
+ addq $16, (null)
+ movl ((null)), (null)
+ movq $_gp, (null)
+ addq $8, (null)
+ movl ((null)), (null)
+ movq $_gp, (null)
+ addq $12, (null)
+ movl ((null)), (null)
+ movq $_gp, (null)
+ addq $20, (null)
+ movl ((null)), (null)
+ movq $_gp, (null)
+ addq $12, (null)
+ movl ((null)), (null)
+ movq $_gp, (null)
+ addq $8, (null)
+ movl ((null)), (null)
+ movq $_gp, (null)
+ addq $20, (null)
+ movl ((null)), (null)
  movl %ebx, %esi
  movl $0, %eax
  movl $.str_wformat, %edi

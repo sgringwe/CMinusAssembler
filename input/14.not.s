@@ -9,19 +9,35 @@
 main:   nop
  pushq %rbp
  movq %rsp, %rbp
- movl %ebx, %esi
+ movl $1, %ebx
+ movl %ebx, (%ebx)
+ movl $0, %ecx
+ movl %ecx, (%ecx)
+ movq $_gp, %edx
+ addq $0, %edx
+ movl (%edx), %r8d
+ movl %r8d, %esi
  movl $0, %eax
  movl $.str_wformat, %edi
  call printf
- movl %ebx, %esi
+ movq $_gp, %edx
+ addq $4, %edx
+ movl (%edx), %r9d
+ movl %r10d, %esi
  movl $0, %eax
  movl $.str_wformat, %edi
  call printf
- movl %ecx, %esi
+ movq $_gp, %edx
+ addq $4, %edx
+ movl (%edx), %r10d
+ movl %r10d, %esi
  movl $0, %eax
  movl $.str_wformat, %edi
  call printf
- movl %ecx, %esi
+ movq $_gp, %edx
+ addq $0, %edx
+ movl (%edx), %r11d
+ movl %r12d, %esi
  movl $0, %eax
  movl $.str_wformat, %edi
  call printf

@@ -14,7 +14,8 @@ main:   nop
  movl $0, %eax
  movl $.str_wformat, %edi
  call printf
- movl %edx, %esi
+ movl $20, %ebx
+ movl %ebx, %esi
  movl $0, %eax
  movl $.str_wformat, %edi
  call printf
