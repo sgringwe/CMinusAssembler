@@ -244,7 +244,7 @@ Assignment      : Variable ASSIGN Expr SEMICOLON
             // printf("got regs %d %d\n", $1, $3);
             char temp[80];
             sprintf(temp, "(%s)", register_names[$1]);
-            emit("movlaaa", register_names[$3], temp);
+            emit("movl", register_names[$3], temp);
 
             // printf("freeing both registers\n");
             freeRegister($1);

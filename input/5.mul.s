@@ -2,10 +2,6 @@
 .int_wformat: .string "%d\n"
 .str_wformat: .string "%s\n"
 .int_rformat: .string "%d"
-<VarDecl> -> <IDENTIFIER
-<VarDecl> -> <IDENTIFIER
-<VarDecl> -> <IDENTIFIER
-<VarDecl> -> <IDENTIFIER
   .comm _gp, 16, 4
  .text
  .globl main
@@ -23,20 +19,21 @@ main:   nop
  addq $0, %edx
  movl (%edx), %r8d
  movl $7, %edx
- movlaaa %edx, (%r8d)
+ movl %edx, (%r8d)
  movq $_gp, %edx
  addq $8, %edx
  movl (%edx), %r8d
  movl $3, %edx
- movlaaa %edx, (%r8d)
+ movl %edx, (%r8d)
  movq $_gp, %edx
  addq $12, %edx
  movl (%edx), %r8d
  movl $4, %edx
- movlaaa %edx, (%r8d)
+ movl %edx, (%r8d)
  movq $_gp, %edx
  addq $4, %edx
- movl (%edx), %r movq $_gp, %edx
+ movl (%edx), %r8d
+ movq  movq $_gp, %edx
  addq $4, %edx
  movl (%edx), %r8d
  movl %r8d, %esi

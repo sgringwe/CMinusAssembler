@@ -2,7 +2,6 @@
 .int_wformat: .string "%d\n"
 .str_wformat: .string "%s\n"
 .int_rformat: .string "%d"
-<VarDecl> -> <IDENTIFIER
 .string_const0:    .string "input an integer:"
   .comm _gp, 4, 4
  .text

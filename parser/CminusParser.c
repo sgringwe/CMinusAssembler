@@ -1729,7 +1729,7 @@ yyreduce:
             // printf("got regs %d %d\n", $1, $3);
             char temp[80];
             sprintf(temp, "(%s)", register_names[(yyvsp[(1) - (4)])]);
-            emit("movlaaa", register_names[(yyvsp[(3) - (4)])], temp);
+            emit("movl", register_names[(yyvsp[(3) - (4)])], temp);
 
             // printf("freeing both registers\n");
             freeRegister((yyvsp[(1) - (4)]));

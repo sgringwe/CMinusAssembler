@@ -2,12 +2,6 @@
 .int_wformat: .string "%d\n"
 .str_wformat: .string "%s\n"
 .int_rformat: .string "%d"
-<VarDecl> -> <IDENTIFIER
-<VarDecl> -> <IDENTIFIER
-<VarDecl> -> <IDENTIFIER
-<VarDecl> -> <IDENTIFIER
-<VarDecl> -> <IDENTIFIER
-<VarDecl> -> <IDENTIFIER
 .string_const0:    .string "i = "
 .string_const1:    .string "j = "
 .string_const2:    .string "k = "
@@ -73,7 +67,7 @@ main:   nop
  movq $_gp, %ebx
  addq $8, %ebx
  movl (%ebx), (null)
- movlaaa %ecx, (%r11d)
+ movl %ecx, (%r11d)
  movq $_gp, %ebx
  addq $20, %ebx
  movl (%ebx), %ecx
