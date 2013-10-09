@@ -562,7 +562,7 @@ MulExpr     :  Factor
             buffer("cdq");
             emit("idivl", "%edx");
 
-            emit("movl", "%edx", register_names[$3]);
+            emit("movl", "%eax", register_names[$3]);
 
             freeRegister($1);
 

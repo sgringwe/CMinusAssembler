@@ -2110,7 +2110,7 @@ yyreduce:
             buffer("cdq");
             emit("idivl", "%edx");
 
-            emit("movl", "%edx", register_names[(yyvsp[(3) - (3)])]);
+            emit("movl", "%eax", register_names[(yyvsp[(3) - (3)])]);
 
             freeRegister((yyvsp[(1) - (3)]));
 
