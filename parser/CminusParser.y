@@ -53,8 +53,8 @@ const char *ASSEMBLY_FOOTER =
 
 int var_count;
 int str_const_count;
-char statements[99999]; // TODO: FIX
-char printfs[9999]; // List of printf options
+char statements[9999]; // TODO: FIX
+char printfs[999]; // List of printf options
 
 // Register management
 int REGISTER_COUNT = 8; // eax ecx edx esi and edi are reserved for calls. ebx is reserved for lots of ops
@@ -185,6 +185,7 @@ IdentifierList  : VarDecl
 
 VarDecl     : IDENTIFIER
         { 
+            // This is where we set the offset for a variable.
             setValue($1, var_count * 4);
             ++var_count;
             // printf("<VarDecl> -> <IDENTIFIER\n");
@@ -233,6 +234,7 @@ Statement   : Assignment
 
 Assignment      : Variable ASSIGN Expr SEMICOLON
         {
+            // Load the expr register value into memory at correct offset
             int offset = getValue($1);
             char temp[80];
 
@@ -316,6 +318,7 @@ IOStatement     : READ LPAREN Variable RPAREN SEMICOLON
             emit("movl", "$0", "%eax");
             buffer("call scanf\n");
 
+            // eax now holds return value. Store it into register value
             int reg = loadFromMemory(offset);
             emit("movl", "%eax", register_names[reg]);
             freeRegister(reg);
@@ -325,11 +328,13 @@ IOStatement     : READ LPAREN Variable RPAREN SEMICOLON
         }
                 | WRITE LPAREN Expr RPAREN SEMICOLON
         {
+            // move register value int oarg and print out value.
             emit("movl", register_names[$3], "%esi");
             emit("movl", "$0", "%eax");
-            buffer("movl $.int_wformat, %edi\n"); // TODO: Pick correct string constant
+            buffer("movl $.int_wformat, %edi\n");
             buffer("call printf\n");
 
+            // don't need this register anymore
             freeRegister($3);
             //printf("<IOStatement> -> <WRITE> <LP> <Expr> <RP> <SC>\n");
         }
@@ -342,7 +347,6 @@ IOStatement     : READ LPAREN Variable RPAREN SEMICOLON
             sprintf(temp, "movl $.string_const%d, %%esi\n", str_const_count);
             buffer(temp);
 
-            // emit("movl", register_names[reg1], "%esi");
             emit("movl", "$0", "%eax");
             buffer("movl $.str_wformat, %edi\n"); // TODO: Pick correct string constant
             buffer("call printf\n");
@@ -696,16 +700,19 @@ int loadFromMemory(int offset) {
     return reg2; // reg2 now holds the location of the variable we want
 }
 
+// Marks the register as available
 void freeRegister(int index) {
     register_taken[index] = 0;
 }
 
+// A helper method for outputing an instructino
 void emit(char *instruction, char *one, char *two) {
     char temp[80];
     sprintf(temp, "%s %s, %s\n", instruction, one, two);
     buffer(temp);
 }
 
+// Prints an instruction to the buffer
 void buffer(char *add) {
     sprintf(statements, "%s %s", statements, add);
 }
