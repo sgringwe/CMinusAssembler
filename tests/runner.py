@@ -19,7 +19,9 @@ failure_occurred = False
 # Then, compare the output to that of the gold file.
 # If it matches, success. Otherwise we have an error.
 passed = 0
+passedItems = []
 failed = 0
+failedItems = []
 for fn in os.listdir(input_dir):
    if fn.endswith('.cm'):
       print('Running ' + fn)
@@ -55,14 +57,18 @@ for fn in os.listdir(input_dir):
 
       if(same):
         passed += 1
+        passedItems.append(fn)
         print 'Test passed for ' + fn + '!'
       else:
         failed += 1
+        failedItems.append(fn)
         failure_occurred = True
         print 'FAILURE for ' + fn + '. This could be due to many reasons, including invalid gold file.'
 
 print 'Passed: ' + str(passed)
+print passedItems
 print 'Failed: ' + str(failed)
+print failedItems
 if failure_occurred:
   print 'At least one of the tests FAILED'
 else:

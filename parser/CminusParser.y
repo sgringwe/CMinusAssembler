@@ -384,33 +384,117 @@ SimpleExpr  : AddExpr
         }
                 | SimpleExpr EQ AddExpr
         {
-                $$ = ($1 == $3);
+                int temp = allocateRegister();
+
+                // cmpl %edx, %ecx
+                // movl $0, %ecx
+                // movl $1, %ebx
+                // cmovg %ebx, %ecx
+                emit("cmpl", register_names[$1], register_names[$3]);
+                emit("movl", "$0", register_names[$3]);
+                emit("movl", "$1", register_names[temp]);
+                emit("cmove", register_names[temp], register_names[$3]);
+
+                freeRegister(temp);
+                freeRegister($1);
+
+                $$ = $3;
             //printf("<SimpleExpr> -> <SimpleExpr> <EQ> <AddExpr> \n");
         }
                 | SimpleExpr NE AddExpr
         {
-                $$ = ($1 != $3);
+                int temp = allocateRegister();
+
+                // cmpl %edx, %ecx
+                // movl $0, %ecx
+                // movl $1, %ebx
+                // cmovg %ebx, %ecx
+                emit("cmpl", register_names[$1], register_names[$3]);
+                emit("movl", "$0", register_names[$3]);
+                emit("movl", "$1", register_names[temp]);
+                emit("cmovne", register_names[temp], register_names[$3]);
+
+                freeRegister(temp);
+                freeRegister($1);
+
+                $$ = $3;
             //printf("<SimpleExpr> -> <SimpleExpr> <NE> <AddExpr> \n");
         }
                 | SimpleExpr LE AddExpr
         {
-                $$ = ($1 <= $3);
+                int temp = allocateRegister();
+
+                // cmpl %edx, %ecx
+                // movl $0, %ecx
+                // movl $1, %ebx
+                // cmovg %ebx, %ecx
+                emit("cmpl", register_names[$1], register_names[$3]);
+                emit("movl", "$0", register_names[$3]);
+                emit("movl", "$1", register_names[temp]);
+                emit("cmovle", register_names[temp], register_names[$3]);
+
+                freeRegister(temp);
+                freeRegister($1);
+
+                $$ = $3;
             //printf("<SimpleExpr> -> <SimpleExpr> <LE> <AddExpr> \n");
         }
                 | SimpleExpr LT AddExpr
         {
-                $$ = ($1 < $3);
+                int temp = allocateRegister();
+
+                // cmpl %edx, %ecx
+                // movl $0, %ecx
+                // movl $1, %ebx
+                // cmovg %ebx, %ecx
+                emit("cmpl", register_names[$1], register_names[$3]);
+                emit("movl", "$0", register_names[$3]);
+                emit("movl", "$1", register_names[temp]);
+                emit("cmovl", register_names[temp], register_names[$3]);
+
+                freeRegister(temp);
+                freeRegister($1);
+
+                $$ = $3;
             //printf("<SimpleExpr> -> <SimpleExpr> <LT> <AddExpr> \n");
         }
                 | SimpleExpr GE AddExpr
         {
-                $$ = ($1 >= $3);
+                int temp = allocateRegister();
+
+                // cmpl %edx, %ecx
+                // movl $0, %ecx
+                // movl $1, %ebx
+                // cmovg %ebx, %ecx
+                emit("cmpl", register_names[$1], register_names[$3]);
+                emit("movl", "$0", register_names[$3]);
+                emit("movl", "$1", register_names[temp]);
+                emit("cmovge", register_names[temp], register_names[$3]);
+
+                freeRegister(temp);
+                freeRegister($1);
+
+                $$ = $3;
             //printf("<SimpleExpr> -> <SimpleExpr> <GE> <AddExpr> \n");
         }
                 | SimpleExpr GT AddExpr
         {
             //printf("<SimpleExpr> -> <SimpleExpr> <GT> <AddExpr> \n");
-                $$ = ($1 > $3);
+                int temp = allocateRegister();
+
+                // cmpl %edx, %ecx
+                // movl $0, %ecx
+                // movl $1, %ebx
+                // cmovg %ebx, %ecx
+                emit("cmpl", register_names[$1], register_names[$3]);
+                emit("movl", "$0", register_names[$3]);
+                emit("movl", "$1", register_names[temp]);
+                emit("cmovg", register_names[temp], register_names[$3]);
+
+                freeRegister(temp);
+                freeRegister($1);
+
+                $$ = $3;
         }
                 ;
 
