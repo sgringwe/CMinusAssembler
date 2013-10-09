@@ -3,6 +3,5 @@ int a;
 int main() {
 	write('Hello world!');
   a = 30;
-  write(a);
   write(20);
 }
