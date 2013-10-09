@@ -364,17 +364,29 @@ Expr            : SimpleExpr
         }
                 | Expr OR SimpleExpr 
         {
-                $$ = $1 | $3;
+                emit("andq", register_names[$1], register_names[$3]);
+                freeRegister($1);
+
+                $$ = $3;
             //printf("<Expr> -> <Expr> <OR> <SimpleExpr> \n");
         }
                 | Expr AND SimpleExpr 
         {
-            $$ = $1 & $3;
+                emit("orq", register_names[$1], register_names[$3]);
+                freeRegister($1);
+
+                $$ = $3;
             //printf("<Expr> -> <Expr> <AND> <SimpleExpr> \n");
         }
                 | NOT SimpleExpr 
         {
-            $$ = $2 ^ 1;
+                int reg = allocateRegister();
+
+                emit("movl", "$1", register_names[reg]);
+                emit("xorq", register_names[reg], register_names[$2]);
+                freeRegister(reg);
+
+                $$ = $2;
             //printf("<Expr> -> <NOT> <SimpleExpr> \n");
         }
                 ;
