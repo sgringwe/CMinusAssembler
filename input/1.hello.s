@@ -14,22 +14,14 @@ main:   nop
  movl $0, %eax
  movl $.str_wformat, %edi
  call printf
- 
- # load a into ebx
  movq $_gp, %rbx
  addq $0, %rbx
  movl (%rbx), %ebx
-
-# load 30 into ecx and then into assign ebx to be 30 (a = 30)
  movl $30, %ecx
- movl %ecx, (%ebx)
-
- # load a into ebx
+ movl %ecx, (%rbx)
  movq $_gp, %rbx
  addq $0, %rbx
  movl (%rbx), %ebx
-
- # set esi (arg2) to be ebx (30) and print
  movl %ebx, %esi
  movl $0, %eax
  movl $.int_wformat, %edi

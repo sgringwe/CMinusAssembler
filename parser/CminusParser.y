@@ -242,9 +242,9 @@ Assignment      : Variable ASSIGN Expr SEMICOLON
             // movl $5, %ecx // this is in constant rule
             // movl %ecx, (%rbx)
             // printf("got regs %d %d\n", $1, $3);
-            char temp[80];
-            sprintf(temp, "(%s)", register_names[$1]);
-            emit("movl", register_names[$3], temp);
+            // char temp[80];
+            // sprintf(temp, "(%s)", register_names[$1]);
+            emit("movl", register_names[$3], "(%rbx)");
 
             // printf("freeing both registers\n");
             freeRegister($1);
