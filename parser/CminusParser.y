@@ -57,7 +57,7 @@ char statements[99999]; // TODO: FIX
 char printfs[9999]; // List of printf options
 
 // Register management
-int REGISTER_COUNT = 10; // eax esi and edi are reserved for calls
+int REGISTER_COUNT = 10; // eax esi and edi are reserved for calls. ebx is reserved for lots of ops
 char *register_names[10] = { "%ebx", "%ecx", "%edx", "%r8d", "%r9d", "%r10d", "%r11d", "%r12d", "%r13d", "%r14d", "%r15d" };
 int register_taken[10];
 
@@ -233,7 +233,25 @@ Statement   : Assignment
 
 Assignment      : Variable ASSIGN Expr SEMICOLON
         {
-            setValue($1, $3);
+            int reg1 = allocateRegister();
+            // movq $_gp,%rbx
+            // addq $0, %rbx
+
+            // Variable($1) = %rbx or other register for
+
+            // movl $5, %ecx
+            // movl %ecx, (%rbx)
+
+            emit("movl", register_names[$3], register_names[reg1]);
+
+            char temp[80];
+            sprintf(temp, "(%s)", register_names[$1]);
+            emit("movl", register_names[reg1], temp);
+
+            freeRegister(reg1);
+
+
+            // setValue($1, $3);
             //printf("<Assignment> -> <Variable> <ASSIGN> <Expr> <SC>\n");
         }
                 ;
@@ -435,14 +453,14 @@ MulExpr     :  Factor
                 
 Factor          : Variable
         { 
-            // $$ = getValue($1);
-            // int offset = getValue($1);
+            $$ = getValue($1);
+            int offset = getValue($1);
 
-            // int resultReg = loadFromMemory(offset);
+            int resultReg = loadFromMemory(offset);
 
-            // $$ = resultReg;
+            $$ = resultReg;
 
-            ////printf("<Factor> -> <Variable>\n");
+            //printf("<Factor> -> <Variable>\n");
         }
                 | Constant
         { 
