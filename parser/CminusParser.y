@@ -557,10 +557,10 @@ MulExpr     :  Factor
         }
                 |  MulExpr DIVIDE Factor
         {
-            emit("movl", register_names[$3], "%edx");
+            emit("movl", register_names[$3], "%ecx");
             emit("movl", register_names[$1], "%eax");
             buffer("cdq\n");
-            buffer("idivl %edx\n");
+            buffer("idivl %ecx\n");
 
             emit("movl", "%eax", register_names[$3]);
 
