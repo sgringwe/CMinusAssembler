@@ -364,7 +364,7 @@ Expr            : SimpleExpr
         }
                 | Expr OR SimpleExpr 
         {
-                emit("orq", register_names[$1], register_names[$3]);
+                emit("orl", register_names[$1], register_names[$3]);
                 freeRegister($1);
 
                 $$ = $3;
@@ -372,7 +372,7 @@ Expr            : SimpleExpr
         }
                 | Expr AND SimpleExpr 
         {
-                emit("andq", register_names[$1], register_names[$3]);
+                emit("andl", register_names[$1], register_names[$3]);
                 freeRegister($1);
 
                 $$ = $3;
@@ -383,7 +383,7 @@ Expr            : SimpleExpr
                 int reg = allocateRegister();
 
                 emit("movl", "$1", register_names[reg]);
-                emit("xorq", register_names[reg], register_names[$2]);
+                emit("xorl", register_names[reg], register_names[$2]);
                 freeRegister(reg);
 
                 $$ = $2;

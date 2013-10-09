@@ -1873,7 +1873,7 @@ yyreduce:
   case 42:
 #line 366 "CminusParser.y"
     {
-                emit("orq", register_names[(yyvsp[(1) - (3)])], register_names[(yyvsp[(3) - (3)])]);
+                emit("orl", register_names[(yyvsp[(1) - (3)])], register_names[(yyvsp[(3) - (3)])]);
                 freeRegister((yyvsp[(1) - (3)]));
 
                 (yyval) = (yyvsp[(3) - (3)]);
@@ -1884,7 +1884,7 @@ yyreduce:
   case 43:
 #line 374 "CminusParser.y"
     {
-                emit("andq", register_names[(yyvsp[(1) - (3)])], register_names[(yyvsp[(3) - (3)])]);
+                emit("andl", register_names[(yyvsp[(1) - (3)])], register_names[(yyvsp[(3) - (3)])]);
                 freeRegister((yyvsp[(1) - (3)]));
 
                 (yyval) = (yyvsp[(3) - (3)]);
@@ -1898,7 +1898,7 @@ yyreduce:
                 int reg = allocateRegister();
 
                 emit("movl", "$1", register_names[reg]);
-                emit("xorq", register_names[reg], register_names[(yyvsp[(2) - (2)])]);
+                emit("xorl", register_names[reg], register_names[(yyvsp[(2) - (2)])]);
                 freeRegister(reg);
 
                 (yyval) = (yyvsp[(2) - (2)]);
