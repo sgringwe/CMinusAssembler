@@ -17,21 +17,18 @@ main:   nop
  movq $_gp, %rbx
  addq $0, %rbx
  movl (%rbx), %ebx
- movq $_gp, %rbx
- addq $0, %rbx
- movl (%rbx), %ecx
+ movl %ebx, %esi
+ movl $0, %eax
+ movl $.int_wformat, %edi
+ call printf
+ movl $1, %ecx
  movl %ecx, %esi
  movl $0, %eax
  movl $.int_wformat, %edi
  call printf
  movl $1, %edx
- movl %edx, %esi
- movl $0, %eax
- movl $.int_wformat, %edi
- call printf
- movl $1, %r8d
- movl $2, %r9d
- movl %r12d, %esi
+ movl $2, %r8d
+ movl %r10d, %esi
  movl $0, %eax
  movl $.int_wformat, %edi
  call printf

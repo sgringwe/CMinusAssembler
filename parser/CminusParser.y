@@ -240,9 +240,6 @@ Assignment      : Variable ASSIGN Expr SEMICOLON
 
             sprintf(temp, "$%d", offset);
             emit("addq", temp, "%rbx"); // add offset to %rbx to move to correct memory location for variable
-
-            sprintf(temp, "(%s)", register_names[$1]);
-            emit("movl", register_names[$3], temp);
             emit("movl", register_names[$3], "(%rbx)");
 
             // printf("freeing both registers\n");

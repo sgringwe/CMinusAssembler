@@ -9,16 +9,16 @@
 main:   nop
  pushq %rbp
  movq %rsp, %rbp
+ movl $1, %ebx
  movq $_gp, %rbx
  addq $0, %rbx
- movl (%rbx), %ebx
- movl $1, %ecx
- movl %ecx, (%ebx)
+ movl %ebx, (%ebx)
+ movl %ebx, (%rbx)
+ movl $0, %ebx
  movq $_gp, %rbx
  addq $4, %rbx
- movl (%rbx), %ebx
- movl $0, %ecx
- movl %ecx, (%ebx)
+ movl %ebx, (%ecx)
+ movl %ebx, (%rbx)
  movq $_gp, %rbx
  addq $0, %rbx
  movl (%rbx), %ebx

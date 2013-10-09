@@ -9,80 +9,79 @@
 main:   nop
  pushq %rbp
  movq %rsp, %rbp
+ movl $1, %ebx
  movq $_gp, %rbx
  addq $0, %rbx
- movl (%rbx), %ebx
- movl $1, %ecx
- movl %ecx, (%ebx)
+ movl %ebx, (%ebx)
+ movl %ebx, (%rbx)
+ movl $2, %ebx
  movq $_gp, %rbx
  addq $4, %rbx
- movl (%rbx), %ebx
- movl $2, %ecx
- movl %ecx, (%ebx)
+ movl %ebx, (%ecx)
+ movl %ebx, (%rbx)
+ movl $3, %ebx
  movq $_gp, %rbx
  addq $8, %rbx
- movl (%rbx), %ebx
- movl $3, %ecx
- movl %ecx, (%ebx)
+ movl %ebx, (%edx)
+ movl %ebx, (%rbx)
+ movl $4, %ebx
  movq $_gp, %rbx
  addq $12, %rbx
- movl (%rbx), %ebx
- movl $4, %ecx
- movl %ecx, (%ebx)
- movq $_gp, %rbx
- addq $16, %rbx
- movl (%rbx), %ebx
+ movl %ebx, (%r8d)
+ movl %ebx, (%rbx)
  movq $_gp, %rbx
  addq $0, %rbx
- movl (%rbx), %ecx
- movl $7, %edx
- movl %r8d, (%ebx)
+ movl (%rbx), %ebx
+ movl $7, %ecx
  movq $_gp, %rbx
  addq $16, %rbx
- movl (%rbx), %ebx
- movl %ebx, %esi
+ movl %ecx, (%r9d)
+ movl %ecx, (%rbx)
+ movq $_gp, %rbx
+ addq $16, %rbx
+ movl (%rbx), %ecx
+ movl %ecx, %esi
  movl $0, %eax
  movl $.int_wformat, %edi
  call printf
  movq $_gp, %rbx
- addq $20, %rbx
- movl (%rbx), %r8d
- movq $_gp, %rbx
  addq $12, %rbx
- movl (%rbx), %r9d
- movl $5, %r10d
- movl (null), (%r8d)
+ movl (%rbx), %edx
+ movl $5, %r8d
  movq $_gp, %rbx
  addq $20, %rbx
- movl (%rbx), %r8d
- movl %r8d, %esi
+ movl (null), (%r10d)
+ movl (null), (%rbx)
+ movq $_gp, %rbx
+ addq $20, %rbx
+ movl (%rbx), %r9d
+ movl %r9d, %esi
  movl $0, %eax
  movl $.int_wformat, %edi
  call printf
  movq $_gp, %rbx
  addq $4, %rbx
+ movl (%rbx), %r10d
+ movq $_gp, %rbx
+ addq $8, %rbx
  movl (%rbx), %r11d
  movq $_gp, %rbx
- addq $8, %rbx
- movl (%rbx), %r12d
- movq $_gp, %rbx
  addq $12, %rbx
- movl (%rbx), %r13d
+ movl (%rbx), %r12d
  movl (null), %esi
  movl $0, %eax
  movl $.int_wformat, %edi
  call printf
  movq $_gp, %rbx
  addq $4, %rbx
- movl (%rbx), %r14d
+ movl (%rbx), %r13d
  movq $_gp, %rbx
  addq $8, %rbx
- movl (%rbx), (null)
+ movl (%rbx), %r14d
  movq $_gp, %rbx
  addq $12, %rbx
  movl (%rbx), (null)
- movl  .section        .rodata
-, %esi
+ movl StatementList, %esi
  movl $0, %eax
  movl $.int_wformat, %edi
  call printf

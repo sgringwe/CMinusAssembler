@@ -15,34 +15,34 @@ main:   nop
  movl $0, %eax
  movl $.int_wformat, %edi
  call printf
+ movl $100, %edx
  movq $_gp, %rbx
  addq $0, %rbx
- movl (%rbx), %edx
- movl $100, %r8d
- movl %r8d, (%edx)
+ movl %edx, (%ebx)
+ movl %edx, (%rbx)
+ movl $2, %edx
  movq $_gp, %rbx
  addq $8, %rbx
- movl (%rbx), %edx
- movl $2, %r8d
- movl %r8d, (%edx)
+ movl %edx, (%edx)
+ movl %edx, (%rbx)
+ movl $5, %edx
  movq $_gp, %rbx
  addq $12, %rbx
- movl (%rbx), %edx
- movl $5, %r8d
- movl %r8d, (%edx)
- movq $_gp, %rbx
- addq $4, %rbx
- movl (%rbx), %edx
+ movl %edx, (%r8d)
+ movl %edx, (%rbx)
  movq $_gp, %rbx
  addq $0, %rbx
+ movl (%rbx), %edx
+ movq $_gp, %rbx
+ addq $8, %rbx
  movl (%rbx), %r8d
  movq $_gp, %rbx
- addq $8, %rbx
+ addq $12, %rbx
  movl (%rbx), %r9d
  movq $_gp, %rbx
- addq $12, %rbx
- movl (%rbx), %r10d
- movl %ebx, (%edx)
+ addq $4, %rbx
+ movl %ebx, (%ecx)
+ movl %ebx, (%rbx)
  movq $_gp, %rbx
  addq $4, %rbx
  movl (%rbx), %ebx
