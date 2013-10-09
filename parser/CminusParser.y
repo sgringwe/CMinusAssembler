@@ -542,20 +542,15 @@ int allocateRegister() {
 // movl (%rbx), %eax
 // we return the equivelant of eax (could be any register)
 int loadFromMemory(int offset) {
-    int reg1 = allocateRegister();
     int reg2 = allocateRegister();
 
     char temp[80];
 
-    emit("movq", "$_gp", register_names[reg1]); // set %rbx reg to equal _gp
+    emit("movq", "$_gp", "%rbx"); // set %rbx reg to equal _gp
 
     sprintf(temp, "$%d", offset);
-    emit("addq", temp, register_names[reg1]); // add offset to %rbx to move to correct memory location for variable
-
-    sprintf(temp, "(%s)", register_names[reg1]);
-    emit("movl", temp, register_names[reg2]); // store the memory location of rbx in eax
-
-    freeRegister(reg1);
+    emit("addq", temp, "%rbx"); // add offset to %rbx to move to correct memory location for variable
+    emit("movl", "(%rbx)", register_names[reg2]); // store the memory location of rbx in eax
 
     return reg2; // reg2 now holds the location of the variable we want
 }

@@ -15,28 +15,14 @@ main:   nop
  movl $0, %eax
  movl $.int_wformat, %edi
  call printf
- movq $_gp, %edx
- addq $0, %edx
- movl (%edx), %r8d
- movl $7, %edx
- movl %edx, (%r8d)
- movq $_gp, %edx
- addq $8, %edx
- movl (%edx), %r8d
- movl $3, %edx
- movl %edx, (%r8d)
- movq $_gp, %edx
- addq $12, %edx
- movl (%edx), %r8d
- movl $4, %edx
- movl %edx, (%r8d)
- movq $_gp, %edx
- addq $4, %edx
- movl (%edx), %r8d
- movq  movq $_gp, %edx
- addq $4, %edx
- movl (%edx), %r8d
- movl %r8d, %esi
+ movq $_gp, %rbx
+ addq $0, %rbx
+ movl (%rbx), %edx
+ movl $7, %r8d
+ movl % movq $_gp, %rbx
+ addq $4, %rbx
+ movl (%rbx), %edx
+ movl %edx, %esi
  movl $0, %eax
  movl $.int_wformat, %edi
  call printf
