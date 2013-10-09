@@ -9,29 +9,30 @@
 main:   nop
  pushq %rbp
  movq %rsp, %rbp
- movl $1, %ebx
+ movl $1, %ecx
  movq $_gp, %rbx
  addq $0, %rbx
- movl %ebx, (%rbx)
- movl $2, %ebx
+ movl %ecx, (%rbx)
+ movl $2, %ecx
  movq $_gp, %rbx
  addq $4, %rbx
- movl %ebx, (%rbx)
- movl $3, %ebx
+ movl %ecx, (%rbx)
+ movl $3, %ecx
  movq $_gp, %rbx
  addq $8, %rbx
- movl %ebx, (%rbx)
- movl $4, %ebx
+ movl %ecx, (%rbx)
+ movl $4, %ecx
  movq $_gp, %rbx
  addq $12, %rbx
- movl %ebx, (%rbx)
+ movl %ecx, (%rbx)
  movq $_gp, %rbx
  addq $0, %rbx
- movl (%rbx), %ebx
- movl $7, %ecx
+ movl (%rbx), %ecx
+ movl $7, %edx
+ addl %ecx, %edx
  movq $_gp, %rbx
  addq $16, %rbx
- movl %ecx, (%rbx)
+ movl %edx, (%rbx)
  movq $_gp, %rbx
  addq $16, %rbx
  movl (%rbx), %ecx
@@ -43,39 +44,76 @@ main:   nop
  addq $12, %rbx
  movl (%rbx), %edx
  movl $5, %r8d
+ subl %r8d, %edx
  movq $_gp, %rbx
  addq $20, %rbx
- movl (null), (%rbx)
+ movl %edx, (%rbx)
  movq $_gp, %rbx
  addq $20, %rbx
- movl (%rbx), %r9d
- movl %r9d, %esi
+ movl (%rbx), %edx
+ movl %edx, %esi
  movl $0, %eax
  movl $.int_wformat, %edi
  call printf
  movq $_gp, %rbx
  addq $4, %rbx
- movl (%rbx), %r10d
+ movl (%rbx), %r8d
  movq $_gp, %rbx
  addq $8, %rbx
- movl (%rbx), %r11d
+ movl (%rbx), %r9d
  movq $_gp, %rbx
  addq $12, %rbx
- movl (%rbx), %r12d
- movl (null), %esi
+ movl (%rbx), %r10d
+ movl WHILE, %esi
  movl $0, %eax
  movl $.int_wformat, %edi
  call printf
  movq $_gp, %rbx
  addq $4, %rbx
+ movl (%rbx), %r11d
+ movq $_gp, %rbx
+ addq $8, %rbx
+ movl (%rbx), %r12d
+ movq $_gp, %rbx
+ addq $12, %rbx
  movl (%rbx), %r13d
+ subl %r13d, GE
+ movl GE, %esi
+ movl $0, %eax
+ movl $.int_wformat, %edi
+ call printf
+ movq $_gp, %rbx
+ addq $0, %rbx
+ movl (%rbx), %r13d
+ movq $_gp, %rbx
+ addq $4, %rbx
+ movl (%rbx), %r14d
+ addl %r13d, %r14d
+ movq $_gp, %rbx
+ addq $8, %rbx
+ movl (%rbx), %r13d
+ movq $_gp, %rbx
+ addq $12, %rbx
+ movl (%rbx), %r15d
+ addl %r14d, IfStatement
+ movl IfStatement, %esi
+ movl $0, %eax
+ movl $.int_wformat, %edi
+ call printf
  movq $_gp, %rbx
  addq $8, %rbx
  movl (%rbx), %r14d
  movq $_gp, %rbx
  addq $12, %rbx
  movl (%rbx), (null)
- movl StatementList, %esi
+ movq $_gp, %rbx
+ addq $4, %rbx
+ movl (%rbx), (null)
+ movq $_gp, %rbx
+ addq $0, %rbx
+ movl (%rbx), (null)
+ subl (null), %r14d
+ movl %r14d, %esi
  movl $0, %eax
  movl $.int_wformat, %edi
  call printf
@@ -85,38 +123,7 @@ main:   nop
  movq $_gp, %rbx
  addq $4, %rbx
  movl (%rbx), (null)
- movq $_gp, %rbx
- addq $8, %rbx
- movl (%rbx), (null)
- movq $_gp, %rbx
- addq $12, %rbx
- movl (%rbx), (null)
- movl (null), %esi
- movl $0, %eax
- movl $.int_wformat, %edi
- call printf
- movq $_gp, %rbx
- addq $8, %rbx
- movl (%rbx), (null)
- movq $_gp, %rbx
- addq $12, %rbx
- movl (%rbx), (null)
- movq $_gp, %rbx
- addq $4, %rbx
- movl (%rbx), (null)
- movq $_gp, %rbx
- addq $0, %rbx
- movl (%rbx), (null)
- movl %ebx, %esi
- movl $0, %eax
- movl $.int_wformat, %edi
- call printf
- movq $_gp, %rbx
- addq $0, %rbx
- movl (%rbx), (null)
- movq $_gp, %rbx
- addq $4, %rbx
- movl (%rbx), (null)
+ addl (null), (null)
  movq $_gp, %rbx
  addq $8, %rbx
  movl (%rbx), (null)
@@ -126,10 +133,11 @@ main:   nop
  movq $_gp, %rbx
  addq $16, %rbx
  movl (%rbx), (null)
+ addl (null), %edx
  movq $_gp, %rbx
  addq $20, %rbx
  movl (%rbx), (null)
- movl %ebx, %esi
+ movl %edx, %esi
  movl $0, %eax
  movl $.int_wformat, %edi
  call printf

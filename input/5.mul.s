@@ -9,12 +9,12 @@
 main:   nop
  pushq %rbp
  movq %rsp, %rbp
- movl $10, %ebx
- movl $20, %ecx
+ movl $10, %ecx
+ movl $20, %edx
  movq $_gp, %rbx
  addq $4, %rbx
- movl (%rbx), %r10d
- movl %r10d, %esi
+ movl (%rbx), %r11d
+ movl %r11d, %esi
  movl $0, %eax
  movl $.int_wformat, %edi
  call printf

@@ -14,23 +14,19 @@ main:   nop
  movl $0, %eax
  movl $.str_wformat, %edi
  call printf
-
- # assignment
- movl $30, %ebx
+ movl $30, %ecx
  movq $_gp, %rbx
  addq $0, %rbx
- movl %ebx, (%rbx)
- 
+ movl %ecx, (%rbx)
  movq $_gp, %rbx
  addq $0, %rbx
- movl (%rbx), %ebx
- movl %ebx, %esi
+ movl (%rbx), %ecx
+ movl %ecx, %esi
  movl $0, %eax
  movl $.int_wformat, %edi
  call printf
- 
- movl $20, %ecx
- movl %ecx, %esi
+ movl $20, %edx
+ movl %edx, %esi
  movl $0, %eax
  movl $.int_wformat, %edi
  call printf

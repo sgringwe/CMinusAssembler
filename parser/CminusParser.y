@@ -306,6 +306,8 @@ IOStatement     : READ LPAREN Variable RPAREN SEMICOLON
             emit("movl", "$0", "%eax");
             buffer("movl $.int_wformat, %edi\n"); // TODO: Pick correct string constant
             buffer("call printf\n");
+
+            freeRegister($3);
             //printf("<IOStatement> -> <WRITE> <LP> <Expr> <RP> <SC>\n");
         }
                 | WRITE LPAREN StringConstant RPAREN SEMICOLON         
