@@ -559,7 +559,7 @@ MulExpr     :  Factor
         {
             emit("movl", register_names[$3], "%edx");
             emit("movl", register_names[$1], "%eax");
-            buffer("cdq");
+            buffer("cdq\n");
             emit("idivl", "%edx");
 
             emit("movl", "%eax", register_names[$3]);
