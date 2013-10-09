@@ -1804,7 +1804,7 @@ yyreduce:
             int reg3 = allocateRegister();
 
             char temp[80];
-            sprintf(temp, "movl $.string_const%d, %%s\n", str_const_count, register_names[reg1]);
+            sprintf(temp, "movl $.string_const%d, %s\n", str_const_count, register_names[reg1]);
             buffer(temp);
 
             emit("movl", register_names[reg1], register_names[reg2]);

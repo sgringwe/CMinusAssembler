@@ -2,9 +2,6 @@
 .int_wformat: .string "%d\n"
 .str_wformat: .string "%s\n"
 .int_rformat: .string "%d"
-input an integer:0
-1
-3
 .string_const0:    .string "input an integer:"
   .comm _gp, 4, 4
  .text

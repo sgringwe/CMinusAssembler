@@ -2,10 +2,6 @@
 .int_wformat: .string "%d\n"
 .str_wformat: .string "%s\n"
 .int_rformat: .string "%d"
-0
-0
-1
-1
   .comm _gp, 8, 4
  .text
  .globl main

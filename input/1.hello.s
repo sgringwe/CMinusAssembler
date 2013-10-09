@@ -2,7 +2,7 @@
 .int_wformat: .string "%d\n"
 .str_wformat: .string "%s\n"
 .int_rformat: .string "%d"
-Hello world!.string_const0:    .string "Hello world!"
+.string_const0:    .string "Hello world!"
   .comm _gp, 0, 4
  .text
  .globl main

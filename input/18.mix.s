@@ -2,10 +2,6 @@
 .int_wformat: .string "%d\n"
 .str_wformat: .string "%s\n"
 .int_rformat: .string "%d"
-i = j = k = l = m = 5
-1
-0
-0
 .string_const0:    .string "i = "
 .string_const1:    .string "j = "
 .string_const2:    .string "k = "
