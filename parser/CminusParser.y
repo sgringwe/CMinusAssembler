@@ -430,15 +430,15 @@ SimpleExpr  : AddExpr
                 // movl $0, %ecx
                 // movl $1, %ebx
                 // cmovg %ebx, %ecx
-                emit("cmpl", register_names[$1], register_names[$3]);
-                emit("movl", "$0", register_names[$3]);
+                emit("cmpl", register_names[$3], register_names[$1]);
+                emit("movl", "$0", register_names[$1]);
                 emit("movl", "$1", register_names[temp]);
-                emit("cmovle", register_names[$3], register_names[temp]);
+                emit("cmovle", register_names[temp], register_names[$1]);
 
                 freeRegister(temp);
-                freeRegister($1);
+                freeRegister($3);
 
-                $$ = $3;
+                $$ = $1;
             //printf("<SimpleExpr> -> <SimpleExpr> <LE> <AddExpr> \n");
         }
                 | SimpleExpr LT AddExpr
@@ -449,15 +449,15 @@ SimpleExpr  : AddExpr
                 // movl $0, %ecx
                 // movl $1, %ebx
                 // cmovg %ebx, %ecx
-                emit("cmpl", register_names[$1], register_names[$3]);
-                emit("movl", "$0", register_names[$3]);
+                emit("cmpl", register_names[$3], register_names[$1]);
+                emit("movl", "$0", register_names[$1]);
                 emit("movl", "$1", register_names[temp]);
-                emit("cmovl", register_names[$3], register_names[temp]);
+                emit("cmovl", register_names[temp], register_names[$1]);
 
                 freeRegister(temp);
-                freeRegister($1);
+                freeRegister($3);
 
-                $$ = $3;
+                $$ = $1;
             //printf("<SimpleExpr> -> <SimpleExpr> <LT> <AddExpr> \n");
         }
                 | SimpleExpr GE AddExpr
@@ -468,15 +468,15 @@ SimpleExpr  : AddExpr
                 // movl $0, %ecx
                 // movl $1, %ebx
                 // cmovg %ebx, %ecx
-                emit("cmpl", register_names[$1], register_names[$3]);
-                emit("movl", "$0", register_names[$3]);
+                emit("cmpl", register_names[$3], register_names[$1]);
+                emit("movl", "$0", register_names[$1]);
                 emit("movl", "$1", register_names[temp]);
-                emit("cmovge", register_names[$3], register_names[temp]);
+                emit("cmovge", register_names[temp], register_names[$1]);
 
                 freeRegister(temp);
-                freeRegister($1);
+                freeRegister($3);
 
-                $$ = $3;
+                $$ = $1;
             //printf("<SimpleExpr> -> <SimpleExpr> <GE> <AddExpr> \n");
         }
                 | SimpleExpr GT AddExpr
@@ -488,15 +488,15 @@ SimpleExpr  : AddExpr
                 // movl $0, %ecx
                 // movl $1, %ebx
                 // cmovg %ebx, %ecx
-                emit("cmpl", register_names[$1], register_names[$3]);
-                emit("movl", "$0", register_names[$3]);
+                emit("cmpl", register_names[$3], register_names[$1]);
+                emit("movl", "$0", register_names[$1]);
                 emit("movl", "$1", register_names[temp]);
-                emit("cmovg", register_names[$3], register_names[temp]);
+                emit("cmovg", register_names[temp], register_names[$1]);
 
                 freeRegister(temp);
-                freeRegister($1);
+                freeRegister($3);
 
-                $$ = $3;
+                $$ = $1;
         }
                 ;
 

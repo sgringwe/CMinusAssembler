@@ -1955,15 +1955,15 @@ yyreduce:
                 // movl $0, %ecx
                 // movl $1, %ebx
                 // cmovg %ebx, %ecx
-                emit("cmpl", register_names[(yyvsp[(1) - (3)])], register_names[(yyvsp[(3) - (3)])]);
-                emit("movl", "$0", register_names[(yyvsp[(3) - (3)])]);
+                emit("cmpl", register_names[(yyvsp[(3) - (3)])], register_names[(yyvsp[(1) - (3)])]);
+                emit("movl", "$0", register_names[(yyvsp[(1) - (3)])]);
                 emit("movl", "$1", register_names[temp]);
-                emit("cmovle", register_names[(yyvsp[(3) - (3)])], register_names[temp]);
+                emit("cmovle", register_names[temp], register_names[(yyvsp[(1) - (3)])]);
 
                 freeRegister(temp);
-                freeRegister((yyvsp[(1) - (3)]));
+                freeRegister((yyvsp[(3) - (3)]));
 
-                (yyval) = (yyvsp[(3) - (3)]);
+                (yyval) = (yyvsp[(1) - (3)]);
             //printf("<SimpleExpr> -> <SimpleExpr> <LE> <AddExpr> \n");
         ;}
     break;
@@ -1977,15 +1977,15 @@ yyreduce:
                 // movl $0, %ecx
                 // movl $1, %ebx
                 // cmovg %ebx, %ecx
-                emit("cmpl", register_names[(yyvsp[(1) - (3)])], register_names[(yyvsp[(3) - (3)])]);
-                emit("movl", "$0", register_names[(yyvsp[(3) - (3)])]);
+                emit("cmpl", register_names[(yyvsp[(3) - (3)])], register_names[(yyvsp[(1) - (3)])]);
+                emit("movl", "$0", register_names[(yyvsp[(1) - (3)])]);
                 emit("movl", "$1", register_names[temp]);
-                emit("cmovl", register_names[(yyvsp[(3) - (3)])], register_names[temp]);
+                emit("cmovl", register_names[temp], register_names[(yyvsp[(1) - (3)])]);
 
                 freeRegister(temp);
-                freeRegister((yyvsp[(1) - (3)]));
+                freeRegister((yyvsp[(3) - (3)]));
 
-                (yyval) = (yyvsp[(3) - (3)]);
+                (yyval) = (yyvsp[(1) - (3)]);
             //printf("<SimpleExpr> -> <SimpleExpr> <LT> <AddExpr> \n");
         ;}
     break;
@@ -1999,15 +1999,15 @@ yyreduce:
                 // movl $0, %ecx
                 // movl $1, %ebx
                 // cmovg %ebx, %ecx
-                emit("cmpl", register_names[(yyvsp[(1) - (3)])], register_names[(yyvsp[(3) - (3)])]);
-                emit("movl", "$0", register_names[(yyvsp[(3) - (3)])]);
+                emit("cmpl", register_names[(yyvsp[(3) - (3)])], register_names[(yyvsp[(1) - (3)])]);
+                emit("movl", "$0", register_names[(yyvsp[(1) - (3)])]);
                 emit("movl", "$1", register_names[temp]);
-                emit("cmovge", register_names[(yyvsp[(3) - (3)])], register_names[temp]);
+                emit("cmovge", register_names[temp], register_names[(yyvsp[(1) - (3)])]);
 
                 freeRegister(temp);
-                freeRegister((yyvsp[(1) - (3)]));
+                freeRegister((yyvsp[(3) - (3)]));
 
-                (yyval) = (yyvsp[(3) - (3)]);
+                (yyval) = (yyvsp[(1) - (3)]);
             //printf("<SimpleExpr> -> <SimpleExpr> <GE> <AddExpr> \n");
         ;}
     break;
@@ -2022,15 +2022,15 @@ yyreduce:
                 // movl $0, %ecx
                 // movl $1, %ebx
                 // cmovg %ebx, %ecx
-                emit("cmpl", register_names[(yyvsp[(1) - (3)])], register_names[(yyvsp[(3) - (3)])]);
-                emit("movl", "$0", register_names[(yyvsp[(3) - (3)])]);
+                emit("cmpl", register_names[(yyvsp[(3) - (3)])], register_names[(yyvsp[(1) - (3)])]);
+                emit("movl", "$0", register_names[(yyvsp[(1) - (3)])]);
                 emit("movl", "$1", register_names[temp]);
-                emit("cmovg", register_names[(yyvsp[(3) - (3)])], register_names[temp]);
+                emit("cmovg", register_names[temp], register_names[(yyvsp[(1) - (3)])]);
 
                 freeRegister(temp);
-                freeRegister((yyvsp[(1) - (3)]));
+                freeRegister((yyvsp[(3) - (3)]));
 
-                (yyval) = (yyvsp[(3) - (3)]);
+                (yyval) = (yyvsp[(1) - (3)]);
         ;}
     break;
 
