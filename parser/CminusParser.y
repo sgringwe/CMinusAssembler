@@ -303,20 +303,20 @@ IOStatement     : READ LPAREN Variable RPAREN SEMICOLON
             // call printf
             int reg1 = allocateRegister();
             // int reg2 = allocateRegister();
-            int reg3 = allocateRegister();
+            // int reg3 = allocateRegister();
 
             char temp[80];
             sprintf(temp, "movl $.string_const%d, %s\n", str_const_count, register_names[reg1]);
             buffer(temp);
 
             emit("movl", register_names[reg1], "%esi");
-            emit("movl", "$0", register_names[reg3]);
+            emit("movl", "$0", "%eax");
             buffer("movl $.str_wformat, %edi\n"); // TODO: Pick correct string constant
             buffer("call printf\n");
 
             freeRegister(reg1);
             // freeRegister(reg2);
-            freeRegister(reg3);
+            // freeRegister(reg3);
 
             ++str_const_count;
             ////printf("<IOStatement> -> <WRITE> <LP> <StringConstant> <RP> <SC>\n");
