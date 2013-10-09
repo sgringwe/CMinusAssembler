@@ -1800,7 +1800,7 @@ yyreduce:
     {
             emit("movl", register_names[(yyvsp[(3) - (5)])], "%esi");
             emit("movl", "$0", "%eax");
-            buffer("movl $.str_wformat, %edi\n"); // TODO: Pick correct string constant
+            buffer("movl $.int_wformat, %edi\n"); // TODO: Pick correct string constant
             buffer("call printf\n");
             //printf("<IOStatement> -> <WRITE> <LP> <Expr> <RP> <SC>\n");
         ;}
