@@ -33,12 +33,12 @@ main:   nop
  movl (%rbx), %ecx
  movq $_gp, %rbx
  addq $8, %rbx
- movl (%rbx), %r8d
- addl %ecx, %r8d
+ movl (%rbx), %edx
+ addl %ecx, %edx
  movq $_gp, %rbx
  addq $12, %rbx
  movl (%rbx), %ecx
- addl %r8d, %ecx
+ addl %edx, %ecx
  movq $_gp, %rbx
  addq $4, %rbx
  movl %ecx, (%rbx)

@@ -26,22 +26,22 @@ main:   nop
  call printf
  movq $_gp, %rbx
  addq $4, %rbx
- movl (%rbx), %edx
- movl %ecx, %esi
+ movl (%rbx), %ecx
+ movl %edx, %esi
  movl $0, %eax
  movl $.int_wformat, %edi
  call printf
  movq $_gp, %rbx
  addq $4, %rbx
- movl (%rbx), %r8d
- movl %r8d, %esi
+ movl (%rbx), %edx
+ movl %edx, %esi
  movl $0, %eax
  movl $.int_wformat, %edi
  call printf
  movq $_gp, %rbx
  addq $0, %rbx
- movl (%rbx), %r9d
- movl %r8d, %esi
+ movl (%rbx), %edx
+ movl %ecx, %esi
  movl $0, %eax
  movl $.int_wformat, %edi
  call printf

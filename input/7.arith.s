@@ -45,23 +45,23 @@ main:   nop
  call printf
  movq $_gp, %rbx
  addq $0, %rbx
- movl (%rbx), %edx
+ movl (%rbx), %ecx
  movq $_gp, %rbx
  addq $12, %rbx
- movl (%rbx), %r9d
+ movl (%rbx), %edx
  movq $_gp, %rbx
  addq $0, %rbx
- movl (%rbx), %r10d
- subl %r10d, %r9d
+ movl (%rbx), %r9d
+ subl %r9d, %edx
  movq $_gp, %rbx
  addq $8, %rbx
- movl (%rbx), %r10d
- addl %edx, %ecx
+ movl (%rbx), %r9d
+ addl %ecx, %ecx
  movq $_gp, %rbx
  addq $4, %rbx
- movl (%rbx), %edx
- addl %ecx, %edx
- movl %edx, %esi
+ movl (%rbx), %ecx
+ addl %ecx, %ecx
+ movl %ecx, %esi
  movl $0, %eax
  movl $.int_wformat, %edi
  call printf

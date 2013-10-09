@@ -15,27 +15,27 @@ main:   nop
  movl $0, %eax
  movl $.int_wformat, %edi
  call printf
- movl $100, %r8d
+ movl $100, %ecx
  movq $_gp, %rbx
  addq $0, %rbx
- movl %r8d, (%rbx)
- movl $2, %r8d
+ movl %ecx, (%rbx)
+ movl $2, %ecx
  movq $_gp, %rbx
  addq $8, %rbx
- movl %r8d, (%rbx)
- movl $5, %r8d
+ movl %ecx, (%rbx)
+ movl $5, %ecx
  movq $_gp, %rbx
  addq $12, %rbx
- movl %r8d, (%rbx)
+ movl %ecx, (%rbx)
  movq $_gp, %rbx
  addq $0, %rbx
+ movl (%rbx), %ecx
+ movq $_gp, %rbx
+ addq $8, %rbx
  movl (%rbx), %r8d
  movq $_gp, %rbx
- addq $8, %rbx
- movl (%rbx), %r9d
- movq $_gp, %rbx
  addq $12, %rbx
- movl (%rbx), %r10d
+ movl (%rbx), %r9d
  movq $_gp, %rbx
  addq $4, %rbx
  movl %ecx, (%rbx)

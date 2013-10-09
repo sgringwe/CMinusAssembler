@@ -433,7 +433,7 @@ SimpleExpr  : AddExpr
                 emit("cmpl", register_names[$1], register_names[$3]);
                 emit("movl", "$0", register_names[$3]);
                 emit("movl", "$1", register_names[temp]);
-                emit("cmovle", register_names[temp], register_names[$3]);
+                emit("cmovle", register_names[$3], register_names[temp]);
 
                 freeRegister(temp);
                 freeRegister($1);
@@ -452,7 +452,7 @@ SimpleExpr  : AddExpr
                 emit("cmpl", register_names[$1], register_names[$3]);
                 emit("movl", "$0", register_names[$3]);
                 emit("movl", "$1", register_names[temp]);
-                emit("cmovl", register_names[temp], register_names[$3]);
+                emit("cmovl", register_names[$3], register_names[temp]);
 
                 freeRegister(temp);
                 freeRegister($1);
@@ -471,7 +471,7 @@ SimpleExpr  : AddExpr
                 emit("cmpl", register_names[$1], register_names[$3]);
                 emit("movl", "$0", register_names[$3]);
                 emit("movl", "$1", register_names[temp]);
-                emit("cmovge", register_names[temp], register_names[$3]);
+                emit("cmovge", register_names[$3], register_names[temp]);
 
                 freeRegister(temp);
                 freeRegister($1);
@@ -491,7 +491,7 @@ SimpleExpr  : AddExpr
                 emit("cmpl", register_names[$1], register_names[$3]);
                 emit("movl", "$0", register_names[$3]);
                 emit("movl", "$1", register_names[temp]);
-                emit("cmovg", register_names[temp], register_names[$3]);
+                emit("cmovg", register_names[$3], register_names[temp]);
 
                 freeRegister(temp);
                 freeRegister($1);

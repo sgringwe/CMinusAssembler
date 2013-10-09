@@ -1958,7 +1958,7 @@ yyreduce:
                 emit("cmpl", register_names[(yyvsp[(1) - (3)])], register_names[(yyvsp[(3) - (3)])]);
                 emit("movl", "$0", register_names[(yyvsp[(3) - (3)])]);
                 emit("movl", "$1", register_names[temp]);
-                emit("cmovle", register_names[temp], register_names[(yyvsp[(3) - (3)])]);
+                emit("cmovle", register_names[(yyvsp[(3) - (3)])], register_names[temp]);
 
                 freeRegister(temp);
                 freeRegister((yyvsp[(1) - (3)]));
@@ -1980,7 +1980,7 @@ yyreduce:
                 emit("cmpl", register_names[(yyvsp[(1) - (3)])], register_names[(yyvsp[(3) - (3)])]);
                 emit("movl", "$0", register_names[(yyvsp[(3) - (3)])]);
                 emit("movl", "$1", register_names[temp]);
-                emit("cmovl", register_names[temp], register_names[(yyvsp[(3) - (3)])]);
+                emit("cmovl", register_names[(yyvsp[(3) - (3)])], register_names[temp]);
 
                 freeRegister(temp);
                 freeRegister((yyvsp[(1) - (3)]));
@@ -2002,7 +2002,7 @@ yyreduce:
                 emit("cmpl", register_names[(yyvsp[(1) - (3)])], register_names[(yyvsp[(3) - (3)])]);
                 emit("movl", "$0", register_names[(yyvsp[(3) - (3)])]);
                 emit("movl", "$1", register_names[temp]);
-                emit("cmovge", register_names[temp], register_names[(yyvsp[(3) - (3)])]);
+                emit("cmovge", register_names[(yyvsp[(3) - (3)])], register_names[temp]);
 
                 freeRegister(temp);
                 freeRegister((yyvsp[(1) - (3)]));
@@ -2025,7 +2025,7 @@ yyreduce:
                 emit("cmpl", register_names[(yyvsp[(1) - (3)])], register_names[(yyvsp[(3) - (3)])]);
                 emit("movl", "$0", register_names[(yyvsp[(3) - (3)])]);
                 emit("movl", "$1", register_names[temp]);
-                emit("cmovg", register_names[temp], register_names[(yyvsp[(3) - (3)])]);
+                emit("cmovg", register_names[(yyvsp[(3) - (3)])], register_names[temp]);
 
                 freeRegister(temp);
                 freeRegister((yyvsp[(1) - (3)]));

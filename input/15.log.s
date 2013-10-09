@@ -48,54 +48,54 @@ main:   nop
  call printf
  movq $_gp, %rbx
  addq $12, %rbx
- movl (%rbx), %r8d
+ movl (%rbx), %ecx
  movq $_gp, %rbx
  addq $8, %rbx
- movl (%rbx), %r9d
- cmpl %r8d, %r9d
- movl $0, %r9d
- movl $1, %r10d
- cmovg %r10d, %r9d
+ movl (%rbx), %r8d
+ cmpl %ecx, %r8d
+ movl $0, %r8d
+ movl $1, %r9d
+ cmovg %r9d, %r8d
+ movl %r8d, %esi
+ movl $0, %eax
+ movl $.int_wformat, %edi
+ call printf
+ movq $_gp, %rbx
+ addq $12, %rbx
+ movl (%rbx), %ecx
+ movq $_gp, %rbx
+ addq $8, %rbx
+ movl (%rbx), %r8d
+ cmpl %ecx, %r8d
+ movl $0, %r8d
+ movl $1, %r9d
+ cmovg %r9d, %r8d
  movl %r9d, %esi
  movl $0, %eax
  movl $.int_wformat, %edi
  call printf
- movq $_gp, %rbx
- addq $12, %rbx
- movl (%rbx), %r8d
- movq $_gp, %rbx
- addq $8, %rbx
- movl (%rbx), %r10d
- cmpl %r8d, %r10d
- movl $0, %r10d
- movl $1, %r11d
- cmovg %r11d, %r10d
- movl %r11d, %esi
- movl $0, %eax
- movl $.int_wformat, %edi
- call printf
- movl $0, %r8d
+ movl $0, %ecx
  movq $_gp, %rbx
  addq $0, %rbx
- movl (%rbx), %r11d
+ movl (%rbx), %r9d
  movq $_gp, %rbx
  addq $4, %rbx
- movl (%rbx), %r12d
- cmpl %r11d, %r12d
- movl $0, %r12d
- movl $1, %r13d
- cmovl %r13d, %r12d
+ movl (%rbx), %r10d
+ cmpl %r9d, %r10d
+ movl $0, %r10d
+ movl $1, %r11d
+ cmovl %r11d, %r10d
  movq $_gp, %rbx
  addq $8, %rbx
- movl (%rbx), %r11d
+ movl (%rbx), %r9d
  movq $_gp, %rbx
  addq $12, %rbx
- movl (%rbx), %r13d
- cmpl %r11d, %r13d
- movl $0, %r13d
- movl $1, %r14d
- cmovne %r14d, %r13d
- movl %r12d, %esi
+ movl (%rbx), %r11d
+ cmpl %r9d, %r11d
+ movl $0, %r11d
+ movl $1, %r12d
+ cmovne %r12d, %r11d
+ movl %r10d, %esi
  movl $0, %eax
  movl $.int_wformat, %edi
  call printf

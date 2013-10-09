@@ -21,15 +21,15 @@ main:   nop
  movl $0, %eax
  movl $.int_wformat, %edi
  call printf
- movl $1, %edx
- movl %edx, %esi
+ movl $1, %ecx
+ movl %ecx, %esi
  movl $0, %eax
  movl $.int_wformat, %edi
  call printf
- movl $1, %r8d
- movl $2, %r9d
- addl %r8d, %r9d
- movl %r9d, %esi
+ movl $1, %ecx
+ movl $2, %edx
+ addl %ecx, %edx
+ movl %edx, %esi
  movl $0, %eax
  movl $.int_wformat, %edi
  call printf
