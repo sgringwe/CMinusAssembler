@@ -51,7 +51,6 @@ main:   nop
  movl (%rbx), %r9d
  movq $_gp, %rbx
  addq $20, %rbx
- movl %ebx, (%r10d)
  movl %ebx, (%rbx)
  movq $_gp, %rbx
  addq $20, %rbx

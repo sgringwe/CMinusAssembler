@@ -18,17 +18,14 @@ main:   nop
  movl $77, %edx
  movq $_gp, %rbx
  addq $0, %rbx
- movl %edx, (%ebx)
  movl %edx, (%rbx)
  movl $3, %edx
  movq $_gp, %rbx
  addq $8, %rbx
- movl %edx, (%edx)
  movl %edx, (%rbx)
  movl $4, %edx
  movq $_gp, %rbx
  addq $12, %rbx
- movl %edx, (%r8d)
  movl %edx, (%rbx)
  movq $_gp, %rbx
  addq $0, %rbx
@@ -41,9 +38,6 @@ main:   nop
  movl (%rbx), %r9d
  movq $_gp, %rbx
  addq $4, %rbx
- movl  leave
- ret
-, (%ecx)
  movl  leave
  ret
 , (%rbx)

@@ -58,7 +58,7 @@ char printfs[9999]; // List of printf options
 
 // Register management
 int REGISTER_COUNT = 10; // eax esi and edi are reserved for calls. ebx is reserved for lots of ops
-char *register_names[10] = { "%ebx", "%ecx", "%edx", "%r8d", "%r9d", "%r10d", "%r11d", "%r12d", "%r13d", "%r14d", "%r15d" };
+char *register_names[10] = { "%ecx", "%edx", "%r8d", "%r9d", "%r10d", "%r11d", "%r12d", "%r13d", "%r14d", "%r15d" };
 int register_taken[10];
 
 %}
