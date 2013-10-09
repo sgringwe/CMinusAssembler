@@ -14,27 +14,27 @@
 main:   nop
  pushq %rbp
  movq %rsp, %rbp
- movl $.string_const0, %s
+ movl $.string_const0, %eax
  movl %eax, %ebx
  movl $0, %ecx
  movl $.str_wformat, %edi
  call printf
- movl $.string_const1, %s
+ movl $.string_const1, %edx
  movl %edx, %esi
  movl $0, %edi
  movl $.str_wformat, %edi
  call printf
- movl $.string_const2, %s
+ movl $.string_const2, %r8d
  movl %r8d, %r9d
  movl $0, %r10d
  movl $.str_wformat, %edi
  call printf
- movl $.string_const3, %s
+ movl $.string_const3, %r11d
  movl %r11d, %r12d
  movl $0, %r13d
  movl $.str_wformat, %edi
  call printf
- movl $.string_const4, %s
+ movl $.string_const4, %r14d
  movl %r14d, (null)
  movl $0, (null)
  movl $.str_wformat, %edi

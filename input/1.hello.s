@@ -10,7 +10,7 @@
 main:   nop
  pushq %rbp
  movq %rsp, %rbp
- movl $.string_const0, %s
+ movl $.string_const0, %eax
  movl %eax, %ebx
  movl $0, %ecx
  movl $.str_wformat, %edi
