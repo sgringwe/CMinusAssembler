@@ -311,13 +311,14 @@ IOStatement     : READ LPAREN Variable RPAREN SEMICOLON
             char temp[80];
             sprintf(temp, "$%d", offset);
             emit("addq", temp, "%rbx");
-            emit("movl", "$_int_rformat", "%edi");
+            emit("movl", "$.int_rformat", "%edi");
             emit("movl", "%ebx", "%esi");
             emit("movl", "$0", "%eax");
             buffer("call scanf\n");
 
             int reg = loadFromMemory(offset);
             emit("movl", "%eax", register_names[reg]);
+            freeRegister(reg);
 
             $$ = reg;
             //printf("<IOStatement> -> <READ> <LP> <Variable> <RP> <SC>\n");
