@@ -233,21 +233,19 @@ Statement   : Assignment
 
 Assignment      : Variable ASSIGN Expr SEMICOLON
         {
-            // int reg1 = allocateRegister();
-            // movq $_gp,%rbx // this is invariable rule
-            // addq $0, %rbx
-
-            // Variable($1) = %rbx or other register for
-
-            // movl $5, %ecx // this is in constant rule
-            // movl %ecx, (%rbx)
-            // printf("got regs %d %d\n", $1, $3);
+            int offset = getValue($1);
             char temp[80];
+
+            emit("movq", "$_gp", "%rbx"); // set %rbx reg to equal _gp
+
+            sprintf(temp, "$%d", offset);
+            emit("addq", temp, "%rbx"); // add offset to %rbx to move to correct memory location for variable
+
             sprintf(temp, "(%s)", register_names[$1]);
             emit("movl", register_names[$3], temp);
+            emit("movl", register_names[$3], "(%rbx)");
 
             // printf("freeing both registers\n");
-            freeRegister($1);
             freeRegister($3);
 
             // freeRegister(reg1);
@@ -455,7 +453,12 @@ MulExpr     :  Factor
                 
 Factor          : Variable
         { 
-            $$ = $1;
+            int offset = getValue($1);
+
+            int resultReg = loadFromMemory(offset);
+
+            // printf("for variable: %d\n", resultReg);
+            $$ = resultReg;
 
             //printf("<Factor> -> <Variable>\n");
         }
@@ -477,12 +480,7 @@ Factor          : Variable
 
 Variable        : IDENTIFIER
         {
-            int offset = getValue($1);
-
-            int resultReg = loadFromMemory(offset);
-
-            // printf("for variable: %d\n", resultReg);
-            $$ = resultReg;
+            $$ = $1;
             //printf("<Variable> -> <IDENTIFIER>\n");
         }
                 | IDENTIFIER LBRACKET Expr RBRACKET    
