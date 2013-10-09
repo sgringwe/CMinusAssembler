@@ -1,0 +1,15 @@
+ .section        .rodata
+.int_wformat: .string "%d\n"
+.str_wformat: .string "%s\n"
+.int_rformat: .string "%d"
+-10
+1
+  .comm _gp, 16, 4
+ .text
+ .globl main
+ .type main,@function
+main:   nop
+ pushq %rbp
+ movq %rsp, %rbp
+ leave
+ ret
