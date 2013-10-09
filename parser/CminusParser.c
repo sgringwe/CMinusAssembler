@@ -1873,7 +1873,7 @@ yyreduce:
   case 42:
 #line 366 "CminusParser.y"
     {
-                emit("andq", register_names[(yyvsp[(1) - (3)])], register_names[(yyvsp[(3) - (3)])]);
+                emit("orq", register_names[(yyvsp[(1) - (3)])], register_names[(yyvsp[(3) - (3)])]);
                 freeRegister((yyvsp[(1) - (3)]));
 
                 (yyval) = (yyvsp[(3) - (3)]);
@@ -1884,7 +1884,7 @@ yyreduce:
   case 43:
 #line 374 "CminusParser.y"
     {
-                emit("orq", register_names[(yyvsp[(1) - (3)])], register_names[(yyvsp[(3) - (3)])]);
+                emit("andq", register_names[(yyvsp[(1) - (3)])], register_names[(yyvsp[(3) - (3)])]);
                 freeRegister((yyvsp[(1) - (3)]));
 
                 (yyval) = (yyvsp[(3) - (3)]);

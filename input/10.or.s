@@ -31,37 +31,41 @@ main:   nop
  movq $_gp, %rbx
  addq $4, %rbx
  movl (%rbx), %edx
+ andq %ecx, %edx
  movl %edx, %esi
  movl $0, %eax
  movl $.int_wformat, %edi
  call printf
  movq $_gp, %rbx
  addq $0, %rbx
- movl (%rbx), %edx
+ movl (%rbx), %ecx
  movq $_gp, %rbx
  addq $0, %rbx
- movl (%rbx), %r8d
- movl %r9d, %esi
+ movl (%rbx), %edx
+ andq %ecx, %edx
+ movl %edx, %esi
  movl $0, %eax
  movl $.int_wformat, %edi
  call printf
  movq $_gp, %rbx
  addq $12, %rbx
- movl (%rbx), %r9d
+ movl (%rbx), %ecx
  movq $_gp, %rbx
  addq $8, %rbx
- movl (%rbx), %r10d
- movl %r13d, %esi
+ movl (%rbx), %edx
+ andq %ecx, %edx
+ movl %edx, %esi
  movl $0, %eax
  movl $.int_wformat, %edi
  call printf
  movq $_gp, %rbx
  addq $8, %rbx
- movl (%rbx), %r11d
+ movl (%rbx), %ecx
  movq $_gp, %rbx
  addq $4, %rbx
- movl (%rbx), %r12d
- movl %r13d, %esi
+ movl (%rbx), %edx
+ andq %ecx, %edx
+ movl %edx, %esi
  movl $0, %eax
  movl $.int_wformat, %edi
  call printf

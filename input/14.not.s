@@ -27,20 +27,24 @@ main:   nop
  movq $_gp, %rbx
  addq $4, %rbx
  movl (%rbx), %ecx
- movl %edx, %esi
+ movl $1, %edx
+ xorq %edx, %ecx
+ movl %ecx, %esi
  movl $0, %eax
  movl $.int_wformat, %edi
  call printf
  movq $_gp, %rbx
  addq $4, %rbx
- movl (%rbx), %edx
- movl %edx, %esi
+ movl (%rbx), %ecx
+ movl %ecx, %esi
  movl $0, %eax
  movl $.int_wformat, %edi
  call printf
  movq $_gp, %rbx
  addq $0, %rbx
- movl (%rbx), %edx
+ movl (%rbx), %ecx
+ movl $1, %edx
+ xorq %edx, %ecx
  movl %ecx, %esi
  movl $0, %eax
  movl $.int_wformat, %edi

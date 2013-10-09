@@ -364,7 +364,7 @@ Expr            : SimpleExpr
         }
                 | Expr OR SimpleExpr 
         {
-                emit("andq", register_names[$1], register_names[$3]);
+                emit("orq", register_names[$1], register_names[$3]);
                 freeRegister($1);
 
                 $$ = $3;
@@ -372,7 +372,7 @@ Expr            : SimpleExpr
         }
                 | Expr AND SimpleExpr 
         {
-                emit("orq", register_names[$1], register_names[$3]);
+                emit("andq", register_names[$1], register_names[$3]);
                 freeRegister($1);
 
                 $$ = $3;
