@@ -287,7 +287,10 @@ IOStatement     : READ LPAREN Variable RPAREN SEMICOLON
         }
                 | WRITE LPAREN Expr RPAREN SEMICOLON
         {
-            // printf("%d\n", $3);
+            emit("movl", register_names[$3], "%esi");
+            emit("movl", "$0", "%eax");
+            buffer("movl $.str_wformat, %edi\n"); // TODO: Pick correct string constant
+            buffer("call printf\n");
             //printf("<IOStatement> -> <WRITE> <LP> <Expr> <RP> <SC>\n");
         }
                 | WRITE LPAREN StringConstant RPAREN SEMICOLON         
@@ -295,16 +298,6 @@ IOStatement     : READ LPAREN Variable RPAREN SEMICOLON
             // First add this constant to list of printf constants
             sprintf(printfs, "%s.string_const%d:    .string \"%s\"\n", printfs, str_const_count, (char *)SymGetFieldByIndex(symtab, $3, SYM_NAME_FIELD)); // TODO: escape stuff out of $3
             
-            // Now buffer the code to load the string constant and print it
-            // movl $.string_const0, %ebx
-            // movl %ebx, %esi
-            // movl $0, %eax
-            // movl $.str_wformat, %edi
-            // call printf
-            // int reg1 = allocateRegister();
-            // int reg2 = allocateRegister();
-            // int reg3 = allocateRegister();
-
             char temp[80];
             sprintf(temp, "movl $.string_const%d, %%esi\n", str_const_count);
             buffer(temp);
@@ -313,10 +306,6 @@ IOStatement     : READ LPAREN Variable RPAREN SEMICOLON
             emit("movl", "$0", "%eax");
             buffer("movl $.str_wformat, %edi\n"); // TODO: Pick correct string constant
             buffer("call printf\n");
-
-            // freeRegister(reg1);
-            // freeRegister(reg2);
-            // freeRegister(reg3);
 
             ++str_const_count;
             ////printf("<IOStatement> -> <WRITE> <LP> <StringConstant> <RP> <SC>\n");

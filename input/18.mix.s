@@ -34,5 +34,21 @@ main:   nop
  movl $0, %eax
  movl $.str_wformat, %edi
  call printf
+ movl %r10d, %esi
+ movl $0, %eax
+ movl $.str_wformat, %edi
+ call printf
+ movl %ecx, %esi
+ movl $0, %eax
+ movl $.str_wformat, %edi
+ call printf
+ movl %ebx, %esi
+ movl $0, %eax
+ movl $.str_wformat, %edi
+ call printf
+ movl %ebx, %esi
+ movl $0, %eax
+ movl $.str_wformat, %edi
+ call printf
  leave
  ret

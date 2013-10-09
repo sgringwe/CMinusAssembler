@@ -9,5 +9,13 @@
 main:   nop
  pushq %rbp
  movq %rsp, %rbp
+ movl %r12d, %esi
+ movl $0, %eax
+ movl $.str_wformat, %edi
+ call printf
+ movl %edx, %esi
+ movl $0, %eax
+ movl $.str_wformat, %edi
+ call printf
  leave
  ret
