@@ -287,13 +287,12 @@ IOStatement     : READ LPAREN Variable RPAREN SEMICOLON
         }
                 | WRITE LPAREN Expr RPAREN SEMICOLON
         {
-            printf("%d\n", $3);
+            // printf("%d\n", $3);
             //printf("<IOStatement> -> <WRITE> <LP> <Expr> <RP> <SC>\n");
         }
                 | WRITE LPAREN StringConstant RPAREN SEMICOLON         
         {
             // First add this constant to list of printf constants
-            printf((char *)SymGetFieldByIndex(symtab, $3, SYM_NAME_FIELD));
             sprintf(printfs, "%s.string_const%d:    .string \"%s\"\n", printfs, str_const_count, (char *)SymGetFieldByIndex(symtab, $3, SYM_NAME_FIELD)); // TODO: escape stuff out of $3
             
             // Now buffer the code to load the string constant and print it

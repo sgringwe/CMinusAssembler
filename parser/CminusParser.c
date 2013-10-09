@@ -558,10 +558,10 @@ static const yytype_uint16 yyrline[] =
        0,   115,   115,   119,   125,   130,   135,   141,   145,   151,
      157,   164,   168,   175,   180,   186,   192,   198,   204,   208,
      212,   216,   220,   224,   228,   234,   241,   245,   252,   258,
-     265,   271,   277,   284,   288,   293,   323,   329,   335,   341,
-     345,   351,   356,   361,   366,   373,   378,   383,   388,   393,
-     398,   403,   410,   415,   420,   427,   432,   437,   444,   455,
-     460,   464,   471,   476,   482,   489
+     265,   271,   277,   284,   288,   293,   322,   328,   334,   340,
+     344,   350,   355,   360,   365,   372,   377,   382,   387,   392,
+     397,   402,   409,   414,   419,   426,   431,   436,   443,   454,
+     459,   463,   470,   475,   481,   488
 };
 #endif
 
@@ -1782,7 +1782,7 @@ yyreduce:
   case 34:
 #line 289 "CminusParser.y"
     {
-            printf("%d\n", (yyvsp[(3) - (5)]));
+            // printf("%d\n", $3);
             //printf("<IOStatement> -> <WRITE> <LP> <Expr> <RP> <SC>\n");
         ;}
     break;
@@ -1791,7 +1791,6 @@ yyreduce:
 #line 294 "CminusParser.y"
     {
             // First add this constant to list of printf constants
-            printf((char *)SymGetFieldByIndex(symtab, (yyvsp[(3) - (5)]), SYM_NAME_FIELD));
             sprintf(printfs, "%s.string_const%d:    .string \"%s\"\n", printfs, str_const_count, (char *)SymGetFieldByIndex(symtab, (yyvsp[(3) - (5)]), SYM_NAME_FIELD)); // TODO: escape stuff out of $3
             
             // Now buffer the code to load the string constant and print it
@@ -1819,42 +1818,42 @@ yyreduce:
     break;
 
   case 36:
-#line 324 "CminusParser.y"
+#line 323 "CminusParser.y"
     {
             //printf("<ReturnStatement> -> <RETURN> <Expr> <SC>\n");
         ;}
     break;
 
   case 37:
-#line 330 "CminusParser.y"
+#line 329 "CminusParser.y"
     {
             //printf("<ExitStatement> -> <EXIT> <SC>\n");
         ;}
     break;
 
   case 38:
-#line 336 "CminusParser.y"
+#line 335 "CminusParser.y"
     {
             //printf("<CompoundStatement> -> <LBR> <StatementList> <RBR>\n");
         ;}
     break;
 
   case 39:
-#line 342 "CminusParser.y"
+#line 341 "CminusParser.y"
     {       
             //printf("<StatementList> -> <Statement>\n");
         ;}
     break;
 
   case 40:
-#line 346 "CminusParser.y"
+#line 345 "CminusParser.y"
     {       
             //printf("<StatementList> -> <StatementList> <Statement>\n");
         ;}
     break;
 
   case 41:
-#line 352 "CminusParser.y"
+#line 351 "CminusParser.y"
     {
             (yyval) = (yyvsp[(1) - (1)]);
             //printf("<Expr> -> <SimpleExpr>\n");
@@ -1862,7 +1861,7 @@ yyreduce:
     break;
 
   case 42:
-#line 357 "CminusParser.y"
+#line 356 "CminusParser.y"
     {
                 (yyval) = (yyvsp[(1) - (3)]) | (yyvsp[(3) - (3)]);
             //printf("<Expr> -> <Expr> <OR> <SimpleExpr> \n");
@@ -1870,7 +1869,7 @@ yyreduce:
     break;
 
   case 43:
-#line 362 "CminusParser.y"
+#line 361 "CminusParser.y"
     {
             (yyval) = (yyvsp[(1) - (3)]) & (yyvsp[(3) - (3)]);
             //printf("<Expr> -> <Expr> <AND> <SimpleExpr> \n");
@@ -1878,7 +1877,7 @@ yyreduce:
     break;
 
   case 44:
-#line 367 "CminusParser.y"
+#line 366 "CminusParser.y"
     {
             (yyval) = (yyvsp[(2) - (2)]) ^ 1;
             //printf("<Expr> -> <NOT> <SimpleExpr> \n");
@@ -1886,7 +1885,7 @@ yyreduce:
     break;
 
   case 45:
-#line 374 "CminusParser.y"
+#line 373 "CminusParser.y"
     {
             (yyval) = (yyvsp[(1) - (1)]);
             //printf("<SimpleExpr> -> <AddExpr>\n");
@@ -1894,7 +1893,7 @@ yyreduce:
     break;
 
   case 46:
-#line 379 "CminusParser.y"
+#line 378 "CminusParser.y"
     {
                 (yyval) = ((yyvsp[(1) - (3)]) == (yyvsp[(3) - (3)]));
             //printf("<SimpleExpr> -> <SimpleExpr> <EQ> <AddExpr> \n");
@@ -1902,7 +1901,7 @@ yyreduce:
     break;
 
   case 47:
-#line 384 "CminusParser.y"
+#line 383 "CminusParser.y"
     {
                 (yyval) = ((yyvsp[(1) - (3)]) != (yyvsp[(3) - (3)]));
             //printf("<SimpleExpr> -> <SimpleExpr> <NE> <AddExpr> \n");
@@ -1910,7 +1909,7 @@ yyreduce:
     break;
 
   case 48:
-#line 389 "CminusParser.y"
+#line 388 "CminusParser.y"
     {
                 (yyval) = ((yyvsp[(1) - (3)]) <= (yyvsp[(3) - (3)]));
             //printf("<SimpleExpr> -> <SimpleExpr> <LE> <AddExpr> \n");
@@ -1918,7 +1917,7 @@ yyreduce:
     break;
 
   case 49:
-#line 394 "CminusParser.y"
+#line 393 "CminusParser.y"
     {
                 (yyval) = ((yyvsp[(1) - (3)]) < (yyvsp[(3) - (3)]));
             //printf("<SimpleExpr> -> <SimpleExpr> <LT> <AddExpr> \n");
@@ -1926,7 +1925,7 @@ yyreduce:
     break;
 
   case 50:
-#line 399 "CminusParser.y"
+#line 398 "CminusParser.y"
     {
                 (yyval) = ((yyvsp[(1) - (3)]) >= (yyvsp[(3) - (3)]));
             //printf("<SimpleExpr> -> <SimpleExpr> <GE> <AddExpr> \n");
@@ -1934,7 +1933,7 @@ yyreduce:
     break;
 
   case 51:
-#line 404 "CminusParser.y"
+#line 403 "CminusParser.y"
     {
             //printf("<SimpleExpr> -> <SimpleExpr> <GT> <AddExpr> \n");
                 (yyval) = ((yyvsp[(1) - (3)]) > (yyvsp[(3) - (3)]));
@@ -1942,7 +1941,7 @@ yyreduce:
     break;
 
   case 52:
-#line 411 "CminusParser.y"
+#line 410 "CminusParser.y"
     {
             (yyval) = (yyvsp[(1) - (1)]);
             //printf("<AddExpr> -> <MulExpr>\n");
@@ -1950,7 +1949,7 @@ yyreduce:
     break;
 
   case 53:
-#line 416 "CminusParser.y"
+#line 415 "CminusParser.y"
     {
             (yyval) = (yyvsp[(1) - (3)]) + (yyvsp[(3) - (3)]);
             //printf("<AddExpr> -> <AddExpr> <PLUS> <MulExpr> \n");
@@ -1958,7 +1957,7 @@ yyreduce:
     break;
 
   case 54:
-#line 421 "CminusParser.y"
+#line 420 "CminusParser.y"
     {
             (yyval) = (yyvsp[(1) - (3)]) - (yyvsp[(3) - (3)]);
             //printf("<AddExpr> -> <AddExpr> <MINUS> <MulExpr> \n");
@@ -1966,7 +1965,7 @@ yyreduce:
     break;
 
   case 55:
-#line 428 "CminusParser.y"
+#line 427 "CminusParser.y"
     {
             (yyval) = (yyvsp[(1) - (1)]);
             //printf("<MulExpr> -> <Factor>\n");
@@ -1974,7 +1973,7 @@ yyreduce:
     break;
 
   case 56:
-#line 433 "CminusParser.y"
+#line 432 "CminusParser.y"
     {
             (yyval) = (yyvsp[(1) - (3)]) * (yyvsp[(3) - (3)]);
             //printf("<MulExpr> -> <MulExpr> <TIMES> <Factor> \n");
@@ -1982,7 +1981,7 @@ yyreduce:
     break;
 
   case 57:
-#line 438 "CminusParser.y"
+#line 437 "CminusParser.y"
     {
             (yyval) = (yyvsp[(1) - (3)]) / (yyvsp[(3) - (3)]);
             //printf("<MulExpr> -> <MulExpr> <DIVIDE> <Factor> \n");
@@ -1990,7 +1989,7 @@ yyreduce:
     break;
 
   case 58:
-#line 445 "CminusParser.y"
+#line 444 "CminusParser.y"
     { 
             // $$ = getValue($1);
             // int offset = getValue($1);
@@ -2004,7 +2003,7 @@ yyreduce:
     break;
 
   case 59:
-#line 456 "CminusParser.y"
+#line 455 "CminusParser.y"
     { 
             (yyval) = (yyvsp[(1) - (1)]);
             //printf("<Factor> -> <Constant>\n");
@@ -2012,14 +2011,14 @@ yyreduce:
     break;
 
   case 60:
-#line 461 "CminusParser.y"
+#line 460 "CminusParser.y"
     {   
             //printf("<Factor> -> <IDENTIFIER> <LP> <RP>\n");
         ;}
     break;
 
   case 61:
-#line 465 "CminusParser.y"
+#line 464 "CminusParser.y"
     {
             (yyval) = (yyvsp[(2) - (3)]);
             //printf("<Factor> -> <LP> <Expr> <RP>\n");
@@ -2027,7 +2026,7 @@ yyreduce:
     break;
 
   case 62:
-#line 472 "CminusParser.y"
+#line 471 "CminusParser.y"
     {
             (yyval) = (yyvsp[(1) - (1)]);
             //printf("<Variable> -> <IDENTIFIER>\n");
@@ -2035,14 +2034,14 @@ yyreduce:
     break;
 
   case 63:
-#line 477 "CminusParser.y"
+#line 476 "CminusParser.y"
     {
             //printf("<Variable> -> <IDENTIFIER> <LBK> <Expr> <RBK>\n");
                 ;}
     break;
 
   case 64:
-#line 483 "CminusParser.y"
+#line 482 "CminusParser.y"
     { 
                (yyval) = (yyvsp[(1) - (1)]);
             //printf("<StringConstant> -> <STRING>\n");
@@ -2050,7 +2049,7 @@ yyreduce:
     break;
 
   case 65:
-#line 490 "CminusParser.y"
+#line 489 "CminusParser.y"
     { 
             (yyval) = (yyvsp[(1) - (1)]);
             //printf("<Constant> -> <INTCON>\n");
@@ -2059,7 +2058,7 @@ yyreduce:
 
 
 /* Line 1267 of yacc.c.  */
-#line 2063 "CminusParser.c"
+#line 2062 "CminusParser.c"
       default: break;
     }
   YY_SYMBOL_PRINT ("-> $$ =", yyr1[yyn], &yyval, &yyloc);
@@ -2273,7 +2272,7 @@ yyreturn:
 }
 
 
-#line 496 "CminusParser.y"
+#line 495 "CminusParser.y"
 
 
 
