@@ -39,8 +39,6 @@ for fn in os.listdir(input_dir):
 
       try:
         print 'Executing executable to output...'
-        print executable_name
-        print output_name
         f = open(output_name, "w")
         call(["./" + executable_name], stdout=f)
       except:
@@ -49,7 +47,9 @@ for fn in os.listdir(input_dir):
 
       same = False
       try:
-        same = filecmp.cmp(output_name, 'tests/' + fn.replace('.cm', '.s'))
+        print output_name
+        print assembly_name.replace('input/', 'tests/')
+        same = filecmp.cmp(output_name, assembly_name.replace('input/', 'tests/'))
       except:
         print "Comparision failed. No such file."
 
