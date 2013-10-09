@@ -306,7 +306,7 @@ IOStatement     : READ LPAREN Variable RPAREN SEMICOLON
             // int reg3 = allocateRegister();
 
             char temp[80];
-            sprintf(temp, "movl $.string_const%d, %esi\n", str_const_count);
+            sprintf(temp, "movl $.string_const%d, %%esi\n", str_const_count);
             buffer(temp);
 
             // emit("movl", register_names[reg1], "%esi");
