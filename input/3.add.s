@@ -10,9 +10,9 @@ main:   nop
  pushq %rbp
  movq %rsp, %rbp
  movl $10, %ecx
- movl $20, %edx
- addl %ecx, %edx
- movl %edx, %esi
+ movl $20, %r8d
+ addl %ecx, %r8d
+ movl %r8d, %esi
  movl $0, %eax
  movl $.int_wformat, %edi
  call printf
@@ -33,12 +33,12 @@ main:   nop
  movl (%rbx), %ecx
  movq $_gp, %rbx
  addq $8, %rbx
- movl (%rbx), %edx
- addl %ecx, %edx
+ movl (%rbx), %r8d
+ addl %ecx, %r8d
  movq $_gp, %rbx
  addq $12, %rbx
  movl (%rbx), %ecx
- addl %edx, %ecx
+ addl %r8d, %ecx
  movq $_gp, %rbx
  addq $4, %rbx
  movl %ecx, (%rbx)

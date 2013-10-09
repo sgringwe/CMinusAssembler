@@ -30,12 +30,12 @@ main:   nop
  movl (%rbx), %ecx
  movq $_gp, %rbx
  addq $4, %rbx
- movl (%rbx), %edx
- cmpl %ecx, %edx
- movl $0, %edx
- movl $1, %r8d
- cmove %r8d, %edx
- movl %edx, %esi
+ movl (%rbx), %r8d
+ cmpl %ecx, %r8d
+ movl $0, %r8d
+ movl $1, %r9d
+ cmove %r9d, %r8d
+ movl %r8d, %esi
  movl $0, %eax
  movl $.int_wformat, %edi
  call printf
@@ -44,12 +44,12 @@ main:   nop
  movl (%rbx), %ecx
  movq $_gp, %rbx
  addq $0, %rbx
- movl (%rbx), %edx
- cmpl %ecx, %edx
- movl $0, %edx
- movl $1, %r8d
- cmovne %r8d, %edx
- movl %edx, %esi
+ movl (%rbx), %r8d
+ cmpl %ecx, %r8d
+ movl $0, %r8d
+ movl $1, %r9d
+ cmovne %r9d, %r8d
+ movl %r8d, %esi
  movl $0, %eax
  movl $.int_wformat, %edi
  call printf
@@ -58,12 +58,12 @@ main:   nop
  movl (%rbx), %ecx
  movq $_gp, %rbx
  addq $8, %rbx
- movl (%rbx), %edx
- cmpl %ecx, %edx
- movl $0, %edx
- movl $1, %r8d
- cmove %r8d, %edx
- movl %edx, %esi
+ movl (%rbx), %r8d
+ cmpl %ecx, %r8d
+ movl $0, %r8d
+ movl $1, %r9d
+ cmove %r9d, %r8d
+ movl %r8d, %esi
  movl $0, %eax
  movl $.int_wformat, %edi
  call printf
@@ -72,12 +72,12 @@ main:   nop
  movl (%rbx), %ecx
  movq $_gp, %rbx
  addq $12, %rbx
- movl (%rbx), %edx
- cmpl %ecx, %edx
- movl $0, %edx
- movl $1, %r8d
- cmovne %r8d, %edx
- movl %edx, %esi
+ movl (%rbx), %r8d
+ cmpl %ecx, %r8d
+ movl $0, %r8d
+ movl $1, %r9d
+ cmovne %r9d, %r8d
+ movl %r8d, %esi
  movl $0, %eax
  movl $.int_wformat, %edi
  call printf

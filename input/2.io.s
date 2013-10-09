@@ -27,9 +27,9 @@ main:   nop
  movl $.int_wformat, %edi
  call printf
  movl $1, %ecx
- movl $2, %edx
- addl %ecx, %edx
- movl %edx, %esi
+ movl $2, %r8d
+ addl %ecx, %r8d
+ movl %r8d, %esi
  movl $0, %eax
  movl $.int_wformat, %edi
  call printf

@@ -27,8 +27,8 @@ main:   nop
  movq $_gp, %rbx
  addq $4, %rbx
  movl (%rbx), %ecx
- movl $1, %edx
- xorq %edx, %ecx
+ movl $1, %r8d
+ xorl %r8d, %ecx
  movl %ecx, %esi
  movl $0, %eax
  movl $.int_wformat, %edi
@@ -43,8 +43,8 @@ main:   nop
  movq $_gp, %rbx
  addq $0, %rbx
  movl (%rbx), %ecx
- movl $1, %edx
- xorq %edx, %ecx
+ movl $1, %r8d
+ xorl %r8d, %ecx
  movl %ecx, %esi
  movl $0, %eax
  movl $.int_wformat, %edi

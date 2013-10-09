@@ -206,9 +206,9 @@ char statements[99999]; // TODO: FIX
 char printfs[9999]; // List of printf options
 
 // Register management
-int REGISTER_COUNT = 9; // eax edx esi and edi are reserved for calls. ebx is reserved for lots of ops
-char *register_names[9] = { "%ecx", "%r8d", "%r9d", "%r10d", "%r11d", "%r12d", "%r13d", "%r14d", "%r15d" };
-int register_taken[9];
+int REGISTER_COUNT = 8; // eax ecx edx esi and edi are reserved for calls. ebx is reserved for lots of ops
+char *register_names[8] = { "%r8d", "%r9d", "%r10d", "%r11d", "%r12d", "%r13d", "%r14d", "%r15d" };
+int register_taken[8];
 
 
 
@@ -2105,10 +2105,10 @@ yyreduce:
   case 57:
 #line 559 "CminusParser.y"
     {
-            emit("movl", register_names[(yyvsp[(3) - (3)])], "%edx");
+            emit("movl", register_names[(yyvsp[(3) - (3)])], "%ecx");
             emit("movl", register_names[(yyvsp[(1) - (3)])], "%eax");
             buffer("cdq\n");
-            buffer("idivl %edx\n");
+            buffer("idivl %ecx\n");
 
             emit("movl", "%eax", register_names[(yyvsp[(3) - (3)])]);
 

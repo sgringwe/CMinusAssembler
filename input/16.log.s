@@ -30,19 +30,19 @@ main:   nop
  movl (%rbx), %ecx
  movq $_gp, %rbx
  addq $4, %rbx
- movl (%rbx), %edx
- cmpl %edx, %ecx
+ movl (%rbx), %r8d
+ cmpl %r8d, %ecx
  movl $0, %ecx
- movl $1, %r8d
- cmovl %r8d, %ecx
+ movl $1, %r9d
+ cmovl %r9d, %ecx
  movq $_gp, %rbx
  addq $16, %rbx
  movl %ecx, (%rbx)
  movq $_gp, %rbx
  addq $16, %rbx
  movl (%rbx), %ecx
- movl $1, %edx
- xorq %edx, %ecx
+ movl $1, %r8d
+ xorl %r8d, %ecx
  movl %ecx, %esi
  movl $0, %eax
  movl $.int_wformat, %edi
@@ -52,12 +52,12 @@ main:   nop
  movl (%rbx), %ecx
  movq $_gp, %rbx
  addq $4, %rbx
- movl (%rbx), %edx
- cmpl %ecx, %edx
- movl $0, %edx
- movl $1, %r8d
- cmove %r8d, %edx
- movl %edx, %esi
+ movl (%rbx), %r8d
+ cmpl %ecx, %r8d
+ movl $0, %r8d
+ movl $1, %r9d
+ cmove %r9d, %r8d
+ movl %r8d, %esi
  movl $0, %eax
  movl $.int_wformat, %edi
  call printf
@@ -66,109 +66,26 @@ main:   nop
  movl (%rbx), %ecx
  movq $_gp, %rbx
  addq $0, %rbx
- movl (%rbx), %edx
- cmpl %ecx, %edx
- movl $0, %edx
- movl $1, %r8d
- cmove %r8d, %edx
- movl %edx, %esi
+ movl (%rbx), %r8d
+ cmpl %ecx, %r8d
+ movl $0, %r8d
+ movl $1, %r9d
+ cmove %r9d, %r8d
+ movl %r8d, %esi
  movl $0, %eax
  movl $.int_wformat, %edi
  call printf
  movq $_gp, %rbx
  addq $12, %rbx
  movl (%rbx), %ecx
- movq $_gp, %rbx
- addq $8, %rbx
- movl (%rbx), %edx
- cmpl %edx, %ecx
- movl $0, %ecx
- movl $1, %r8d
- cmovg %r8d, %ecx
- movl %ecx, %esi
- movl $0, %eax
- movl $.int_wformat, %edi
- call printf
- movq $_gp, %rbx
- addq $4, %rbx
- movl (%rbx), %ecx
- movq $_gp, %rbx
- addq $4, %rbx
- movl (%rbx), %edx
- cmpl %edx, %ecx
- movl $0, %ecx
- movl $1, %r8d
- cmovge %r8d, %ecx
- movl %ecx, %esi
- movl $0, %eax
- movl $.int_wformat, %edi
- call printf
- movq $_gp, %rbx
- addq $8, %rbx
- movl (%rbx), %ecx
- movq $_gp, %rbx
- addq $0, %rbx
- movl (%rbx), %edx
- cmpl %edx, %ecx
- movl $0, %ecx
- movl $1, %r8d
- cmovle %r8d, %ecx
- movl %ecx, %esi
- movl $0, %eax
- movl $.int_wformat, %edi
- call printf
- movq $_gp, %rbx
- addq $0, %rbx
- movl (%rbx), %ecx
- movq $_gp, %rbx
- addq $4, %rbx
- movl (%rbx), %edx
- cmpl %ecx, %edx
- movl $0, %edx
- movl $1, %r8d
- cmovne %r8d, %edx
- movl %edx, %esi
- movl $0, %eax
- movl $.int_wformat, %edi
- call printf
- movq $_gp, %rbx
- addq $12, %rbx
- movl (%rbx), %ecx
- movq $_gp, %rbx
- addq $8, %rbx
- movl (%rbx), %edx
- cmpl %edx, %ecx
- movl $0, %ecx
- movl $1, %r8d
- cmovg %r8d, %ecx
- movl $1, %edx
- xorq %edx, %ecx
- movl %ecx, %esi
- movl $0, %eax
- movl $.int_wformat, %edi
- call printf
- movq $_gp, %rbx
- addq $0, %rbx
- movl (%rbx), %ecx
- movq $_gp, %rbx
- addq $4, %rbx
- movl (%rbx), %edx
- cmpl %edx, %ecx
- movl $0, %ecx
- movl $1, %r8d
- cmovg %r8d, %ecx
- movq $_gp, %rbx
- addq $12, %rbx
- movl (%rbx), %edx
  movq $_gp, %rbx
  addq $8, %rbx
  movl (%rbx), %r8d
- cmpl %r8d, %edx
- movl $0, %edx
+ cmpl %r8d, %ecx
+ movl $0, %ecx
  movl $1, %r9d
- cmovg %r9d, %edx
- andq %ecx, %edx
- movl %edx, %esi
+ cmovg %r9d, %ecx
+ movl %ecx, %esi
  movl $0, %eax
  movl $.int_wformat, %edi
  call printf
@@ -176,37 +93,60 @@ main:   nop
  addq $4, %rbx
  movl (%rbx), %ecx
  movq $_gp, %rbx
- addq $0, %rbx
- movl (%rbx), %edx
- cmpl %edx, %ecx
+ addq $4, %rbx
+ movl (%rbx), %r8d
+ cmpl %r8d, %ecx
  movl $0, %ecx
- movl $1, %r8d
- cmovg %r8d, %ecx
+ movl $1, %r9d
+ cmovge %r9d, %ecx
+ movl %ecx, %esi
+ movl $0, %eax
+ movl $.int_wformat, %edi
+ call printf
+ movq $_gp, %rbx
+ addq $8, %rbx
+ movl (%rbx), %ecx
+ movq $_gp, %rbx
+ addq $0, %rbx
+ movl (%rbx), %r8d
+ cmpl %r8d, %ecx
+ movl $0, %ecx
+ movl $1, %r9d
+ cmovle %r9d, %ecx
+ movl %ecx, %esi
+ movl $0, %eax
+ movl $.int_wformat, %edi
+ call printf
+ movq $_gp, %rbx
+ addq $0, %rbx
+ movl (%rbx), %ecx
+ movq $_gp, %rbx
+ addq $4, %rbx
+ movl (%rbx), %r8d
+ cmpl %ecx, %r8d
+ movl $0, %r8d
+ movl $1, %r9d
+ cmovne %r9d, %r8d
+ movl %r8d, %esi
+ movl $0, %eax
+ movl $.int_wformat, %edi
+ call printf
  movq $_gp, %rbx
  addq $12, %rbx
- movl (%rbx), %edx
+ movl (%rbx), %ecx
  movq $_gp, %rbx
  addq $8, %rbx
  movl (%rbx), %r8d
- cmpl %r8d, %edx
- movl $0, %edx
+ cmpl %r8d, %ecx
+ movl $0, %ecx
  movl $1, %r9d
- cmovg %r9d, %edx
- orq %ecx, %edx
- movl %edx, %esi
+ cmovg %r9d, %ecx
+ movl $1, %r8d
+ xorl %r8d, %ecx
+ movl %ecx, %esi
  movl $0, %eax
  movl $.int_wformat, %edi
  call printf
- movq $_gp, %rbx
- addq $0, %rbx
- movl (%rbx), %ecx
- movq $_gp, %rbx
- addq $4, %rbx
- movl (%rbx), %edx
- cmpl %ecx, %edx
- movl $0, %edx
- movl $1, %r8d
- cmove %r8d, %edx
  movq $_gp, %rbx
  addq $0, %rbx
  movl (%rbx), %ecx
@@ -216,20 +156,80 @@ main:   nop
  cmpl %r8d, %ecx
  movl $0, %ecx
  movl $1, %r9d
- cmovl %r9d, %ecx
- andq %edx, %ecx
- movq $_gp, %rbx
- addq $8, %rbx
- movl (%rbx), %edx
+ cmovg %r9d, %ecx
  movq $_gp, %rbx
  addq $12, %rbx
  movl (%rbx), %r8d
- cmpl %edx, %r8d
+ movq $_gp, %rbx
+ addq $8, %rbx
+ movl (%rbx), %r9d
+ cmpl %r9d, %r8d
+ movl $0, %r8d
+ movl $1, %r10d
+ cmovg %r10d, %r8d
+ orl %ecx, %r8d
+ movl %r8d, %esi
+ movl $0, %eax
+ movl $.int_wformat, %edi
+ call printf
+ movq $_gp, %rbx
+ addq $4, %rbx
+ movl (%rbx), %ecx
+ movq $_gp, %rbx
+ addq $0, %rbx
+ movl (%rbx), %r8d
+ cmpl %r8d, %ecx
+ movl $0, %ecx
+ movl $1, %r9d
+ cmovg %r9d, %ecx
+ movq $_gp, %rbx
+ addq $12, %rbx
+ movl (%rbx), %r8d
+ movq $_gp, %rbx
+ addq $8, %rbx
+ movl (%rbx), %r9d
+ cmpl %r9d, %r8d
+ movl $0, %r8d
+ movl $1, %r10d
+ cmovg %r10d, %r8d
+ andl %ecx, %r8d
+ movl %r8d, %esi
+ movl $0, %eax
+ movl $.int_wformat, %edi
+ call printf
+ movq $_gp, %rbx
+ addq $0, %rbx
+ movl (%rbx), %ecx
+ movq $_gp, %rbx
+ addq $4, %rbx
+ movl (%rbx), %r8d
+ cmpl %ecx, %r8d
  movl $0, %r8d
  movl $1, %r9d
- cmovne %r9d, %r8d
- orq %ecx, %r8d
- movl %r8d, %esi
+ cmove %r9d, %r8d
+ movq $_gp, %rbx
+ addq $0, %rbx
+ movl (%rbx), %ecx
+ movq $_gp, %rbx
+ addq $4, %rbx
+ movl (%rbx), %r9d
+ cmpl %r9d, %ecx
+ movl $0, %ecx
+ movl $1, %r10d
+ cmovl %r10d, %ecx
+ orl %r8d, %ecx
+ movq $_gp, %rbx
+ addq $8, %rbx
+ movl (%rbx), %r8d
+ movq $_gp, %rbx
+ addq $12, %rbx
+ movl (%rbx), %r9d
+ cmpl %r8d, %r9d
+ movl $0, %r9d
+ movl $1, %r10d
+ cmovne %r10d, %r9d
+ andl %ecx, %r9d
+ movl %r9d, %esi
  movl $0, %eax
  movl $.int_wformat, %edi
  call printf
