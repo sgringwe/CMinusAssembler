@@ -421,12 +421,24 @@ AddExpr     :  MulExpr
         }
                 |  AddExpr PLUS MulExpr
         {
-            $$ = $1 + $3;
+            // $$ = $1 + $3;
+            // addl %edx, %ecx
+            emit("addl", register_names[$1], register_names[$3]);
+
+            freeRegister($1);
+
+            $$ = $3;
             //printf("<AddExpr> -> <AddExpr> <PLUS> <MulExpr> \n");
         }
                 |  AddExpr MINUS MulExpr
         {
-            $$ = $1 - $3;
+            // $$ = $1 - $3;
+            // subl %edx, %ecx
+            emit("subl", register_names[$3], register_names[$1]);
+
+            freeRegister($3);
+
+            $$ = $1;
             //printf("<AddExpr> -> <AddExpr> <MINUS> <MulExpr> \n");
         }
                 ;
