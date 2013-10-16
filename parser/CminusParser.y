@@ -1,5 +1,5 @@
 /*******************************************************/
-/*                     Cminus Parser                    */
+/*                     Cminus Parser                   */
 /*                                                     */
 /*******************************************************/
 
@@ -193,15 +193,11 @@ IdentifierList 	: VarDecl
 
 VarDecl 	: IDENTIFIER
 		{ 
-      fprintf(stdout,"var decl%s: line %d\n",fileName,Cminus_lineno);
-      int rv = SymIndex(symtab,$1);
-      printf("vardecl rv: %d\n", rv);
-			$$ = rv;
+			$$ = SymIndex(symtab,$1);
 		}
 		| IDENTIFIER LBRACKET INTCON RBRACKET
 		{
-      printf("does this get called\n");
-			$$ = SymIndex(symtab,$1);
+			$$ = SYM_INVALID_INDEX;
 		}
 		;
 
@@ -375,15 +371,11 @@ Factor          : Variable
 Variable        : IDENTIFIER
 		{
 			int symIndex = SymQueryIndex(symtab,$1);
-      fprintf(stdout,"yoo%s: line %d\n",fileName,Cminus_lineno);
-      printf("symIndex is %d\n", symIndex);
 			$$ = emitComputeVariableAddress(instList,symtab,symIndex);
 		}
                 | IDENTIFIER LBRACKET Expr RBRACKET    
 		{
-      // Same as above except take into account the Expr which is the array index
-			int symIndex = SymQueryIndex(symtab,$1);
-      $$ = emitComputeVariableAddress(instList,symtab,symIndex + (4 * $3));
+			$$ = SYM_INVALID_INDEX;
 		}
                 ;			       
 
@@ -441,11 +433,11 @@ static void initialize(char* inputFileName) {
 	char* dotChar = rindex(inputFileName,'.');
 	int endIndex = strlen(inputFileName) - strlen(dotChar);
 	char *outputFileName = nssave(2,substr(inputFileName,0,endIndex),".s");
-	// stdout = freopen(outputFileName,"w", stdout);
- //        if (stdout == NULL) {
- //          fprintf(stderr,"Error: Could not open file %s\n",outputFileName);
- //          exit(-1);
- //       } 
+	stdout = freopen(outputFileName,"w", stdout);
+        if (stdout == NULL) {
+          fprintf(stderr,"Error: Could not open file %s\n",outputFileName);
+          exit(-1);
+       } 
 
 	initSymTable();
 	
