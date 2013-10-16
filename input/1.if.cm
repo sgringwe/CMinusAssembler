@@ -1,9 +1,9 @@
-int a;
+int a, b;
 
 int main() {
 
   write('enter a:');
-  read(a);
+  read(b);
   if (a != 0) { 
     write(1);
   }

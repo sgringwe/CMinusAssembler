@@ -104,8 +104,10 @@ void emitExit(DList instList) {
 void emitAssignment(DList instList,SymTable symtab,int lhsRegIndex, int rhsRegIndex) {
 	char *inst;
 	
+	char* regName = malloc(sizeof(char) * 7);
+	get64bitIntegerRegisterName(symtab, lhsRegIndex, regName);
 	 inst = nssave(5,  "\tmovl ", (char*)SymGetFieldByIndex(symtab,rhsRegIndex,SYM_NAME_FIELD),
-			", (", get64bitIntegerRegisterName(symtab, lhsRegIndex), ")");
+			", (", regName, ")");
 	dlinkAppend(instList,dlinkNodeAlloc(inst));
 
 	freeIntegerRegister((int)SymGetFieldByIndex(symtab,rhsRegIndex,SYMTAB_REGISTER_INDEX_FIELD));
@@ -408,7 +410,8 @@ int emitComputeVariableAddress(DList instList, SymTable symtab, int varIndex) {
 
 	int regIndex = getFreeIntegerRegisterIndex(symtab);
 	
-	char* regName = (char*)get64bitIntegerRegisterName(symtab, regIndex);
+	char* regName = malloc(sizeof(char) * 7);
+	get64bitIntegerRegisterName(symtab, regIndex, regName);
 
 	int offset = (int)SymGetFieldByIndex(symtab,varIndex,SYMTAB_OFFSET_FIELD);
 	char offsetStr[10];
@@ -440,7 +443,9 @@ int emitLoadVariable(DList instList, SymTable symtab, int regIndex) {
 
 	char* newRegName = (char*)SymGetFieldByIndex(symtab,newRegIndex,SYM_NAME_FIELD);
 
-	char* regName = (char*) get64bitIntegerRegisterName(symtab, regIndex);
+	char* regName = malloc(sizeof(char) * 7);
+	get64bitIntegerRegisterName(symtab, regIndex, regName);
+	// char* regName = (char*) get64bitIntegerRegisterName(symtab, regIndex);
 
 	char *inst;
 	

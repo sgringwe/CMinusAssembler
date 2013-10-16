@@ -141,9 +141,9 @@ char* getIntegerRegisterName(int reg) {
  * @param reg a mips register number
  * @return see above
  */
-char* get64bitIntegerRegisterName(SymTable symtab, int reg) {
+get64bitIntegerRegisterName(SymTable symtab, int reg, char* regName) {
   int regIndex = (int)SymGetFieldByIndex(symtab,reg,SYMTAB_REGISTER_INDEX_FIELD);
-  return integer64bitRegisterNames[regIndex];
+  strcpy(regName, integer64bitRegisterNames[regIndex]);
 }
 
 /**
