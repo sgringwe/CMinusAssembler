@@ -132,6 +132,7 @@ void freeIntegerRegister(int reg) {
  * @return see above
  */
 char* getIntegerRegisterName(int reg) {
+	printf("test1\n");
 	return integerRegisterNames[reg];
 }
 
@@ -142,7 +143,9 @@ char* getIntegerRegisterName(int reg) {
  * @return see above
  */
 char* get64bitIntegerRegisterName(SymTable symtab, int reg) {
+	printf("test2\n");
   int regIndex = (int)SymGetFieldByIndex(symtab,reg,SYMTAB_REGISTER_INDEX_FIELD);
+  printf("%d\n", regIndex);
   return integer64bitRegisterNames[regIndex];
 }
 
@@ -153,6 +156,7 @@ char* get64bitIntegerRegisterName(SymTable symtab, int reg) {
  * @return see above
  */
 char* get64bitIntegerRegisterNamebyIndex(int reg) {
+	printf("test3\n");
   return integer64bitRegisterNames[reg];
 }
 

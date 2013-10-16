@@ -404,11 +404,12 @@ int emitDivideExpression(DList instList, SymTable symtab, int leftOperand, int r
  * @return the symbol table index of the result register
  */
 int emitComputeVariableAddress(DList instList, SymTable symtab, int varIndex) {
-	
 
 	int regIndex = getFreeIntegerRegisterIndex(symtab);
+	printf("reg index is %d\n", regIndex);
 	
 	char* regName = (char*)get64bitIntegerRegisterName(symtab, regIndex);
+	printf("reg name is %s\n", regName);
 
 	int offset = (int)SymGetFieldByIndex(symtab,varIndex,SYMTAB_OFFSET_FIELD);
 	char offsetStr[10];
@@ -532,17 +533,19 @@ int emitLoadStringConstantAddress(DList instList, DList dataList, SymTable symta
  * 		  the symbol table, and the current offset in the activation record.
  */
 void addIdToSymtab(DNode node, AddIdStructPtr data) {
-
+	printf("addIdToSymtab\n");
 	int symIndex = (int)dlinkNodeAtom(node);
-	/* int typeIndex = (int)SymGetFieldByIndex(symtab,symIndex,SYMTAB_TYPE_INDEX_FIELD);
+	printf("symIndex %d\n", symIndex);
+	 int typeIndex = (int)SymGetFieldByIndex(data->symtab,symIndex,SYMTAB_TYPE_INDEX_FIELD);
+	 printf("typeIndex %d\n", typeIndex);
 	
 	if (typeIndex == -1) {
-		SymPutFieldByIndex(symtab,symIndex,SYMTAB_TYPE_INDEX_FIELD,(Generic)data->typeIndex);
+		SymPutFieldByIndex(data->symtab,symIndex,SYMTAB_TYPE_INDEX_FIELD,(Generic)data->typeIndex);
 		typeIndex = data->typeIndex;
 	}
 
-        int size = (int)SymGetFieldByIndex(symtab,typeIndex,SYMTAB_SIZE_FIELD);*/
-	int size = 4;
+        // int size = (int)SymGetFieldByIndex(data->symtab,typeIndex,SYMTAB_SIZE_FIELD);
+		int size = 4;
 
         SymPutFieldByIndex(data->symtab,symIndex,SYMTAB_OFFSET_FIELD,(Generic)(data->offset));
         data->offset += size;
