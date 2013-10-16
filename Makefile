@@ -1,8 +1,8 @@
 OBJ_TYPE_FLAG = -g
 CC = gcc
 TARGET	= cmc
-DIRS = parser util 
-LIBS = parser/libparser-g.a util/libutil-g.a 
+DIRS = parser util codegen 
+LIBS = parser/libparser-g.a util/libutil-g.a codegen/libcodegen-g.a 
 DOXYGEN_SRC = CminusCompilerDocumentation.Doxyfile
 
 RM = /bin/rm -f

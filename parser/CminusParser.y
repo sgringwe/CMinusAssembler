@@ -1,5 +1,5 @@
 /*******************************************************/
-/*                     Cminus Parser                   */
+/*                     Cminus Parser                    */
 /*                                                     */
 /*******************************************************/
 
@@ -14,9 +14,12 @@
 #include <util/symtab_stack.h>
 #include <util/dlink.h>
 #include <util/string_utils.h>
+#include <codegen/symfields.h>
+#include <codegen/types.h>
+#include <codegen/codegen.h>
+#include <codegen/reg.h>
 
 #define SYMTABLE_SIZE 100
-#define SYMTAB_VALUE_FIELD     "value"
 
 /*********************EXTERNAL DECLARATIONS***********************/
 
@@ -24,42 +27,20 @@ EXTERN(void,Cminus_error,(char*));
 
 EXTERN(int,Cminus_lex,(void));
 
-char *fileName;
-
 SymTable symtab;
 
+static DList instList;
+static DList dataList;
+
+char *fileName;
+
+static int functionOffset;
+int globalOffset = 0;
+static char* functionName;
+
+extern union YYSTYPE yylval;
+
 extern int Cminus_lineno;
-
-// CONSTANTS
-const char *ASSEMBLY_HEADER =
-" .section        .rodata\n";
-
-const char *BASIC_PRINTFS =
-".int_wformat: .string \"%d\\n\"\n"
-".str_wformat: .string \"%s\\n\"\n"
-".int_rformat: .string \"%d\"\n";
-
-const char *OTHER = 
-" .text\n"
-" .globl main\n"
-" .type main,@function\n"
-"main:   nop\n"
-" pushq %rbp\n"
-" movq %rsp, %rbp\n";
-
-const char *ASSEMBLY_FOOTER =
-" leave\n"
-" ret\n";
-
-int var_count;
-int str_const_count;
-char statements[9999]; // TODO: FIX
-char printfs[999]; // List of printf options
-
-// Register management
-int REGISTER_COUNT = 8; // eax ecx edx esi and edi are reserved for calls. ebx is reserved for lots of ops
-char *register_names[8] = { "%r8d", "%r9d", "%r10d", "%r11d", "%r12d", "%r13d", "%r14d", "%r15d" };
-int register_taken[8];
 
 %}
 
@@ -71,11 +52,12 @@ int register_taken[8];
 %token AND
 %token ELSE
 %token EXIT
+%token FLOAT
 %token FOR
-%token IF       
+%token IF 		
 %token INTEGER 
-%token NOT      
-%token OR       
+%token NOT 		
+%token OR 		
 %token READ
 %token WHILE
 %token WRITE
@@ -99,8 +81,9 @@ int register_taken[8];
 %token IDENTIFIER
 %token DIVIDE
 %token RETURN
-%token STRING   
+%token STRING	
 %token INTCON
+%token FLOATCON
 %token MINUS
 
 %left OR
@@ -110,552 +93,304 @@ int register_taken[8];
 %left PLUS MINUS
 %left TIMES DIVDE
 
+%union {
+	char*	name;
+	int     symIndex;
+	DList	idList;
+	int 	offset;
+}
+
+%type <idList> IdentifierList
+%type <symIndex> Expr SimpleExpr AddExpr
+%type <symIndex> MulExpr Factor Variable StringConstant Constant VarDecl FunctionDecl ProcedureHead
+%type <offset> DeclList
+%type <name> IDENTIFIER STRING FLOATCON INTCON 
+
 /***********************PRODUCTIONS****************************/
 %%
-   Program      : Procedures 
-        {
-            //printf("<Program> -> <Procedures>\n");
-        }
-        | DeclList Procedures
-        {
-            //printf("<Program> -> <DeclList> <Procedures>\n");
-        }
+Program		: Procedures 
+		{
+			emitDataPrologue(dataList);
+			emitInstructions(instList);
+		}
+	  	| DeclList Procedures
+		{
+			globalOffset = $1;
+			emitDataPrologue(dataList);
+			emitInstructions(instList);
+		}
           ;
 
-Procedures  : ProcedureDecl Procedures
-        {
-            //printf("<Procedures> -> <ProcedureDecl> <Procedures>\n");
-        }
-        |
-        {
-            //printf("<Procedures> -> epsilon\n");
-        }
-        ;
+Procedures 	: ProcedureDecl Procedures
+	   	|
+	   	;
 
 ProcedureDecl : ProcedureHead ProcedureBody
-        {
-            //printf("<ProcedureDecl> -> <ProcedureHead> <ProcedureBody>\n");
-        }
-              ;
+               {
+			emitExit(instList);
+               }
+	      ;
 
 ProcedureHead : FunctionDecl DeclList 
-        {
-            //printf("<ProcedureHead> -> <FunctionDecl> <DeclList>\n");
-        }
-          | FunctionDecl
-        {
-            //printf("<ProcedureHead> -> <FunctionDecl>\n");
-        }
+		{
+			emitProcedurePrologue(instList,symtab,$1,$2);
+			functionOffset = $2;
+			$$ = $1;
+		}
+	      | FunctionDecl
+		{
+			emitProcedurePrologue(instList,symtab,$1,0);
+			functionOffset = 0;
+			$$ = $1;
+		}
               ;
 
 FunctionDecl :  Type IDENTIFIER LPAREN RPAREN LBRACE 
-        {
-            //printf("<FunctionDecl> ->  <Type> <IDENTIFIER> <LP> <RP> <LBR>\n"); 
-        }
-            ;
+		{
+			$$ = SymIndex(symtab,$2);
+		}
+	      	;
 
 ProcedureBody : StatementList RBRACE
-        {
-            //printf("<ProcedureBody> -> <StatementList> <RBR>\n");
-        }
-          ;
+	      ;
 
 
-DeclList    : Type IdentifierList  SEMICOLON 
-        {
-            //printf("<DeclList> -> <Type> <IdentifierList> <SC>\n");
-        }       
-        | DeclList Type IdentifierList SEMICOLON
-        {
-            //printf("<DeclList> -> <DeclList> <Type> <IdentifierList> <SC>\n");
-        }
-            ;
+DeclList 	: Type IdentifierList  SEMICOLON 
+		{
+			AddIdStructPtr data = (AddIdStructPtr)malloc(sizeof(AddIdStruct));
+			data->offset = 0;
+			data->symtab = symtab;
+			dlinkApply1($2,(DLinkApply1Func)addIdToSymtab,(Generic)data);
+			$$ = data->offset;
+			dlinkFreeNodes($2);
+			free(data);
+		}		
+	   	| DeclList Type IdentifierList SEMICOLON
+	 	{
+			AddIdStructPtr data = (AddIdStructPtr)malloc(sizeof(AddIdStruct));
+			data->offset = $1;
+			data->symtab = symtab;
+			dlinkApply1($3,(DLinkApply1Func)addIdToSymtab,(Generic)data);
+			$$ = data->offset;
+			dlinkFreeNodes($3);
+			free(data);
+	 	}
+          	;
 
 
-IdentifierList  : VarDecl  
-        {
-            //printf("<IdentifierList> -> <VarDecl>\n");
-        }
-                        
+IdentifierList 	: VarDecl  
+		{
+			$$ = dlinkListAlloc(NULL);
+			dlinkAppend($$,dlinkNodeAlloc((Generic)$1));
+		}
+						
                 | IdentifierList COMMA VarDecl
-        {
-            //printf("<IdentifierList> -> <IdentifierList> <CM> <VarDecl>\n");
-        }
+		{
+			dlinkAppend($1,dlinkNodeAlloc((Generic)$3));
+			$$ = $1;
+		}
                 ;
 
-VarDecl     : IDENTIFIER
-        { 
-            // This is where we set the offset for a variable.
-            setValue($1, var_count * 4);
-            ++var_count;
-            // printf("<VarDecl> -> <IDENTIFIER\n");
-        }
-        | IDENTIFIER LBRACKET INTCON RBRACKET
-                {
-            //printf("<VarDecl> -> <IDENTIFIER> <LBK> <INTCON> <RBK>\n");
-        }
-        ;
+VarDecl 	: IDENTIFIER
+		{ 
+			$$ = SymIndex(symtab,$1);
+		}
+		| IDENTIFIER LBRACKET INTCON RBRACKET
+		{
+			$$ = SYM_INVALID_INDEX;
+		}
+		;
 
-Type        : INTEGER 
-        { 
-            //printf("<Type> -> <INTEGER>\n");
-        }
+Type     	: INTEGER 
+                | FLOAT   
                 ;
 
-Statement   : Assignment
-        { 
-            //printf("<Statement> -> <Assignment>\n");
-        }
+Statement 	: Assignment
                 | IfStatement
-        { 
-            //printf("<Statement> -> <IfStatement>\n");
-        }
-        | WhileStatement
-        { 
-            //printf("<Statement> -> <WhileStatement>\n");
-        }
+		| WhileStatement
                 | IOStatement 
-        { 
-            //printf("<Statement> -> <IOStatement>\n");
-        }
-        | ReturnStatement
-        { 
-            //printf("<Statement> -> <ReturnStatement>\n");
-        }
-        | ExitStatement 
-        { 
-            //printf("<Statement> -> <ExitStatement>\n");
-        }
-        | CompoundStatement
-        { 
-            //printf("<Statement> -> <CompoundStatement>\n");
-        }
+		| ReturnStatement
+		| ExitStatement	
+		| CompoundStatement
                 ;
 
 Assignment      : Variable ASSIGN Expr SEMICOLON
-        {
-            // Load the expr register value into memory at correct offset
-            int offset = getValue($1);
-            char temp[80];
-
-            emit("movq", "$_gp", "%rbx"); // set %rbx reg to equal _gp
-
-            sprintf(temp, "$%d", offset);
-            emit("addq", temp, "%rbx"); // add offset to %rbx to move to correct memory location for variable
-            emit("movl", register_names[$3], "(%rbx)");
-
-            // printf("freeing both registers\n");
-            freeRegister($3);
-
-            // freeRegister(reg1);
-
-
-            // setValue($1, $3);
-            //printf("<Assignment> -> <Variable> <ASSIGN> <Expr> <SC>\n");
-        }
+		{
+			emitAssignment(instList,symtab,$1,$3);
+		}
                 ;
-                
-IfStatement : IF TestAndThen ELSE CompoundStatement
-        {
-            //printf("<IfStatement> -> <IF> <TestAndThen> <ELSE> <CompoundStatement>\n");
-        }
-        | IF TestAndThen
-        {
-            //printf("<IfStatement> -> <IF> <TestAndThen>\n");
-        }
-        ;
-        
-                
-TestAndThen : Test CompoundStatement
-        {
-            //printf("<TestAndThen> -> <Test> <CompoundStatement>\n");
-        }
-        ;
-                
-Test        : LPAREN Expr RPAREN
-        {
-            //printf("<Test> -> <LP> <Expr> <RP>\n");
-        }
-        ;
-    
+				
+IfStatement	: IF TestAndThen ELSE CompoundStatement
+		| IF TestAndThen
+		;
+		
+				
+TestAndThen	: Test CompoundStatement
+		;
+				
+Test		: LPAREN Expr RPAREN
+		;
+	
 
 WhileStatement  : WhileToken WhileExpr Statement
-        {
-            //printf("<WhileStatement> -> <WhileToken> <WhileExpr> <Statement>\n");
-        }
                 ;
                 
-WhileExpr   : LPAREN Expr RPAREN
-        {
-            //printf("<WhileExpr> -> <LP> <Expr> <RP>\n");
-        }
-        ;
-                
-WhileToken  : WHILE
-        {
-            //printf("<WhileToken> -> <WHILE>\n");
-        }
-        ;
+WhileExpr	: LPAREN Expr RPAREN
+		;
+				
+WhileToken	: WHILE
+		;
 
 
 IOStatement     : READ LPAREN Variable RPAREN SEMICOLON
-        {
-            // movq $_gp,%rbx
-            // addq $4, %rbx
-            // movl $.int_rformat, %edi
-            // movl %ebx, %esi
-            // movl $0, %eax
-            // call scanf
-            int offset = getValue($3);
-
-            emit("movq", "$_gp", "%rbx");
-
-            char temp[80];
-            sprintf(temp, "$%d", offset);
-            emit("addq", temp, "%rbx");
-            emit("movl", "$.int_rformat", "%edi");
-            emit("movl", "%ebx", "%esi");
-            emit("movl", "$0", "%eax");
-            buffer("call scanf\n");
-
-            // eax now holds return value. Store it into register value
-            int reg = loadFromMemory(offset);
-            emit("movl", "%eax", register_names[reg]);
-            freeRegister(reg);
-
-            $$ = reg;
-            //printf("<IOStatement> -> <READ> <LP> <Variable> <RP> <SC>\n");
-        }
+		{
+			emitReadVariable(instList,symtab,$3);
+		}
                 | WRITE LPAREN Expr RPAREN SEMICOLON
-        {
-            // move register value int oarg and print out value.
-            emit("movl", register_names[$3], "%esi");
-            emit("movl", "$0", "%eax");
-            buffer("movl $.int_wformat, %edi\n");
-            buffer("call printf\n");
-
-            // don't need this register anymore
-            freeRegister($3);
-            //printf("<IOStatement> -> <WRITE> <LP> <Expr> <RP> <SC>\n");
-        }
+		{
+			emitWriteExpression(instList,symtab,$3,SYSCALL_PRINT_INTEGER);
+		}
                 | WRITE LPAREN StringConstant RPAREN SEMICOLON         
-        {
-            // First add this constant to list of printf constants
-            sprintf(printfs, "%s.string_const%d:    .string \"%s\"\n", printfs, str_const_count, (char *)SymGetFieldByIndex(symtab, $3, SYM_NAME_FIELD)); // TODO: escape stuff out of $3
-            
-            char temp[80];
-            sprintf(temp, "movl $.string_const%d, %%esi\n", str_const_count);
-            buffer(temp);
-
-            emit("movl", "$0", "%eax");
-            buffer("movl $.str_wformat, %edi\n"); // TODO: Pick correct string constant
-            buffer("call printf\n");
-
-            ++str_const_count;
-            ////printf("<IOStatement> -> <WRITE> <LP> <StringConstant> <RP> <SC>\n");
-        }
+		{
+			emitWriteExpression(instList,symtab,$3,SYSCALL_PRINT_STRING);
+		}
                 ;
 
 ReturnStatement : RETURN Expr SEMICOLON
-        {
-            //printf("<ReturnStatement> -> <RETURN> <Expr> <SC>\n");
-        }
                 ;
 
-ExitStatement   : EXIT SEMICOLON
-        {
-            //printf("<ExitStatement> -> <EXIT> <SC>\n");
-        }
-        ;
+ExitStatement 	: EXIT SEMICOLON
+		{
+			emitExit(instList);
+		}
+		;
 
 CompoundStatement : LBRACE StatementList RBRACE
-        {
-            //printf("<CompoundStatement> -> <LBR> <StatementList> <RBR>\n");
-        }
                 ;
 
 StatementList   : Statement
-        {       
-            //printf("<StatementList> -> <Statement>\n");
-        }
+		
                 | StatementList Statement
-        {       
-            //printf("<StatementList> -> <StatementList> <Statement>\n");
-        }
+		
                 ;
 
 Expr            : SimpleExpr
-        {
-            $$ = $1;
-            //printf("<Expr> -> <SimpleExpr>\n");
-        }
+		{
+			$$ = $1; 
+		}
                 | Expr OR SimpleExpr 
-        {
-                emit("orl", register_names[$1], register_names[$3]);
-                freeRegister($1);
-
-                $$ = $3;
-            //printf("<Expr> -> <Expr> <OR> <SimpleExpr> \n");
-        }
+		{
+			$$ = emitOrExpression(instList,symtab,$1,$3);
+		}
                 | Expr AND SimpleExpr 
-        {
-                emit("andl", register_names[$1], register_names[$3]);
-                freeRegister($1);
-
-                $$ = $3;
-            //printf("<Expr> -> <Expr> <AND> <SimpleExpr> \n");
-        }
+		{
+			$$ = emitAndExpression(instList,symtab,$1,$3);
+		}
                 | NOT SimpleExpr 
-        {
-                int reg = allocateRegister();
-
-                emit("movl", "$1", register_names[reg]);
-                emit("xorl", register_names[reg], register_names[$2]);
-                freeRegister(reg);
-
-                $$ = $2;
-            //printf("<Expr> -> <NOT> <SimpleExpr> \n");
-        }
+		{
+			$$ = emitNotExpression(instList,symtab,$2);
+		}
                 ;
 
-SimpleExpr  : AddExpr
-        {
-            $$ = $1;
-            //printf("<SimpleExpr> -> <AddExpr>\n");
-        }
+SimpleExpr	: AddExpr
+		{
+			$$ = $1; 
+		}
                 | SimpleExpr EQ AddExpr
-        {
-                int temp = allocateRegister();
-
-                // cmpl %edx, %ecx
-                // movl $0, %ecx
-                // movl $1, %ebx
-                // cmovg %ebx, %ecx
-                emit("cmpl", register_names[$1], register_names[$3]);
-                emit("movl", "$0", register_names[$3]);
-                emit("movl", "$1", register_names[temp]);
-                emit("cmove", register_names[temp], register_names[$3]);
-
-                freeRegister(temp);
-                freeRegister($1);
-
-                $$ = $3;
-            //printf("<SimpleExpr> -> <SimpleExpr> <EQ> <AddExpr> \n");
-        }
+		{
+			$$ = emitEqualExpression(instList,symtab,$1,$3);
+		}
                 | SimpleExpr NE AddExpr
-        {
-                int temp = allocateRegister();
-
-                // cmpl %edx, %ecx
-                // movl $0, %ecx
-                // movl $1, %ebx
-                // cmovg %ebx, %ecx
-                emit("cmpl", register_names[$1], register_names[$3]);
-                emit("movl", "$0", register_names[$3]);
-                emit("movl", "$1", register_names[temp]);
-                emit("cmovne", register_names[temp], register_names[$3]);
-
-                freeRegister(temp);
-                freeRegister($1);
-
-                $$ = $3;
-            //printf("<SimpleExpr> -> <SimpleExpr> <NE> <AddExpr> \n");
-        }
+		{
+			$$ = emitNotEqualExpression(instList,symtab,$1,$3);
+		}
                 | SimpleExpr LE AddExpr
-        {
-                int temp = allocateRegister();
-
-                // cmpl %edx, %ecx
-                // movl $0, %ecx
-                // movl $1, %ebx
-                // cmovg %ebx, %ecx
-                emit("cmpl", register_names[$3], register_names[$1]);
-                emit("movl", "$0", register_names[$1]);
-                emit("movl", "$1", register_names[temp]);
-                emit("cmovle", register_names[temp], register_names[$1]);
-
-                freeRegister(temp);
-                freeRegister($3);
-
-                $$ = $1;
-            //printf("<SimpleExpr> -> <SimpleExpr> <LE> <AddExpr> \n");
-        }
+		{
+			$$ = emitLessEqualExpression(instList,symtab,$1,$3);
+		}
                 | SimpleExpr LT AddExpr
-        {
-                int temp = allocateRegister();
-
-                // cmpl %edx, %ecx
-                // movl $0, %ecx
-                // movl $1, %ebx
-                // cmovg %ebx, %ecx
-                emit("cmpl", register_names[$3], register_names[$1]);
-                emit("movl", "$0", register_names[$1]);
-                emit("movl", "$1", register_names[temp]);
-                emit("cmovl", register_names[temp], register_names[$1]);
-
-                freeRegister(temp);
-                freeRegister($3);
-
-                $$ = $1;
-            //printf("<SimpleExpr> -> <SimpleExpr> <LT> <AddExpr> \n");
-        }
+		{
+			$$ = emitLessThanExpression(instList,symtab,$1,$3);
+		}
                 | SimpleExpr GE AddExpr
-        {
-                int temp = allocateRegister();
-
-                // cmpl %edx, %ecx
-                // movl $0, %ecx
-                // movl $1, %ebx
-                // cmovg %ebx, %ecx
-                emit("cmpl", register_names[$3], register_names[$1]);
-                emit("movl", "$0", register_names[$1]);
-                emit("movl", "$1", register_names[temp]);
-                emit("cmovge", register_names[temp], register_names[$1]);
-
-                freeRegister(temp);
-                freeRegister($3);
-
-                $$ = $1;
-            //printf("<SimpleExpr> -> <SimpleExpr> <GE> <AddExpr> \n");
-        }
+		{
+			$$ = emitGreaterEqualExpression(instList,symtab,$1,$3);
+		}
                 | SimpleExpr GT AddExpr
-        {
-            //printf("<SimpleExpr> -> <SimpleExpr> <GT> <AddExpr> \n");
-                int temp = allocateRegister();
-
-                // cmpl %edx, %ecx
-                // movl $0, %ecx
-                // movl $1, %ebx
-                // cmovg %ebx, %ecx
-                emit("cmpl", register_names[$3], register_names[$1]);
-                emit("movl", "$0", register_names[$1]);
-                emit("movl", "$1", register_names[temp]);
-                emit("cmovg", register_names[temp], register_names[$1]);
-
-                freeRegister(temp);
-                freeRegister($3);
-
-                $$ = $1;
-        }
+		{
+			$$ = emitGreaterThanExpression(instList,symtab,$1,$3);
+		}
                 ;
 
-AddExpr     :  MulExpr            
-        {
-            $$ = $1;
-            //printf("<AddExpr> -> <MulExpr>\n");
-        }
+AddExpr		:  MulExpr            
+		{
+			$$ = $1; 
+		}
                 |  AddExpr PLUS MulExpr
-        {
-            // $$ = $1 + $3;
-            // addl %edx, %ecx
-            emit("addl", register_names[$1], register_names[$3]);
-
-            freeRegister($1);
-
-            $$ = $3;
-            //printf("<AddExpr> -> <AddExpr> <PLUS> <MulExpr> \n");
-        }
+		{
+			$$ = emitAddExpression(instList,symtab,$1,$3);
+		}
                 |  AddExpr MINUS MulExpr
-        {
-            // $$ = $1 - $3;
-            // subl %edx, %ecx
-            emit("subl", register_names[$3], register_names[$1]);
-
-            freeRegister($3);
-
-            $$ = $1;
-            //printf("<AddExpr> -> <AddExpr> <MINUS> <MulExpr> \n");
-        }
+		{
+			$$ = emitSubtractExpression(instList,symtab,$1,$3);
+		}
                 ;
 
-MulExpr     :  Factor
-        {
-            $$ = $1;
-            //printf("<MulExpr> -> <Factor>\n");
-        }
+MulExpr		:  Factor
+		{
+			$$ = $1; 
+		}
                 |  MulExpr TIMES Factor
-        {
-            emit("imull", register_names[$1], register_names[$3]);
-
-            freeRegister($1);
-
-            $$ = $3;
-            //printf("<MulExpr> -> <MulExpr> <TIMES> <Factor> \n");
-        }
+		{
+			$$ = emitMultiplyExpression(instList,symtab,$1,$3);
+		}
                 |  MulExpr DIVIDE Factor
-        {
-            emit("movl", register_names[$3], "%ecx");
-            emit("movl", register_names[$1], "%eax");
-            buffer("cdq\n");
-            buffer("idivl %ecx\n");
-
-            emit("movl", "%eax", register_names[$3]);
-
-            freeRegister($1);
-
-            $$ = $3;
-            //printf("<MulExpr> -> <MulExpr> <DIVIDE> <Factor> \n");
-        }       
+		{
+			$$ = emitDivideExpression(instList,symtab,$1,$3);
+		}		
                 ;
-                
+				
 Factor          : Variable
-        { 
-            int offset = getValue($1);
-
-            int resultReg = loadFromMemory(offset);
-
-            // printf("for variable: %d\n", resultReg);
-            $$ = resultReg;
-
-            //printf("<Factor> -> <Variable>\n");
-        }
+		{ 
+			$$ = emitLoadVariable(instList,symtab,$1);
+		}
                 | Constant
-        { 
-            $$ = $1;
-            //printf("<Factor> -> <Constant>\n");
-        }
+		{ 
+			$$ = $1;
+		}
                 | IDENTIFIER LPAREN RPAREN
-            {   
-            //printf("<Factor> -> <IDENTIFIER> <LP> <RP>\n");
-        }
-            | LPAREN Expr RPAREN
-        {
-            $$ = $2;
-            //printf("<Factor> -> <LP> <Expr> <RP>\n");
-        }
+		{
+			$$ = SYM_INVALID_INDEX;
+		}
+         	| LPAREN Expr RPAREN
+		{
+			$$ = $2;
+		}
                 ;  
 
 Variable        : IDENTIFIER
-        {
-            $$ = $1;
-            //printf("<Variable> -> <IDENTIFIER>\n");
-        }
+		{
+			int symIndex = SymQueryIndex(symtab,$1);
+			$$ = emitComputeVariableAddress(instList,symtab,symIndex);
+		}
                 | IDENTIFIER LBRACKET Expr RBRACKET    
-                {
-            //printf("<Variable> -> <IDENTIFIER> <LBK> <Expr> <RBK>\n");
-                }
-                ;                  
+		{
+			$$ = SYM_INVALID_INDEX;
+		}
+                ;			       
 
-StringConstant  : STRING
-        { 
-               $$ = $1;
-            //printf("<StringConstant> -> <STRING>\n");
-        }
+StringConstant 	: STRING
+		{ 
+			int symIndex = SymIndex(symtab,$1);
+			$$ = emitLoadStringConstantAddress(instList,dataList,symtab,symIndex); 
+		}
                 ;
 
-Constant        : INTCON
-        { 
-            // load constant into a register
-            int reg = allocateRegister();
-
-            char temp[80];
-            sprintf(temp, "$%d", $1);
-
-            emit("movl", temp, register_names[reg]);
-            // printf("for const: %d\n", reg);
-            $$ = reg;
-            //printf("<Constant> -> <INTCON>\n");
-        }
+Constant        :  INTCON
+		{ 
+			int symIndex = SymIndex(symtab,$1);
+			$$ = emitLoadIntegerConstant(instList,symtab,symIndex); 
+		}
                 ;
 
 %%
@@ -663,131 +398,80 @@ Constant        : INTCON
 
 /********************C ROUTINES *********************************/
 
-
-// Returns the index of the register we are using. Index maps to register_names.
-// Returns an index of a free register
-int allocateRegister() {
-    int i = 0;
-    for(i = 0; i < REGISTER_COUNT; ++i) {
-        if(register_taken[i] == 0) {
-            register_taken[i] = 1;
-            return i;
-        }
-    }
-
-    Cminus_error("No registers remaining for allocation.");
-    return -1;
-}
-
-// loads variable from memory at the given offset into a register
-//
-// Example:
-// movq $_gp,%rbx
-// addq $4, %rbx
-// movl (%rbx), %eax
-// we return the equivelant of eax (could be any register)
-int loadFromMemory(int offset) {
-    int reg2 = allocateRegister();
-
-    char temp[80];
-
-    emit("movq", "$_gp", "%rbx"); // set %rbx reg to equal _gp
-
-    sprintf(temp, "$%d", offset);
-    emit("addq", temp, "%rbx"); // add offset to %rbx to move to correct memory location for variable
-    emit("movl", "(%rbx)", register_names[reg2]); // store the memory location of rbx in eax
-
-    return reg2; // reg2 now holds the location of the variable we want
-}
-
-// Marks the register as available
-void freeRegister(int index) {
-    register_taken[index] = 0;
-}
-
-// A helper method for outputing an instructino
-void emit(char *instruction, char *one, char *two) {
-    char temp[80];
-    sprintf(temp, "%s %s, %s\n", instruction, one, two);
-    buffer(temp);
-}
-
-// Prints an instruction to the buffer
-void buffer(char *add) {
-    sprintf(statements, "%s %s", statements, add);
-}
-
 void Cminus_error(char *s)
 {
   fprintf(stderr,"%s: line %d: %s\n",fileName,Cminus_lineno,s);
 }
 
 int Cminus_wrap() {
-    return 1;
+	return 1;
+}
+
+static void initSymTable() {
+
+	symtab = SymInit(SYMTABLE_SIZE); 
+
+	SymInitField(symtab,SYMTAB_OFFSET_FIELD,(Generic)-1,NULL);
+	SymInitField(symtab,SYMTAB_REGISTER_INDEX_FIELD,(Generic)-1,NULL);
+}
+
+static void deleteSymTable() {
+    SymKillField(symtab,SYMTAB_REGISTER_INDEX_FIELD);
+    SymKillField(symtab,SYMTAB_OFFSET_FIELD);
+    SymKill(symtab);
+
 }
 
 static void initialize(char* inputFileName) {
 
-    stdin = freopen(inputFileName,"r",stdin);
-    if (stdin == NULL) {
-        fprintf(stderr,"Error: Could not open file %s\n",inputFileName);
-        exit(-1);
-    }
+	stdin = freopen(inputFileName,"r", stdin);
+        if (stdin == NULL) {
+          fprintf(stderr,"Error: Could not open file %s\n",inputFileName);
+          exit(-1);
+        }
 
-    char* dotChar = rindex(inputFileName,'.');
-    int endIndex = strlen(inputFileName) - strlen(dotChar);
-    char *outputFileName = nssave(2,substr(inputFileName,0,endIndex),".s");
-    stdout = freopen(outputFileName,"w",stdout);
-    if (stdout == NULL) {
-        fprintf(stderr,"Error: Could not open file %s\n",outputFileName);
-        exit(-1);
-    }
+	char* dotChar = rindex(inputFileName,'.');
+	int endIndex = strlen(inputFileName) - strlen(dotChar);
+	char *outputFileName = nssave(2,substr(inputFileName,0,endIndex),".s");
+	stdout = freopen(outputFileName,"w", stdout);
+        if (stdout == NULL) {
+          fprintf(stderr,"Error: Could not open file %s\n",outputFileName);
+          exit(-1);
+       } 
 
-    // We keep track of variable count for header global data declaration
-    var_count = 0;
-    str_const_count = 0;
+	initSymTable();
+	
+	initRegisters();
+	
+	instList = dlinkListAlloc(NULL);
+	dataList = dlinkListAlloc(NULL);
 
-    // Print out the initial header every file has
-    printf("%s", ASSEMBLY_HEADER);
-    printf("%s", BASIC_PRINTFS);
-
-    symtab = SymInit(SYMTABLE_SIZE);
-    SymInitField(symtab,SYMTAB_VALUE_FIELD,(Generic)-1,NULL);
 }
 
 static void finalize() {
-    printf("%s", printfs);
-    printf("  .comm _gp, %d, 4\n", var_count * 4);
-    printf("%s", OTHER);
-    printf("%s", statements);
-    printf("%s", ASSEMBLY_FOOTER);
 
-    SymKillField(symtab,SYMTAB_VALUE_FIELD);
-    SymKill(symtab);
     fclose(stdin);
-    fclose(stdout);
+    /*fclose(stdout);*/
+    
+    deleteSymTable();
+ 
+    cleanupRegisters();
+    
+    dlinkFreeNodesAndAtoms(instList);
+    dlinkFreeNodesAndAtoms(dataList);
+
 }
 
 int main(int argc, char** argv)
 
-{   
-    fileName = argv[1];
-    initialize(fileName);
-    
+{	
+	fileName = argv[1];
+	initialize(fileName);
+	
         Cminus_parse();
   
-    finalize();
+  	finalize();
   
-    return 0;
-}
-
-int getValue(int index)
-{
-  return (int)SymGetFieldByIndex(symtab, index, SYMTAB_VALUE_FIELD);
-}
-
-int setValue(int index, int value)
-{
-  SymPutFieldByIndex(symtab, index, SYMTAB_VALUE_FIELD, (Generic)value); 
+  	return 0;
 }
 /******************END OF C ROUTINES**********************/

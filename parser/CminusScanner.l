@@ -35,7 +35,8 @@ WS	[ \t]
 #include <util/dlink.h>
 #include "CminusParser.h"
 
-extern SymTable symtab;
+extern SymtabStack symtabStack;
+
 %}
 
 %option bison-bridge
@@ -47,6 +48,7 @@ int				{ return INTEGER;}
 while				{ return WHILE; }
 else				{ return ELSE; }
 exit				{ return EXIT; }
+float				{ return FLOAT; }
 if				{ return IF; }
 read				{ return READ; }
 write				{ return WRITE; }
@@ -74,13 +76,36 @@ return				{ return RETURN; }
 \*				{ return TIMES; }
 \/				{ return DIVIDE;}
 ","				{ return COMMA;}
-\'[^\']*\'			{ Cminus_lval = SymIndex(symtab, substr(Cminus_text, 1, Cminus_leng-2));
-                                  return STRING; }
-[a-zA-Z]([a-zA-Z]|[0-9])*	{ Cminus_lval = SymIndex(symtab, ssave(Cminus_text)); 
-                                  return IDENTIFIER; }
-[0-9]+				{ Cminus_lval = atoi(Cminus_text); return INTCON; }
+
+\'[^\']*\'			{ 
+					Cminus_lval.name = ssave(Cminus_text);
+					return STRING; 
+				}
+	
+[a-zA-Z]([a-zA-Z]|[0-9])*	{ 
+					Cminus_lval.name = ssave(Cminus_text);
+					return IDENTIFIER; 
+				}
+	
+[0-9]+				{ 
+					Cminus_lval.name = ssave(Cminus_text);
+					return INTCON; 
+				}
+
 {WS}				{ ; }
 "\n"				{ Cminus_lineno++;}
+
+[0-9]*(\.)[0-9]+((e|E)(\+|\-)?[0-9]*)?/[^.$]   { 
+							Cminus_lval.name = ssave(Cminus_text);
+							return FLOATCON; 
+						}
+
+[0-9]+((e|E)(\+|\-)?[0-9]*)/[^.$]  { 
+					Cminus_lval.name = ssave(Cminus_text);
+					return FLOATCON; 
+				   }
+
+
 .				{
 					fprintf(stderr, "Scanner: lexical error '%s'.\n", Cminus_text); 
 				}
