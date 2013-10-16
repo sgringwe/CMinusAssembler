@@ -320,28 +320,24 @@ int SymQueryIndex(SymTable ip, char* name)
 	 * (1) name found: index returned
 	 * (2) empty slot encountered => name cannot be in table
 	 * (3) searched whole table and name not found
-	*/
+	 */
 
     if (strcmp(name, Names[ip->Index[i]]) == 0)
-			return ip->Index[i]; /* found! */
+		return ip->Index[i]; /* found! */
     else {
-	  	count++;
-	  	/* 16 is relatively prime to a Mersenne prime! */
+	  count++;
+	  /* 16 is relatively prime to a Mersenne prime! */
       i = (i + 16) % ip->NumIndices;
 
 #ifdef DEBUG
-  		fprintf(stderr, "\tre-probe: %d", i);
-  		if ((count % 4) == 0)
-     		fprintf(stderr,"\n");
+  fprintf(stderr, "\tre-probe: %d", i);
+  if ((count % 4) == 0)
+     fprintf(stderr,"\n");
 #endif
-      if (i == initial) {	/* searched whole table, name not found */
-   			printf("searched whole table\n");
-				return SYM_INVALID_INDEX;
-  		}
+      if (i == initial)	/* searched whole table, name not found */
+		return SYM_INVALID_INDEX;
+      }
     }
-  }
-  
-  printf("empty slot encountered\n");
   return SYM_INVALID_INDEX; /* empty slot encountered */
 }
 
