@@ -410,7 +410,7 @@ int emitComputeVariableAddress(DList instList, SymTable symtab, int varIndex) {
 
 	int regIndex = getFreeIntegerRegisterIndex(symtab);
 	
-	char* regName = malloc(sizeof(char) * 7);
+	char* regName = malloc(sizeof(char) * 7); // Assume 7 is largest reg name
 	get64bitIntegerRegisterName(symtab, regIndex, regName);
 
 	int offset = (int)SymGetFieldByIndex(symtab,varIndex,SYMTAB_OFFSET_FIELD);

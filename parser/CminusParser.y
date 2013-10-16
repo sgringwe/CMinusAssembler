@@ -413,9 +413,11 @@ static void initSymTable() {
 
 	SymInitField(symtab,SYMTAB_OFFSET_FIELD,(Generic)-1,NULL);
 	SymInitField(symtab,SYMTAB_REGISTER_INDEX_FIELD,(Generic)-1,NULL);
+  SymInitField(symtab,SYMTAB_SIZE_FIELD,(Generic)-1,NULL);
 }
 
 static void deleteSymTable() {
+    SymKillField(symtab,SYMTAB_SIZE_FIELD);
     SymKillField(symtab,SYMTAB_REGISTER_INDEX_FIELD);
     SymKillField(symtab,SYMTAB_OFFSET_FIELD);
     SymKill(symtab);
