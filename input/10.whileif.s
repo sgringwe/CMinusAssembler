@@ -1,12 +1,11 @@
-Test    : LPAREN Expr RPAREN
-CompoundStatement : LBRACE StatementList RBRACE
-Statement : CompoundStatement
-CompoundStatement : LBRACE StatementList RBRACE
-TestAndThen : Test CompoundStatement
-CompoundStatement : LBRACE StatementList RBRACE
-Statement : CompoundStatement
-CompoundStatement : LBRACE StatementList RBRACE
-IfStatement : IF TestAndThen ELSE CompoundStatement
+WhileToken  : WHILE
+WhileExpr : LPAREN Expr RPAREN
+WhileStatement  : WhileToken WhileExpr Statement
+Statement : WhileStatement
+WhileToken  : WHILE
+WhileExpr : LPAREN Expr RPAREN
+WhileStatement  : WhileToken WhileExpr Statement
+Statement : WhileStatement
 WRITE LPAREN Expr RPAREN SEMICOLON
 	.section	.rodata
 	.int_wformat: .string "%d\n"
@@ -59,6 +58,7 @@ main:	nop
 	addq $0, %r8
 	movl $0, %r9d
 	movl %r9d, (%r8)
+label1: nop
 	movq $_gp,%r8
 	addq $4, %r8
 	movl (%r8), %r9d
@@ -69,67 +69,78 @@ main:	nop
 	movl $0, %r9d
 	movl $1, %r8d
 	cmovle %r8d, %r9d
-	movq $_gp,%r8
-	addq $0, %r8
+	movl $-1 , %r8d
+	testl %r9d, %r8d
+	je label2
 	movq $_gp,%r10
 	addq $0, %r10
-	movl (%r10), %r11d
-	movq $_gp,%r10
-	addq $4, %r10
-	movl (%r10), %r12d
-	addl %r12d, %r11d
-	movl %r11d, (%r8)
-	movq $_gp,%r8
-	addq $4, %r8
-	movq $_gp,%r10
-	addq $4, %r10
-	movl (%r10), %r11d
-	movl $1, %r10d
-	addl %r10d, %r11d
-	movl %r11d, (%r8)
-	jmp label1
-label0: nop
-	movq $_gp,%r8
-	addq $4, %r8
-	movl $1, %r10d
-	movl %r10d, (%r8)
-	movq $_gp,%r8
-	addq $0, %r8
-	movl $1, %r10d
-	movl %r10d, (%r8)
-	movq $_gp,%r8
-	addq $4, %r8
-	movl (%r8), %r10d
-	movq $_gp,%r8
-	addq $8, %r8
-	movl (%r8), %r11d
-	cmpl %r11d, %r10d
-	movl $0, %r10d
-	movl $1, %r8d
-	cmovle %r8d, %r10d
-	movq $_gp,%r8
-	addq $0, %r8
 	movq $_gp,%r11
 	addq $0, %r11
 	movl (%r11), %r12d
 	movq $_gp,%r11
 	addq $4, %r11
 	movl (%r11), %r13d
-	imull %r13d, %r12d
-	movl %r12d, (%r8)
-	movq $_gp,%r8
-	addq $4, %r8
+	addl %r13d, %r12d
+	movl %r12d, (%r10)
+	movq $_gp,%r10
+	addq $4, %r10
 	movq $_gp,%r11
 	addq $4, %r11
 	movl (%r11), %r12d
 	movl $1, %r11d
 	addl %r11d, %r12d
-	movl %r12d, (%r8)
-label1: nop
-	movq $_gp,%r8
-	addq $0, %r8
-	movl (%r8), %r11d
-	movl %r11d, %esi
+	movl %r12d, (%r10)
+	jmp label1
+label2: nop
+	jmp label3
+label0: nop
+	movq $_gp,%r10
+	addq $4, %r10
+	movl $1, %r11d
+	movl %r11d, (%r10)
+	movq $_gp,%r10
+	addq $0, %r10
+	movl $1, %r11d
+	movl %r11d, (%r10)
+label4: nop
+	movq $_gp,%r10
+	addq $4, %r10
+	movl (%r10), %r11d
+	movq $_gp,%r10
+	addq $8, %r10
+	movl (%r10), %r12d
+	cmpl %r12d, %r11d
+	movl $0, %r11d
+	movl $1, %r10d
+	cmovle %r10d, %r11d
+	movl $-1 , %r10d
+	testl %r11d, %r10d
+	je label5
+	movq $_gp,%r12
+	addq $0, %r12
+	movq $_gp,%r13
+	addq $0, %r13
+	movl (%r13), %r14d
+	movq $_gp,%r13
+	addq $4, %r13
+	movl (%r13), %r15d
+	imull %r15d, %r14d
+	movl %r14d, (%r12)
+	movq $_gp,%r12
+	addq $4, %r12
+	movq $_gp,%r13
+	addq $4, %r13
+	movl (%r13), %r14d
+	movl $1, %r13d
+	addl %r13d, %r14d
+	movl %r14d, (%r12)
+	jmp label4
+label5: nop
+label3: nop
+	movq $_gp,%r12
+	addq $0, %r12
+	movl (%r12), %r13d
+	movl %r13d, %esi
 	movl $0, %eax
 	movl $.int_wformat, %edi
 	call printf

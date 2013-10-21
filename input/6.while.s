@@ -1,6 +1,8 @@
+WhileToken  : WHILE
+WhileExpr : LPAREN Expr RPAREN
 WRITE LPAREN Expr RPAREN SEMICOLON
-CompoundStatement : LBRACE StatementList RBRACE
-Statement : CompoundStatement
+WhileStatement  : WhileToken WhileExpr Statement
+Statement : WhileStatement
 WRITE LPAREN Expr RPAREN SEMICOLON
 	.section	.rodata
 	.int_wformat: .string "%d\n"
@@ -21,6 +23,7 @@ main:	nop
 	addq $4, %rbx
 	movl $0, %ecx
 	movl %ecx, (%rbx)
+label0: nop
 	movq $_gp,%rbx
 	addq $0, %rbx
 	movl (%rbx), %ecx
@@ -29,35 +32,40 @@ main:	nop
 	movl $0, %ecx
 	movl $1, %ebx
 	cmovle %ebx, %ecx
-	movq $_gp,%rbx
-	addq $0, %rbx
-	movl (%rbx), %r8d
-	movl %r8d, %esi
+	movl $-1 , %ebx
+	testl %ecx, %ebx
+	je label1
+	movq $_gp,%r8
+	addq $0, %r8
+	movl (%r8), %r9d
+	movl %r9d, %esi
 	movl $0, %eax
 	movl $.int_wformat, %edi
 	call printf
-	movq $_gp,%rbx
-	addq $4, %rbx
+	movq $_gp,%r8
+	addq $4, %r8
+	movq $_gp,%r9
+	addq $4, %r9
+	movl (%r9), %r10d
+	movq $_gp,%r9
+	addq $0, %r9
+	movl (%r9), %r11d
+	addl %r11d, %r10d
+	movl %r10d, (%r8)
+	movq $_gp,%r8
+	addq $0, %r8
+	movq $_gp,%r9
+	addq $0, %r9
+	movl (%r9), %r10d
+	movl $1, %r9d
+	addl %r9d, %r10d
+	movl %r10d, (%r8)
+	jmp label0
+label1: nop
 	movq $_gp,%r8
 	addq $4, %r8
 	movl (%r8), %r9d
-	movq $_gp,%r8
-	addq $0, %r8
-	movl (%r8), %r10d
-	addl %r10d, %r9d
-	movl %r9d, (%rbx)
-	movq $_gp,%rbx
-	addq $0, %rbx
-	movq $_gp,%r8
-	addq $0, %r8
-	movl (%r8), %r9d
-	movl $1, %r8d
-	addl %r8d, %r9d
-	movl %r9d, (%rbx)
-	movq $_gp,%rbx
-	addq $4, %rbx
-	movl (%rbx), %r8d
-	movl %r8d, %esi
+	movl %r9d, %esi
 	movl $0, %eax
 	movl $.int_wformat, %edi
 	call printf

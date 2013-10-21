@@ -103,7 +103,7 @@ extern int Cminus_lineno;
 %type <idList> IdentifierList
 %type <symIndex> Expr SimpleExpr AddExpr
 %type <symIndex> MulExpr Factor Variable StringConstant Constant VarDecl FunctionDecl ProcedureHead 
-%type <symIndex> CompoundStatement TestAndThen Test
+%type <symIndex> CompoundStatement TestAndThen Test WhileToken WhileExpr
 %type <offset> DeclList
 %type <name> IDENTIFIER STRING FLOATCON INTCON 
 
@@ -209,13 +209,13 @@ Type     	: INTEGER
 Statement 	: Assignment
                 | IfStatement
 		| WhileStatement
+    {
+      printf("Statement : WhileStatement\n");
+    }
                 | IOStatement 
 		| ReturnStatement
 		| ExitStatement	
 		| CompoundStatement
-    {
-      // printf("Statement : CompoundStatement\n");
-    }
                 ;
 
 Assignment      : Variable ASSIGN Expr SEMICOLON
@@ -254,12 +254,24 @@ Test		: LPAREN Expr RPAREN
 	
 
 WhileStatement  : WhileToken WhileExpr Statement
+    {
+      emitWhileStatement(instList,symtab,$1,$2);
+      printf("WhileStatement  : WhileToken WhileExpr Statement\n");
+    }
                 ;
                 
 WhileExpr	: LPAREN Expr RPAREN
+    {
+      printf("WhileExpr : LPAREN Expr RPAREN\n");
+      $$ = emitTest(instList,symtab, $2);
+    }
 		;
 				
 WhileToken	: WHILE
+    {
+      $$ = emitWhileToken(instList,symtab);
+      printf("WhileToken  : WHILE\n");
+    }
 		;
 
 
@@ -270,7 +282,7 @@ IOStatement     : READ LPAREN Variable RPAREN SEMICOLON
                 | WRITE LPAREN Expr RPAREN SEMICOLON
 		{
 			emitWriteExpression(instList,symtab,$3,SYSCALL_PRINT_INTEGER);
-      // printf("WRITE LPAREN Expr RPAREN SEMICOLON\n");
+      printf("WRITE LPAREN Expr RPAREN SEMICOLON\n");
 		}
                 | WRITE LPAREN StringConstant RPAREN SEMICOLON         
 		{

@@ -127,7 +127,7 @@ int emitTest(DList instList, SymTable symtab, int exprRegister) {
 	inst = nssave(4, "\ttestl ", (char*)SymGetFieldByIndex(symtab,exprRegister,SYM_NAME_FIELD), ", ", (char*)SymGetFieldByIndex(symtab,regIndex,SYM_NAME_FIELD));
 	dlinkAppend(instList,dlinkNodeAlloc(inst));
 
-	// Allocate a new label for else statement
+	// Allocate a new label for else statement/after statement
 	int num = addLabelToSymtab(symtab);
 
 	// Output a jump to the elseLabel if equal (false)
@@ -171,6 +171,21 @@ int emitTestAndThen(DList instList, SymTable symtab,int elseLabel) {
 
 	// freeIntegerRegister((int)SymGetFieldByIndex(symtab,rhsRegIndex,SYMTAB_REGISTER_INDEX_FIELD));
 	// freeIntegerRegister((int)SymGetFieldByIndex(symtab,lhsRegIndex,SYMTAB_REGISTER_INDEX_FIELD));
+}
+
+
+int emitWhileToken(DList instList, SymTable symtab) {
+	int num = addLabelToSymtab(symtab);
+	emitStatementLabel(instList,symtab,num);
+	return num;
+}
+
+
+void emitWhileStatement(DList instList, SymTable symtab, int checkLabel, int afterLabel) {
+	char *inst;
+	inst = nssave(2, "\tjmp ", (char*)SymGetFieldByIndex(symtab,checkLabel,SYMTAB_LABEL_FIELD));
+	dlinkAppend(instList,dlinkNodeAlloc(inst));
+	emitStatementLabel(instList,symtab,afterLabel);
 }
 
 /**

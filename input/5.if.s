@@ -1,22 +1,7 @@
-Test    : LPAREN Expr RPAREN
-Test    : LPAREN Expr RPAREN
 WRITE LPAREN Expr RPAREN SEMICOLON
-CompoundStatement : LBRACE StatementList RBRACE
-TestAndThen : Test CompoundStatement
 WRITE LPAREN Expr RPAREN SEMICOLON
-CompoundStatement : LBRACE StatementList RBRACE
-IfStatement : IF TestAndThen ELSE CompoundStatement
-CompoundStatement : LBRACE StatementList RBRACE
-TestAndThen : Test CompoundStatement
-Test    : LPAREN Expr RPAREN
 WRITE LPAREN Expr RPAREN SEMICOLON
-CompoundStatement : LBRACE StatementList RBRACE
-TestAndThen : Test CompoundStatement
 WRITE LPAREN Expr RPAREN SEMICOLON
-CompoundStatement : LBRACE StatementList RBRACE
-IfStatement : IF TestAndThen ELSE CompoundStatement
-CompoundStatement : LBRACE StatementList RBRACE
-IfStatement : IF TestAndThen ELSE CompoundStatement
 	.section	.rodata
 	.int_wformat: .string "%d\n"
 	.str_wformat: .string "%s\n"
