@@ -94,6 +94,86 @@ void emitExit(DList instList) {
 }
 
 /**
+ * Add test and then instruction. Allocates new label and returns after label.
+ *
+ * @param instList a DList of instructions
+ * @param symtab a symbol table
+ * @param exprRegister The register containing the expression result
+ * @return 
+ */
+int emitTest(DList instList, SymTable symtab, int exprRegister) {
+	printf("emitTest: Expression register: %d\n", exprRegister);
+
+	// Allocate a register for -1
+	int regIndex = getFreeIntegerRegisterIndex(symtab);
+	char *inst;
+
+	// Compare expression to -1
+	inst = nssave(3,  "\tmovl ", "$-1 ", (char*)SymGetFieldByIndex(symtab,regIndex,SYM_NAME_FIELD));
+	dlinkAppend(instList,dlinkNodeAlloc(inst));
+
+	inst = nssave(4, "\ttestl ", (char*)SymGetFieldByIndex(symtab,exprRegister,SYM_NAME_FIELD), " ", (char*)SymGetFieldByIndex(symtab,regIndex,SYM_NAME_FIELD));
+	dlinkAppend(instList,dlinkNodeAlloc(inst));
+
+	// Allocate a new label for after statement
+	static int stringNum = 0;
+	int num = stringNum;
+	++stringNum;
+
+	char* strLabel = (char*)malloc(sizeof(char)*15);
+	snprintf(strLabel,15,"label%d",num);
+	SymPutFieldByIndex(symtab,num,SYMTAB_LABEL_FIELD,(Generic)(strLabel));
+
+	// Output a jump to that label if expression is false
+	inst = nssave(3, "\tje", " .", strLabel);
+	dlinkAppend(instList,dlinkNodeAlloc(inst));
+
+	return num;
+
+	// freeIntegerRegister((int)SymGetFieldByIndex(symtab,rhsRegIndex,SYMTAB_REGISTER_INDEX_FIELD));
+	// freeIntegerRegister((int)SymGetFieldByIndex(symtab,lhsRegIndex,SYMTAB_REGISTER_INDEX_FIELD));
+}
+
+/**
+ * Add test and then instruction.
+ *
+ * @param instList a DList of instructions
+ * @param symtab a symbol table
+ * @param resultRegister The register containing the result of the test
+ * @param afterLabelIndex The index of the label that is directly after code block
+ * @return 
+ */
+int emitTestAndThen(DList instList, SymTable symtab, int resultRegister, int labelIndex) {
+	// printf("emitTestAndThen: Result register: %d\n", resultRegister);
+	// printf("emitTestAndThen: After label: %d\n", afterLabelIndex);
+
+	// char *inst;
+	// inst = nssave(2, (char*)SymGetFieldByIndex(symtab,labelIndex,SYMTAB_LABEL_FIELD), ": nop");
+	// dlinkAppend(instList,dlinkNodeAlloc(inst));
+
+	// inst = nssave(5,  "\tmovl ", (char*)SymGetFieldByIndex(symtab,regIndex,SYM_NAME_FIELD),
+	// 		", (", regName, ")");
+	// dlinkAppend(instList,dlinkNodeAlloc(inst));
+
+	// freeIntegerRegister((int)SymGetFieldByIndex(symtab,rhsRegIndex,SYMTAB_REGISTER_INDEX_FIELD));
+	// freeIntegerRegister((int)SymGetFieldByIndex(symtab,lhsRegIndex,SYMTAB_REGISTER_INDEX_FIELD));
+}
+
+/**
+ * Add a label to the inst list.
+ *
+ * @param instList a DList of instructions
+ * @param symtab a symbol table
+ * @param operand the symbol table index of the register holding the operand
+ * @return the symbol table index for the result register
+ */
+void emitStatementLabel(DList instList, SymTable symtab, int labelIndex) {
+	char *inst;
+	inst = nssave(2, (char*)SymGetFieldByIndex(symtab,labelIndex,SYMTAB_LABEL_FIELD), ": nop");
+	dlinkAppend(instList,dlinkNodeAlloc(inst));	
+}
+
+/**
  * Add an instruction that performance an assignment.
  *
  * @param instList a DList of assembly instructions
@@ -106,7 +186,7 @@ void emitAssignment(DList instList,SymTable symtab,int lhsRegIndex, int rhsRegIn
 	
 	char* regName = malloc(sizeof(char) * 7);
 	get64bitIntegerRegisterName(symtab, lhsRegIndex, regName);
-	 inst = nssave(5,  "\tmovl ", (char*)SymGetFieldByIndex(symtab,rhsRegIndex,SYM_NAME_FIELD),
+	inst = nssave(5,  "\tmovl ", (char*)SymGetFieldByIndex(symtab,rhsRegIndex,SYM_NAME_FIELD),
 			", (", regName, ")");
 	dlinkAppend(instList,dlinkNodeAlloc(inst));
 

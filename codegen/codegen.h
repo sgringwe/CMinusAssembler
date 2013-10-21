@@ -26,6 +26,10 @@ typedef struct AddIdType {
 EXTERN(void, emitDataPrologue, (DList dataList));
 EXTERN(void, emitInstructions,(DList list));
 
+EXTERN(int, emitTestAndThen, (DList instList,SymTable symtab,int resultRegister,int afterLabelIndex));
+EXTERN(int, emitTest, (DList instList,SymTable symtab,int exprRegister));
+EXTERN(void, emitStatementLabel, (DList instList,SymTable symtab, int labelIndex));
+
 EXTERN(void, emitAssignment, (DList instList,SymTable symtab,int lhsRegIndex, int rhsRegIndex));
 EXTERN(void, emitReadVariable, (DList instList, SymTable symtab, int addrIndex));
 EXTERN(void, emitWriteExpression,(DList instList,SymTable symtab, int index, char *syscallService));

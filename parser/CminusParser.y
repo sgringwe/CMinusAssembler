@@ -102,7 +102,8 @@ extern int Cminus_lineno;
 
 %type <idList> IdentifierList
 %type <symIndex> Expr SimpleExpr AddExpr
-%type <symIndex> MulExpr Factor Variable StringConstant Constant VarDecl FunctionDecl ProcedureHead
+%type <symIndex> MulExpr Factor Variable StringConstant Constant VarDecl FunctionDecl ProcedureHead 
+%type <symIndex> CompoundStatement TestAndThen Test
 %type <offset> DeclList
 %type <name> IDENTIFIER STRING FLOATCON INTCON 
 
@@ -212,6 +213,9 @@ Statement 	: Assignment
 		| ReturnStatement
 		| ExitStatement	
 		| CompoundStatement
+    {
+      printf("Statement : CompoundStatement\n");
+    }
                 ;
 
 Assignment      : Variable ASSIGN Expr SEMICOLON
@@ -233,12 +237,17 @@ IfStatement	: IF TestAndThen ELSE CompoundStatement
 				
 TestAndThen	: Test CompoundStatement
     {
+      // $1 = result of test register
+      // $2 = index of after statement label
+      // $$ = emitTestAndThen(instList, symtab, $1, $2);
+      emitStatementLabel(instList,symtab, $1);
       printf("TestAndThen : Test CompoundStatement\n");
     }
 		;
 Test		: LPAREN Expr RPAREN
     {
-      printf("TestAndThen : Test CompoundStatement\n");
+      $$ = emitTest(instList, symtab, $2);
+      printf("Test    : LPAREN Expr RPAREN\n");
     }
 		;
 	
@@ -260,6 +269,7 @@ IOStatement     : READ LPAREN Variable RPAREN SEMICOLON
                 | WRITE LPAREN Expr RPAREN SEMICOLON
 		{
 			emitWriteExpression(instList,symtab,$3,SYSCALL_PRINT_INTEGER);
+      printf("WRITE LPAREN Expr RPAREN SEMICOLON\n");
 		}
                 | WRITE LPAREN StringConstant RPAREN SEMICOLON         
 		{
@@ -277,6 +287,11 @@ ExitStatement 	: EXIT SEMICOLON
 		;
 
 CompoundStatement : LBRACE StatementList RBRACE
+    {
+      // create a label for AFTER this statement
+      // emitStatementLabel(instList,symtab, );
+      printf("CompoundStatement : LBRACE StatementList RBRACE\n");
+    }
                 ;
 
 StatementList   : Statement
@@ -421,7 +436,7 @@ int Cminus_wrap() {
 static void initSymTable() {
 
 	symtab = SymInit(SYMTABLE_SIZE); 
-
+  SymInitField(symtab,SYMTAB_LABEL_FIELD,(Generic)-1,NULL);
 	SymInitField(symtab,SYMTAB_OFFSET_FIELD,(Generic)-1,NULL);
 	SymInitField(symtab,SYMTAB_REGISTER_INDEX_FIELD,(Generic)-1,NULL);
   SymInitField(symtab,SYMTAB_SIZE_FIELD,(Generic)-1,NULL);
@@ -431,6 +446,7 @@ static void deleteSymTable() {
     SymKillField(symtab,SYMTAB_SIZE_FIELD);
     SymKillField(symtab,SYMTAB_REGISTER_INDEX_FIELD);
     SymKillField(symtab,SYMTAB_OFFSET_FIELD);
+    SymKillField(symtab,SYMTAB_LABEL_FIELD);
     SymKill(symtab);
 
 }

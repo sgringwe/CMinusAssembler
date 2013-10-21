@@ -1,8 +1,14 @@
+emitTest: Expression register: 4
+Test    : LPAREN Expr RPAREN
+WRITE LPAREN Expr RPAREN SEMICOLON
+CompoundStatement : LBRACE StatementList RBRACE
+TestAndThen : Test CompoundStatement
+IF TestAndThen
 	.section	.rodata
 	.int_wformat: .string "%d\n"
 	.str_wformat: .string "%s\n"
 	.int_rformat: .string "%d"
-	.comm _gp, 8, 4
+	.comm _gp, 4, 4
 .string_const0: .string "enter a:"
 .string_const1: .string "complete!"
 	.text
@@ -17,7 +23,7 @@ main:	nop
 	movl $.str_wformat, %edi
 	call printf
 	movq $_gp,%rbx
-	addq $4, %rbx
+	addq $0, %rbx
 	movl $.int_rformat, %edi
 	movl %ebx, %esi
 	movl $0, %eax
@@ -30,13 +36,17 @@ main:	nop
 	movl $0, %ecx
 	movl $1, %ebx
 	cmovne %ebx, %ecx
-	movl $1, %ebx
-	movl %ebx, %esi
+	movl $-1 %ebx
+	testl %ecx %ebx
+	je .label0
+	movl $1, %r8d
+	movl %r8d, %esi
 	movl $0, %eax
 	movl $.int_wformat, %edi
 	call printf
-	movl $.string_const1, %ebx
-	movl %ebx, %esi
+label0: nop
+	movl $.string_const1, %r8d
+	movl %r8d, %esi
 	movl $0, %eax
 	movl $.str_wformat, %edi
 	call printf
