@@ -125,7 +125,7 @@ int emitTest(DList instList, SymTable symtab, int exprRegister) {
 	SymPutFieldByIndex(symtab,num,SYMTAB_LABEL_FIELD,(Generic)(strLabel));
 
 	// Output a jump to that label if expression is false
-	inst = nssave(3, "\tje", " .", strLabel);
+	inst = nssave(2, "\tje ", strLabel);
 	dlinkAppend(instList,dlinkNodeAlloc(inst));
 
 	return num;
