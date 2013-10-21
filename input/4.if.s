@@ -1,6 +1,23 @@
-emitTest: Expression register: 5
-emitTest: Expression register: 9
-emitTest: Expression register: 11
+Test    : LPAREN Expr RPAREN
+WRITE LPAREN Expr RPAREN SEMICOLON
+CompoundStatement : LBRACE StatementList RBRACE
+TestAndThen : Test CompoundStatement
+WRITE LPAREN Expr RPAREN SEMICOLON
+CompoundStatement : LBRACE StatementList RBRACE
+IfStatement : IF TestAndThen ELSE CompoundStatement
+Test    : LPAREN Expr RPAREN
+Test    : LPAREN Expr RPAREN
+WRITE LPAREN Expr RPAREN SEMICOLON
+CompoundStatement : LBRACE StatementList RBRACE
+TestAndThen : Test CompoundStatement
+WRITE LPAREN Expr RPAREN SEMICOLON
+CompoundStatement : LBRACE StatementList RBRACE
+IfStatement : IF TestAndThen ELSE CompoundStatement
+CompoundStatement : LBRACE StatementList RBRACE
+TestAndThen : Test CompoundStatement
+WRITE LPAREN Expr RPAREN SEMICOLON
+CompoundStatement : LBRACE StatementList RBRACE
+IfStatement : IF TestAndThen ELSE CompoundStatement
 	.section	.rodata
 	.int_wformat: .string "%d\n"
 	.str_wformat: .string "%s\n"
@@ -27,48 +44,54 @@ main:	nop
 	movq $_gp,%rbx
 	addq $0, %rbx
 	movl (%rbx), %ecx
-	movl $-1 %ebx
-	testl %ecx %ebx
-	je .label0
+	movl $-1 , %ebx
+	testl %ecx, %ebx
+	je label0
 	movl $1, %r8d
 	movl %r8d, %esi
 	movl $0, %eax
 	movl $.int_wformat, %edi
 	call printf
+	jmp label1
 label0: nop
 	movl $0, %r8d
 	movl %r8d, %esi
 	movl $0, %eax
 	movl $.int_wformat, %edi
 	call printf
+label1: nop
 	movq $_gp,%r8
 	addq $4, %r8
 	movl (%r8), %r9d
-	movl $-1 %r8d
-	testl %r9d %r8d
-	je .label1
+	movl $-1 , %r8d
+	testl %r9d, %r8d
+	je label2
 	movq $_gp,%r10
 	addq $0, %r10
 	movl (%r10), %r11d
-	movl $-1 %r10d
-	testl %r11d %r10d
-	je .label2
+	movl $-1 , %r10d
+	testl %r11d, %r10d
+	je label3
 	movl $0, %r12d
 	movl %r12d, %esi
 	movl $0, %eax
 	movl $.int_wformat, %edi
 	call printf
-label2: nop
+	jmp label4
+label3: nop
 	movl $1, %r12d
 	movl %r12d, %esi
 	movl $0, %eax
 	movl $.int_wformat, %edi
 	call printf
-label1: nop
+label4: nop
+	jmp label5
+label2: nop
 	movl $0, %r12d
 	movl %r12d, %esi
 	movl $0, %eax
 	movl $.int_wformat, %edi
 	call printf
+label5: nop
 	leave
 	ret

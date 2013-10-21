@@ -1,6 +1,24 @@
-emitTest: Expression register: 5
-emitTest: Expression register: 5
-emitTest: Expression register: 5
+CompoundStatement : LBRACE StatementList RBRACE
+Statement : CompoundStatement
+CompoundStatement : LBRACE StatementList RBRACE
+Statement : CompoundStatement
+Test    : LPAREN Expr RPAREN
+CompoundStatement : LBRACE StatementList RBRACE
+TestAndThen : Test CompoundStatement
+IF TestAndThen
+Test    : LPAREN Expr RPAREN
+CompoundStatement : LBRACE StatementList RBRACE
+TestAndThen : Test CompoundStatement
+IF TestAndThen
+Test    : LPAREN Expr RPAREN
+CompoundStatement : LBRACE StatementList RBRACE
+TestAndThen : Test CompoundStatement
+IF TestAndThen
+CompoundStatement : LBRACE StatementList RBRACE
+Statement : CompoundStatement
+CompoundStatement : LBRACE StatementList RBRACE
+Statement : CompoundStatement
+WRITE LPAREN Expr RPAREN SEMICOLON
 	.section	.rodata
 	.int_wformat: .string "%d\n"
 	.str_wformat: .string "%s\n"
@@ -170,9 +188,9 @@ main:	nop
 	movl $0, %ebx
 	movl $1, %ebx
 	cmovne %ebx, %ebx
-	movl $-1 %ebx
-	testl %ebx %ebx
-	je .label0
+	movl $-1 , %ebx
+	testl %ebx, %ebx
+	je label0
 	movq $_gp,bogus
 	addq $20, bogus
 	movl (bogus), bogus
@@ -199,72 +217,76 @@ main:	nop
 	movl $1, %ebx
 	addl %ebx, bogus
 	movl bogus, (%rbx)
+	jmp label1
 label0: nop
-	movq $_gp,%rbx
-	addq $20, %rbx
-	movl (%rbx), bogus
-	movl $1, %ebx
-	subl %ebx, bogus
-	movq $_gp,%rbx
-	addq $16, %rbx
-	movl (%rbx), bogus
-	imull bogus, bogus
-	movq $_gp,%rbx
-	addq $24, %rbx
-	movl (%rbx), bogus
-	addl bogus, bogus
-	movl (%rbx), %ebx
-	movq $_gp,%rbx
-	addq $20, %rbx
-	movl (%rbx), bogus
-	movq $_gp,%rbx
-	addq $16, %rbx
-	movl (%rbx), bogus
-	imull bogus, bogus
-	movq $_gp,%rbx
-	addq $24, %rbx
-	movl (%rbx), bogus
-	addl bogus, bogus
-	movl (%rbx), %ebx
-	cmpl %ebx, %ebx
-	movl $0, %ebx
-	movl $1, %ebx
-	cmovl %ebx, %ebx
-	movl $-1 %ebx
-	testl %ebx %ebx
-	je .label1
-	movq $_gp,bogus
-	addq $20, bogus
-	movl (bogus), bogus
-	movq $_gp,bogus
-	addq $16, bogus
-	movl (bogus), bogus
-	imull bogus, bogus
-	movq $_gp,bogus
-	addq $24, bogus
-	movl (bogus), bogus
-	addl bogus, bogus
-	movq $_gp,bogus
-	addq $20, bogus
-	movl (bogus), bogus
-	movl $1, bogus
-	subl bogus, bogus
-	movq $_gp,bogus
-	addq $16, bogus
-	movl (bogus), bogus
-	imull bogus, bogus
-	movq $_gp,bogus
-	addq $24, bogus
-	movl (bogus), bogus
-	addl bogus, bogus
-	movl (%rbx), bogus
-	movl $1, %ebx
-	addl %ebx, bogus
-	movl bogus, (%rbx)
 label1: nop
 	movq $_gp,%rbx
 	addq $20, %rbx
 	movl (%rbx), bogus
+	movl $1, %ebx
+	subl %ebx, bogus
+	movq $_gp,%rbx
+	addq $16, %rbx
+	movl (%rbx), bogus
+	imull bogus, bogus
+	movq $_gp,%rbx
+	addq $24, %rbx
+	movl (%rbx), bogus
+	addl bogus, bogus
+	movl (%rbx), %ebx
+	movq $_gp,%rbx
+	addq $20, %rbx
+	movl (%rbx), bogus
+	movq $_gp,%rbx
+	addq $16, %rbx
+	movl (%rbx), bogus
+	imull bogus, bogus
+	movq $_gp,%rbx
+	addq $24, %rbx
+	movl (%rbx), bogus
+	addl bogus, bogus
+	movl (%rbx), %ebx
+	cmpl %ebx, %ebx
+	movl $0, %ebx
+	movl $1, %ebx
+	cmovl %ebx, %ebx
+	movl $-1 , %ebx
+	testl %ebx, %ebx
+	je label2
+	movq $_gp,bogus
+	addq $20, bogus
+	movl (bogus), bogus
+	movq $_gp,bogus
+	addq $16, bogus
+	movl (bogus), bogus
+	imull bogus, bogus
+	movq $_gp,bogus
+	addq $24, bogus
+	movl (bogus), bogus
+	addl bogus, bogus
+	movq $_gp,bogus
+	addq $20, bogus
+	movl (bogus), bogus
+	movl $1, bogus
+	subl bogus, bogus
+	movq $_gp,bogus
+	addq $16, bogus
+	movl (bogus), bogus
+	imull bogus, bogus
+	movq $_gp,bogus
+	addq $24, bogus
+	movl (bogus), bogus
+	addl bogus, bogus
+	movl (%rbx), bogus
+	movl $1, %ebx
+	addl %ebx, bogus
+	movl bogus, (%rbx)
+	jmp label3
+label2: nop
+label3: nop
+	movq $_gp,%rbx
+	addq $20, %rbx
+	movl (%rbx), bogus
 	movq $_gp,%rbx
 	addq $16, %rbx
 	movl (%rbx), bogus
@@ -292,9 +314,9 @@ label1: nop
 	movl $0, %ebx
 	movl $1, %ebx
 	cmovl %ebx, %ebx
-	movl $-1 %ebx
-	testl %ebx %ebx
-	je .label2
+	movl $-1 , %ebx
+	testl %ebx, %ebx
+	je label4
 	movq $_gp,bogus
 	addq $20, bogus
 	movl (bogus), bogus
@@ -323,7 +345,9 @@ label1: nop
 	movl $1, %ebx
 	addl %ebx, bogus
 	movl bogus, (%rbx)
-label2: nop
+	jmp label5
+label4: nop
+label5: nop
 	movq $_gp,%rbx
 	addq $24, %rbx
 	movq $_gp,bogus

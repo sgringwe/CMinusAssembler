@@ -93,6 +93,18 @@ void emitExit(DList instList) {
   dlinkAppend(instList,dlinkNodeAlloc(inst));
 }
 
+int addLabelToSymtab(SymTable symtab) {
+	static int stringNum = 0;
+	int num = stringNum;
+	++stringNum;
+
+	char* strLabel = (char*)malloc(sizeof(char)*15);
+	snprintf(strLabel,15,"label%d",num);
+	SymPutFieldByIndex(symtab,num,SYMTAB_LABEL_FIELD,(Generic)(strLabel));
+
+	return num;
+}
+
 /**
  * Add test and then instruction. Allocates new label and returns after label.
  *
@@ -115,17 +127,11 @@ int emitTest(DList instList, SymTable symtab, int exprRegister) {
 	inst = nssave(4, "\ttestl ", (char*)SymGetFieldByIndex(symtab,exprRegister,SYM_NAME_FIELD), ", ", (char*)SymGetFieldByIndex(symtab,regIndex,SYM_NAME_FIELD));
 	dlinkAppend(instList,dlinkNodeAlloc(inst));
 
-	// Allocate a new label for after statement
-	static int stringNum = 0;
-	int num = stringNum;
-	++stringNum;
+	// Allocate a new label for else statement
+	int num = addLabelToSymtab(symtab);
 
-	char* strLabel = (char*)malloc(sizeof(char)*15);
-	snprintf(strLabel,15,"label%d",num);
-	SymPutFieldByIndex(symtab,num,SYMTAB_LABEL_FIELD,(Generic)(strLabel));
-
-	// Output a jump to that label if expression is false
-	inst = nssave(2, "\tje ", strLabel);
+	// Output a jump to the elseLabel if equal (false)
+	inst = nssave(2, "\tje ", (char*)SymGetFieldByIndex(symtab,num,SYMTAB_LABEL_FIELD));
 	dlinkAppend(instList,dlinkNodeAlloc(inst));
 
 	return num;
@@ -143,13 +149,21 @@ int emitTest(DList instList, SymTable symtab, int exprRegister) {
  * @param afterLabelIndex The index of the label that is directly after code block
  * @return 
  */
-int emitTestAndThen(DList instList, SymTable symtab, int resultRegister, int labelIndex) {
+int emitTestAndThen(DList instList, SymTable symtab,int elseLabel) {
 	// printf("emitTestAndThen: Result register: %d\n", resultRegister);
 	// printf("emitTestAndThen: After label: %d\n", afterLabelIndex);
 
-	// char *inst;
-	// inst = nssave(2, (char*)SymGetFieldByIndex(symtab,labelIndex,SYMTAB_LABEL_FIELD), ": nop");
-	// dlinkAppend(instList,dlinkNodeAlloc(inst));
+	// Allocate a new label for after label for when if is done executing
+	int num = addLabelToSymtab(symtab);
+
+	char *inst;
+	inst = nssave(2, "\tjmp ", (char*)SymGetFieldByIndex(symtab,num,SYMTAB_LABEL_FIELD));
+	dlinkAppend(instList,dlinkNodeAlloc(inst));
+
+	// Output the else
+	emitStatementLabel(instList,symtab,elseLabel);
+
+	return num;
 
 	// inst = nssave(5,  "\tmovl ", (char*)SymGetFieldByIndex(symtab,regIndex,SYM_NAME_FIELD),
 	// 		", (", regName, ")");

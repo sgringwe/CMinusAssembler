@@ -1,6 +1,22 @@
-emitTest: Expression register: 6
-emitTest: Expression register: 8
-emitTest: Expression register: 12
+Test    : LPAREN Expr RPAREN
+Test    : LPAREN Expr RPAREN
+WRITE LPAREN Expr RPAREN SEMICOLON
+CompoundStatement : LBRACE StatementList RBRACE
+TestAndThen : Test CompoundStatement
+WRITE LPAREN Expr RPAREN SEMICOLON
+CompoundStatement : LBRACE StatementList RBRACE
+IfStatement : IF TestAndThen ELSE CompoundStatement
+CompoundStatement : LBRACE StatementList RBRACE
+TestAndThen : Test CompoundStatement
+Test    : LPAREN Expr RPAREN
+WRITE LPAREN Expr RPAREN SEMICOLON
+CompoundStatement : LBRACE StatementList RBRACE
+TestAndThen : Test CompoundStatement
+WRITE LPAREN Expr RPAREN SEMICOLON
+CompoundStatement : LBRACE StatementList RBRACE
+IfStatement : IF TestAndThen ELSE CompoundStatement
+CompoundStatement : LBRACE StatementList RBRACE
+IfStatement : IF TestAndThen ELSE CompoundStatement
 	.section	.rodata
 	.int_wformat: .string "%d\n"
 	.str_wformat: .string "%s\n"
@@ -50,9 +66,9 @@ main:	nop
 	movl $0, %ecx
 	movl $1, %ebx
 	cmovg %ebx, %ecx
-	movl $-1 %ebx
-	testl %ecx %ebx
-	je .label0
+	movl $-1 , %ebx
+	testl %ecx, %ebx
+	je label0
 	movq $_gp,%r8
 	addq $0, %r8
 	movl (%r8), %r9d
@@ -61,9 +77,9 @@ main:	nop
 	movl $0, %r9d
 	movl $1, %r8d
 	cmovg %r8d, %r9d
-	movl $-1 %r8d
-	testl %r9d %r8d
-	je .label1
+	movl $-1 , %r8d
+	testl %r9d, %r8d
+	je label1
 	movl $.string_const2, %r10d
 	movl %r10d, %esi
 	movl $0, %eax
@@ -76,6 +92,7 @@ main:	nop
 	movl $0, %eax
 	movl $.int_wformat, %edi
 	call printf
+	jmp label2
 label1: nop
 	movl $.string_const3, %r10d
 	movl %r10d, %esi
@@ -89,6 +106,8 @@ label1: nop
 	movl $0, %eax
 	movl $.int_wformat, %edi
 	call printf
+label2: nop
+	jmp label3
 label0: nop
 	movq $_gp,%r10
 	addq $0, %r10
@@ -98,9 +117,9 @@ label0: nop
 	movl $0, %r11d
 	movl $1, %r10d
 	cmovl %r10d, %r11d
-	movl $-1 %r10d
-	testl %r11d %r10d
-	je .label2
+	movl $-1 , %r10d
+	testl %r11d, %r10d
+	je label4
 	movl $.string_const4, %r12d
 	movl %r12d, %esi
 	movl $0, %eax
@@ -113,7 +132,8 @@ label0: nop
 	movl $0, %eax
 	movl $.int_wformat, %edi
 	call printf
-label2: nop
+	jmp label5
+label4: nop
 	movl $.string_const5, %r12d
 	movl %r12d, %esi
 	movl $0, %eax
@@ -126,5 +146,7 @@ label2: nop
 	movl $0, %eax
 	movl $.int_wformat, %edi
 	call printf
+label5: nop
+label3: nop
 	leave
 	ret

@@ -1,3 +1,11 @@
+WRITE LPAREN Expr RPAREN SEMICOLON
+CompoundStatement : LBRACE StatementList RBRACE
+Statement : CompoundStatement
+WRITE LPAREN Expr RPAREN SEMICOLON
+CompoundStatement : LBRACE StatementList RBRACE
+Statement : CompoundStatement
+CompoundStatement : LBRACE StatementList RBRACE
+Statement : CompoundStatement
 	.section	.rodata
 	.int_wformat: .string "%d\n"
 	.str_wformat: .string "%s\n"

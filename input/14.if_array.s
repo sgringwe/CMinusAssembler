@@ -1,4 +1,9 @@
-emitTest: Expression register: 4
+Test    : LPAREN Expr RPAREN
+CompoundStatement : LBRACE StatementList RBRACE
+TestAndThen : Test CompoundStatement
+WRITE LPAREN Expr RPAREN SEMICOLON
+CompoundStatement : LBRACE StatementList RBRACE
+IfStatement : IF TestAndThen ELSE CompoundStatement
 	.section	.rodata
 	.int_wformat: .string "%d\n"
 	.str_wformat: .string "%s\n"
@@ -40,14 +45,15 @@ main:	nop
 	movl $1, %ebx
 	cmovge %ebx, %r8d
 	orl %r8d, %ecx
-	movl $-1 %ebx
-	testl %ecx %ebx
-	je .label0
+	movl $-1 , %ebx
+	testl %ecx, %ebx
+	je label0
 	movl $.string_const1, %r8d
 	movl %r8d, %esi
 	movl $0, %eax
 	movl $.str_wformat, %edi
 	call printf
+	jmp label1
 label0: nop
 	movq $_gp,%r8
 	addq $4, %r8
@@ -69,5 +75,6 @@ label0: nop
 	movl $0, %eax
 	movl $.int_wformat, %edi
 	call printf
+label1: nop
 	leave
 	ret
