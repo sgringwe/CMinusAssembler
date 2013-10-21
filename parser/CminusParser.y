@@ -214,7 +214,7 @@ Statement 	: Assignment
 		| ExitStatement	
 		| CompoundStatement
     {
-      printf("Statement : CompoundStatement\n");
+      // printf("Statement : CompoundStatement\n");
     }
                 ;
 
@@ -227,12 +227,12 @@ Assignment      : Variable ASSIGN Expr SEMICOLON
 IfStatement	: IF TestAndThen ELSE CompoundStatement
     {
       emitStatementLabel(instList,symtab,$2);
-      printf("IfStatement : IF TestAndThen ELSE CompoundStatement\n");
+      // printf("IfStatement : IF TestAndThen ELSE CompoundStatement\n");
     }
 		| IF TestAndThen
     {
       emitStatementLabel(instList,symtab,$2);
-      printf("IF TestAndThen\n");
+      // printf("IF TestAndThen\n");
     }
 		;
 		
@@ -242,13 +242,13 @@ TestAndThen	: Test CompoundStatement
       // $1 = label for after statement
       $$ = emitTestAndThen(instList,symtab,$1);
       // emitStatementLabel(instList,symtab, $1);
-      printf("TestAndThen : Test CompoundStatement\n");
+      // printf("TestAndThen : Test CompoundStatement\n");
     }
 		;
 Test		: LPAREN Expr RPAREN
     {
       $$ = emitTest(instList, symtab, $2);
-      printf("Test    : LPAREN Expr RPAREN\n");
+      // printf("Test    : LPAREN Expr RPAREN\n");
     }
 		;
 	
@@ -270,7 +270,7 @@ IOStatement     : READ LPAREN Variable RPAREN SEMICOLON
                 | WRITE LPAREN Expr RPAREN SEMICOLON
 		{
 			emitWriteExpression(instList,symtab,$3,SYSCALL_PRINT_INTEGER);
-      printf("WRITE LPAREN Expr RPAREN SEMICOLON\n");
+      // printf("WRITE LPAREN Expr RPAREN SEMICOLON\n");
 		}
                 | WRITE LPAREN StringConstant RPAREN SEMICOLON         
 		{
@@ -291,7 +291,7 @@ CompoundStatement : LBRACE StatementList RBRACE
     {
       // create a label for AFTER this statement
       // emitStatementLabel(instList,symtab, );
-      printf("CompoundStatement : LBRACE StatementList RBRACE\n");
+      // printf("CompoundStatement : LBRACE StatementList RBRACE\n");
     }
                 ;
 
