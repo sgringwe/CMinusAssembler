@@ -210,7 +210,7 @@ Statement 	: Assignment
                 | IfStatement
 		| WhileStatement
     {
-      printf("Statement : WhileStatement\n");
+      // printf("Statement : WhileStatement\n");
     }
                 | IOStatement 
 		| ReturnStatement
@@ -256,13 +256,13 @@ Test		: LPAREN Expr RPAREN
 WhileStatement  : WhileToken WhileExpr Statement
     {
       emitWhileStatement(instList,symtab,$1,$2);
-      printf("WhileStatement  : WhileToken WhileExpr Statement\n");
+      // printf("WhileStatement  : WhileToken WhileExpr Statement\n");
     }
                 ;
                 
 WhileExpr	: LPAREN Expr RPAREN
     {
-      printf("WhileExpr : LPAREN Expr RPAREN\n");
+      // printf("WhileExpr : LPAREN Expr RPAREN\n");
       $$ = emitTest(instList,symtab, $2);
     }
 		;
@@ -270,7 +270,7 @@ WhileExpr	: LPAREN Expr RPAREN
 WhileToken	: WHILE
     {
       $$ = emitWhileToken(instList,symtab);
-      printf("WhileToken  : WHILE\n");
+      // printf("WhileToken  : WHILE\n");
     }
 		;
 
@@ -282,7 +282,7 @@ IOStatement     : READ LPAREN Variable RPAREN SEMICOLON
                 | WRITE LPAREN Expr RPAREN SEMICOLON
 		{
 			emitWriteExpression(instList,symtab,$3,SYSCALL_PRINT_INTEGER);
-      printf("WRITE LPAREN Expr RPAREN SEMICOLON\n");
+      // printf("WRITE LPAREN Expr RPAREN SEMICOLON\n");
 		}
                 | WRITE LPAREN StringConstant RPAREN SEMICOLON         
 		{
