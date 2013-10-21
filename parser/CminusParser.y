@@ -193,12 +193,14 @@ IdentifierList 	: VarDecl
                 ;
 
 VarDecl 	: IDENTIFIER
-		{ 
+		{
 			$$ = SymIndex(symtab,$1);
+      SymPutFieldByIndex(symtab,$$,SYMTAB_SIZE_FIELD,(Generic)4);
 		}
 		| IDENTIFIER LBRACKET INTCON RBRACKET
 		{
-			$$ = SYM_INVALID_INDEX;
+			$$ = SymIndex(symtab,$1);
+      SymPutFieldByIndex(symtab,$$,SYMTAB_SIZE_FIELD,(Generic)(4 * atoi($3)));
 		}
 		;
 
@@ -414,7 +416,8 @@ Variable        : IDENTIFIER
 		}
                 | IDENTIFIER LBRACKET Expr RBRACKET    
 		{
-			$$ = SYM_INVALID_INDEX;
+			int symIndex = SymQueryIndex(symtab,$1 + ($3 * 4));
+      $$ = emitComputeVariableAddress(instList,symtab,symIndex);
 		}
                 ;			       
 

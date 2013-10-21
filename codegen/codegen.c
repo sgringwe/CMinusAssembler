@@ -653,12 +653,12 @@ void addIdToSymtab(DNode node, AddIdStructPtr data) {
 	if (typeIndex == -1) {
 		SymPutFieldByIndex(symtab,symIndex,SYMTAB_TYPE_INDEX_FIELD,(Generic)data->typeIndex);
 		typeIndex = data->typeIndex;
-	}
+	}*/
 
-        int size = (int)SymGetFieldByIndex(symtab,typeIndex,SYMTAB_SIZE_FIELD);*/
-	int size = 4;
+  int size = (int)SymGetFieldByIndex(data->symtab,symIndex,SYMTAB_SIZE_FIELD);
+	// int size = 4;
 
-        SymPutFieldByIndex(data->symtab,symIndex,SYMTAB_OFFSET_FIELD,(Generic)(data->offset));
-        data->offset += size;
+  SymPutFieldByIndex(data->symtab,symIndex,SYMTAB_OFFSET_FIELD,(Generic)(data->offset));
+  data->offset += size;
 }
 
