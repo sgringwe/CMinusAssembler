@@ -102,7 +102,7 @@ void emitExit(DList instList) {
  * @return 
  */
 int emitTest(DList instList, SymTable symtab, int exprRegister) {
-	printf("emitTest: Expression register: %d\n", exprRegister);
+	// printf("emitTest: Expression register: %d\n", exprRegister);
 
 	// Allocate a register for -1
 	int regIndex = getFreeIntegerRegisterIndex(symtab);
