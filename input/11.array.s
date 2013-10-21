@@ -1,4 +1,3 @@
-WRITE LPAREN Expr RPAREN SEMICOLON
 	.section	.rodata
 	.int_wformat: .string "%d\n"
 	.str_wformat: .string "%s\n"

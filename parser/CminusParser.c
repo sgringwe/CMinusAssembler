@@ -1658,7 +1658,7 @@ yyreduce:
   case 25:
 #line 216 "CminusParser.y"
     {
-      printf("Statement : CompoundStatement\n");
+      // printf("Statement : CompoundStatement\n");
     ;}
     break;
 
@@ -1672,14 +1672,14 @@ yyreduce:
   case 27:
 #line 228 "CminusParser.y"
     {
-      printf("IfStatement : IF TestAndThen ELSE CompoundStatement\n");
+      // printf("IfStatement : IF TestAndThen ELSE CompoundStatement\n");
     ;}
     break;
 
   case 28:
 #line 232 "CminusParser.y"
     {
-      printf("IF TestAndThen\n");
+      // printf("IF TestAndThen\n");
     ;}
     break;
 
@@ -1690,7 +1690,7 @@ yyreduce:
       // $2 = index of after statement label
       // $$ = emitTestAndThen(instList, symtab, $1, $2);
       emitStatementLabel(instList,symtab, (yyvsp[(1) - (2)].symIndex));
-      printf("TestAndThen : Test CompoundStatement\n");
+      // printf("TestAndThen : Test CompoundStatement\n");
     ;}
     break;
 
@@ -1698,7 +1698,7 @@ yyreduce:
 #line 248 "CminusParser.y"
     {
       (yyval.symIndex) = emitTest(instList, symtab, (yyvsp[(2) - (3)].symIndex));
-      printf("Test    : LPAREN Expr RPAREN\n");
+      // printf("Test    : LPAREN Expr RPAREN\n");
     ;}
     break;
 
@@ -1713,7 +1713,7 @@ yyreduce:
 #line 270 "CminusParser.y"
     {
 			emitWriteExpression(instList,symtab,(yyvsp[(3) - (5)].symIndex),SYSCALL_PRINT_INTEGER);
-      printf("WRITE LPAREN Expr RPAREN SEMICOLON\n");
+      // printf("WRITE LPAREN Expr RPAREN SEMICOLON\n");
 		;}
     break;
 
@@ -1736,7 +1736,7 @@ yyreduce:
     {
       // create a label for AFTER this statement
       // emitStatementLabel(instList,symtab, );
-      printf("CompoundStatement : LBRACE StatementList RBRACE\n");
+      // printf("CompoundStatement : LBRACE StatementList RBRACE\n");
     ;}
     break;
 

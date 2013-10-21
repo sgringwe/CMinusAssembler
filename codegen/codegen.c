@@ -109,10 +109,10 @@ int emitTest(DList instList, SymTable symtab, int exprRegister) {
 	char *inst;
 
 	// Compare expression to -1
-	inst = nssave(3,  "\tmovl ", "$-1 ", (char*)SymGetFieldByIndex(symtab,regIndex,SYM_NAME_FIELD));
+	inst = nssave(4,  "\tmovl ", "$-1 ", ", ", (char*)SymGetFieldByIndex(symtab,regIndex,SYM_NAME_FIELD));
 	dlinkAppend(instList,dlinkNodeAlloc(inst));
 
-	inst = nssave(4, "\ttestl ", (char*)SymGetFieldByIndex(symtab,exprRegister,SYM_NAME_FIELD), " ", (char*)SymGetFieldByIndex(symtab,regIndex,SYM_NAME_FIELD));
+	inst = nssave(4, "\ttestl ", (char*)SymGetFieldByIndex(symtab,exprRegister,SYM_NAME_FIELD), ", ", (char*)SymGetFieldByIndex(symtab,regIndex,SYM_NAME_FIELD));
 	dlinkAppend(instList,dlinkNodeAlloc(inst));
 
 	// Allocate a new label for after statement
