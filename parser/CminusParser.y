@@ -221,14 +221,25 @@ Assignment      : Variable ASSIGN Expr SEMICOLON
                 ;
 				
 IfStatement	: IF TestAndThen ELSE CompoundStatement
+    {
+      printf("IfStatement : IF TestAndThen ELSE CompoundStatement\n");
+    }
 		| IF TestAndThen
+    {
+      printf("IF TestAndThen\n");
+    }
 		;
 		
 				
 TestAndThen	: Test CompoundStatement
+    {
+      printf("TestAndThen : Test CompoundStatement\n");
+    }
 		;
-				
 Test		: LPAREN Expr RPAREN
+    {
+      printf("TestAndThen : Test CompoundStatement\n");
+    }
 		;
 	
 
