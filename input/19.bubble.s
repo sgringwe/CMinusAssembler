@@ -1,29 +1,3 @@
-Offset for 1 is 60
-Offset for 1 is 60
-Offset for 4 is 72
-Offset for 1 is 60
-Offset for 2 is 64
-Offset for 1 is 60
-Offset for 2 is 64
-Offset for 2 is 64
-Offset for 4 is 72
-Offset for 4 is 72
-Offset for 2 is 64
-Offset for 2 is 64
-Offset for 2 is 64
-Offset for 3 is 68
-Offset for 1 is 60
-Offset for 1 is 60
-Offset for 4 is 72
-Offset for 4 is 72
-Offset for 3 is 68
-Offset for 1 is 60
-Offset for 1 is 60
-Offset for 1 is 60
-Offset for 1 is 60
-Offset for 1 is 60
-Offset for 1 is 60
-Offset for 1 is 60
 	.section	.rodata
 	.int_wformat: .string "%d\n"
 	.str_wformat: .string "%s\n"
@@ -40,274 +14,274 @@ main:	nop
 	addq $0, %rcx
 	imull %ebx, $4
 	addq %ecx, %ebx
-	movl $32, %r8d
-	movl %r8d, (%rcx)
-	movl $1, %ecx
+	movl $32, %ebx
+	movl %ebx, (%rcx)
+	movl $1, %ebx
+	movq $_gp,%rcx
+	addq $0, %rcx
+	imull %ebx, $4
+	addq %ecx, %ebx
+	movl $11, %ebx
+	movl %ebx, (%rcx)
+	movl $2, %ebx
+	movq $_gp,%rcx
+	addq $0, %rcx
+	imull %ebx, $4
+	addq %ecx, %ebx
+	movl $111, %ebx
+	movl %ebx, (%rcx)
+	movl $3, %ebx
+	movq $_gp,%rcx
+	addq $0, %rcx
+	imull %ebx, $4
+	addq %ecx, %ebx
+	movl $88, %ebx
+	movl %ebx, (%rcx)
+	movl $4, %ebx
+	movq $_gp,%rcx
+	addq $0, %rcx
+	imull %ebx, $4
+	addq %ecx, %ebx
+	movl $11, %ebx
+	movl %ebx, (%rcx)
+	movl $5, %ebx
+	movq $_gp,%rcx
+	addq $0, %rcx
+	imull %ebx, $4
+	addq %ecx, %ebx
+	movl $44, %ebx
+	movl %ebx, (%rcx)
+	movl $6, %ebx
+	movq $_gp,%rcx
+	addq $0, %rcx
+	imull %ebx, $4
+	addq %ecx, %ebx
+	movl $33, %ebx
+	movl %ebx, (%rcx)
+	movl $7, %ebx
+	movq $_gp,%rcx
+	addq $0, %rcx
+	imull %ebx, $4
+	addq %ecx, %ebx
+	movl $33, %ebx
+	movl %ebx, (%rcx)
+	movl $8, %ebx
+	movq $_gp,%rcx
+	addq $0, %rcx
+	imull %ebx, $4
+	addq %ecx, %ebx
+	movl $22, %ebx
+	movl %ebx, (%rcx)
+	movl $9, %ebx
+	movq $_gp,%rcx
+	addq $0, %rcx
+	imull %ebx, $4
+	addq %ecx, %ebx
+	movl $77, %ebx
+	movl %ebx, (%rcx)
+	movl $10, %ebx
+	movq $_gp,%rcx
+	addq $0, %rcx
+	imull %ebx, $4
+	addq %ecx, %ebx
+	movl $45, %ebx
+	movl %ebx, (%rcx)
+	movl $11, %ebx
+	movq $_gp,%rcx
+	addq $0, %rcx
+	imull %ebx, $4
+	addq %ecx, %ebx
+	movl $65, %ebx
+	movl %ebx, (%rcx)
+	movl $12, %ebx
+	movq $_gp,%rcx
+	addq $0, %rcx
+	imull %ebx, $4
+	addq %ecx, %ebx
+	movl $76, %ebx
+	movl %ebx, (%rcx)
+	movl $13, %ebx
+	movq $_gp,%rcx
+	addq $0, %rcx
+	imull %ebx, $4
+	addq %ecx, %ebx
+	movl $87, %ebx
+	movl %ebx, (%rcx)
+	movl $14, %ebx
+	movq $_gp,%rcx
+	addq $0, %rcx
+	imull %ebx, $4
+	addq %ecx, %ebx
+	movl $34, %ebx
+	movl %ebx, (%rcx)
+	movq $_gp,%rbx
+	addq $60, %rbx
+	movl $0, %ecx
+	movl %ecx, (%rbx)
+label0: nop
+	movq $_gp,%rbx
+	addq $60, %rbx
+	movl (%rbx), %ecx
+	movl $14, %ebx
+	cmpl %ebx, %ecx
+	movl $0, %ecx
+	movl $1, %ebx
+	cmovl %ebx, %ecx
+	movl $-1 , %ebx
+	testl %ecx, %ebx
+	je label1
 	movq $_gp,%r8
-	addq $0, %r8
-	imull %ecx, $4
-	addq %r8d, %ecx
-	movl $11, %r9d
-	movl %r9d, (%r8)
-	movl $2, %r8d
+	addq $72, %r8
 	movq $_gp,%r9
-	addq $0, %r9
-	imull %r8d, $4
-	addq %r9d, %r8d
-	movl $111, %r10d
-	movl %r10d, (%r9)
-	movl $3, %r9d
+	addq $60, %r9
+	movl (%r9), %r10d
+	movl %r10d, (%r8)
+	movq $_gp,%r8
+	addq $64, %r8
+	movq $_gp,%r9
+	addq $60, %r9
+	movl (%r9), %r10d
+	movl $1, %r9d
+	addl %r9d, %r10d
+	movl %r10d, (%r8)
+label2: nop
+	movq $_gp,%r8
+	addq $64, %r8
+	movl (%r8), %r9d
+	movl $15, %r8d
+	cmpl %r8d, %r9d
+	movl $0, %r9d
+	movl $1, %r8d
+	cmovl %r8d, %r9d
+	movl $-1 , %r8d
+	testl %r9d, %r8d
+	je label3
+	movq $_gp,%r10
+	addq $64, %r10
+	movl (%r10), %r11d
 	movq $_gp,%r10
 	addq $0, %r10
-	imull %r9d, $4
-	addq %r10d, %r9d
-	movl $88, %r11d
-	movl %r11d, (%r10)
-	movl $4, %r10d
-	movq $_gp,%r11
-	addq $0, %r11
-	imull %r10d, $4
-	addq %r11d, %r10d
-	movl $11, %r12d
-	movl %r12d, (%r11)
-	movl $5, %r11d
-	movq $_gp,%r12
-	addq $0, %r12
 	imull %r11d, $4
-	addq %r12d, %r11d
-	movl $44, %r13d
-	movl %r13d, (%r12)
-	movl $6, %r12d
-	movq $_gp,%r13
-	addq $0, %r13
+	addq %r10d, %r11d
+	movl (%r10), %r11d
+	movq $_gp,%r10
+	addq $72, %r10
+	movl (%r10), %r12d
+	movq $_gp,%r10
+	addq $0, %r10
 	imull %r12d, $4
-	addq %r13d, %r12d
-	movl $33, %r14d
-	movl %r14d, (%r13)
-	movl $7, %r13d
-	movq $_gp,%r14
-	addq $0, %r14
-	imull %r13d, $4
-	addq %r14d, %r13d
-	movl $33, %r15d
-	movl %r15d, (%r14)
-	movl $8, %r14d
-	movq $_gp,%r15
-	addq $0, %r15
-	imull %r14d, $4
-	addq %r15d, %r14d
-	movl $22, bogus
-	movl bogus, (%r15)
-	movl $9, %r15d
-	movq $_gp,bogus
-	addq $0, bogus
-	imull %r15d, $4
-	addq bogus, %r15d
-	movl $77, bogus
-	movl bogus, (bogus)
-	movl $10, bogus
-	movq $_gp,bogus
-	addq $0, bogus
-	imull bogus, $4
-	addq bogus, bogus
-	movl $45, bogus
-	movl bogus, (bogus)
-	movl $11, bogus
-	movq $_gp,bogus
-	addq $0, bogus
-	imull bogus, $4
-	addq bogus, bogus
-	movl $65, bogus
-	movl bogus, (bogus)
-	movl $12, bogus
-	movq $_gp,bogus
-	addq $0, bogus
-	imull bogus, $4
-	addq bogus, bogus
-	movl $76, bogus
-	movl bogus, (bogus)
-	movl $13, bogus
-	movq $_gp,bogus
-	addq $0, bogus
-	imull bogus, $4
-	addq bogus, bogus
-	movl $87, bogus
-	movl bogus, (bogus)
-	movl $14, bogus
-	movq $_gp,bogus
-	addq $0, bogus
-	imull bogus, $4
-	addq bogus, bogus
-	movl $34, bogus
-	movl bogus, (bogus)
-	movq $_gp,bogus
-	addq $60, bogus
-	movl $0, bogus
-	movl bogus, (bogus)
-label0: nop
-	movq $_gp,bogus
-	addq $60, bogus
-	movl (bogus), bogus
-	movl $14, bogus
-	cmpl bogus, bogus
-	movl $0, bogus
-	movl $1, bogus
-	cmovl bogus, bogus
-	movl $-1 , bogus
-	testl bogus, bogus
-	je label1
-	movq $_gp,bogus
-	addq $72, bogus
-	movq $_gp,bogus
-	addq $60, bogus
-	movl (bogus), bogus
-	movl bogus, (bogus)
-	movq $_gp,bogus
-	addq $64, bogus
-	movq $_gp,bogus
-	addq $60, bogus
-	movl (bogus), bogus
-	movl $1, bogus
-	addl bogus, bogus
-	movl bogus, (bogus)
-label2: nop
-	movq $_gp,bogus
-	addq $64, bogus
-	movl (bogus), bogus
-	movl $15, bogus
-	cmpl bogus, bogus
-	movl $0, bogus
-	movl $1, bogus
-	cmovl bogus, bogus
-	movl $-1 , bogus
-	testl bogus, bogus
-	je label3
-	movq $_gp,bogus
-	addq $64, bogus
-	movl (bogus), bogus
-	movq $_gp,bogus
-	addq $0, bogus
-	imull bogus, $4
-	addq bogus, bogus
-	movl (bogus), bogus
-	movq $_gp,bogus
-	addq $72, bogus
-	movl (bogus), bogus
-	movq $_gp,bogus
-	addq $0, bogus
-	imull bogus, $4
-	addq bogus, bogus
-	movl (bogus), bogus
-	cmpl bogus, bogus
-	movl $0, bogus
-	movl $1, bogus
-	cmovl bogus, bogus
-	movl $-1 , bogus
-	testl bogus, bogus
+	addq %r10d, %r12d
+	movl (%r10), %r12d
+	cmpl %r12d, %r11d
+	movl $0, %r11d
+	movl $1, %r10d
+	cmovl %r10d, %r11d
+	movl $-1 , %r10d
+	testl %r11d, %r10d
 	je label4
-	movq $_gp,bogus
-	addq $72, bogus
-	movq $_gp,bogus
-	addq $64, bogus
-	movl (bogus), bogus
-	movl bogus, (bogus)
+	movq $_gp,%r12
+	addq $72, %r12
+	movq $_gp,%r13
+	addq $64, %r13
+	movl (%r13), %r14d
+	movl %r14d, (%r12)
 	jmp label5
 label4: nop
 label5: nop
-	movq $_gp,bogus
-	addq $64, bogus
-	movq $_gp,bogus
-	addq $64, bogus
-	movl (bogus), bogus
-	movl $1, bogus
-	addl bogus, bogus
-	movl bogus, (bogus)
+	movq $_gp,%r12
+	addq $64, %r12
+	movq $_gp,%r13
+	addq $64, %r13
+	movl (%r13), %r14d
+	movl $1, %r13d
+	addl %r13d, %r14d
+	movl %r14d, (%r12)
 	jmp label2
 label3: nop
-	movq $_gp,bogus
-	addq $68, bogus
-	movq $_gp,bogus
-	addq $60, bogus
-	movl (bogus), bogus
-	movq $_gp,bogus
-	addq $0, bogus
-	imull bogus, $4
-	addq bogus, bogus
-	movl (bogus), bogus
-	movl bogus, (bogus)
-	movq $_gp,bogus
-	addq $60, bogus
-	movl (bogus), bogus
-	movq $_gp,bogus
-	addq $0, bogus
-	imull bogus, $4
-	addq bogus, bogus
-	movq $_gp,bogus
-	addq $72, bogus
-	movl (bogus), bogus
-	movq $_gp,bogus
-	addq $0, bogus
-	imull bogus, $4
-	addq bogus, bogus
-	movl (bogus), bogus
-	movl bogus, (bogus)
-	movq $_gp,bogus
-	addq $72, bogus
-	movl (bogus), bogus
-	movq $_gp,bogus
-	addq $0, bogus
-	imull bogus, $4
-	addq bogus, bogus
-	movq $_gp,bogus
-	addq $68, bogus
-	movl (bogus), bogus
-	movl bogus, (bogus)
-	movq $_gp,bogus
-	addq $60, bogus
-	movq $_gp,bogus
-	addq $60, bogus
-	movl (bogus), bogus
-	movl $1, bogus
-	addl bogus, bogus
-	movl bogus, (bogus)
+	movq $_gp,%r12
+	addq $68, %r12
+	movq $_gp,%r13
+	addq $60, %r13
+	movl (%r13), %r14d
+	movq $_gp,%r13
+	addq $0, %r13
+	imull %r14d, $4
+	addq %r13d, %r14d
+	movl (%r13), %r14d
+	movl %r14d, (%r12)
+	movq $_gp,%r12
+	addq $60, %r12
+	movl (%r12), %r13d
+	movq $_gp,%r12
+	addq $0, %r12
+	imull %r13d, $4
+	addq %r12d, %r13d
+	movq $_gp,%r13
+	addq $72, %r13
+	movl (%r13), %r14d
+	movq $_gp,%r13
+	addq $0, %r13
+	imull %r14d, $4
+	addq %r13d, %r14d
+	movl (%r13), %r14d
+	movl %r14d, (%r12)
+	movq $_gp,%r12
+	addq $72, %r12
+	movl (%r12), %r13d
+	movq $_gp,%r12
+	addq $0, %r12
+	imull %r13d, $4
+	addq %r12d, %r13d
+	movq $_gp,%r13
+	addq $68, %r13
+	movl (%r13), %r14d
+	movl %r14d, (%r12)
+	movq $_gp,%r12
+	addq $60, %r12
+	movq $_gp,%r13
+	addq $60, %r13
+	movl (%r13), %r14d
+	movl $1, %r13d
+	addl %r13d, %r14d
+	movl %r14d, (%r12)
 	jmp label0
 label1: nop
-	movq $_gp,bogus
-	addq $60, bogus
-	movl $0, bogus
-	movl bogus, (bogus)
+	movq $_gp,%r12
+	addq $60, %r12
+	movl $0, %r13d
+	movl %r13d, (%r12)
 label6: nop
-	movq $_gp,bogus
-	addq $60, bogus
-	movl (bogus), bogus
-	movl $15, bogus
-	cmpl bogus, bogus
-	movl $0, bogus
-	movl $1, bogus
-	cmovl bogus, bogus
-	movl $-1 , bogus
-	testl bogus, bogus
+	movq $_gp,%r12
+	addq $60, %r12
+	movl (%r12), %r13d
+	movl $15, %r12d
+	cmpl %r12d, %r13d
+	movl $0, %r13d
+	movl $1, %r12d
+	cmovl %r12d, %r13d
+	movl $-1 , %r12d
+	testl %r13d, %r12d
 	je label7
-	movq $_gp,bogus
-	addq $60, bogus
-	movl (bogus), bogus
-	movq $_gp,bogus
-	addq $0, bogus
-	imull bogus, $4
-	addq bogus, bogus
-	movl (bogus), bogus
-	movl bogus, %esi
+	movq $_gp,%r14
+	addq $60, %r14
+	movl (%r14), %r15d
+	movq $_gp,%r14
+	addq $0, %r14
+	imull %r15d, $4
+	addq %r14d, %r15d
+	movl (%r14), %r15d
+	movl %r15d, %esi
 	movl $0, %eax
 	movl $.int_wformat, %edi
 	call printf
-	movq $_gp,bogus
-	addq $60, bogus
-	movq $_gp,bogus
-	addq $60, bogus
-	movl (bogus), bogus
-	movl $1, bogus
-	addl bogus, bogus
-	movl bogus, (bogus)
+	movq $_gp,%r14
+	addq $60, %r14
+	movq $_gp,%r15
+	addq $60, %r15
+	movl (%r15), bogus
+	movl $1, %r15d
+	addl %r15d, bogus
+	movl bogus, (%r14)
 	jmp label6
 label7: nop
 	leave

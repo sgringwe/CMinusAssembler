@@ -571,6 +571,8 @@ int emitComputeArrayVariableAddress(DList instList, SymTable symtab, int varInde
 	inst = nssave(4, "\taddq ", (char*)SymGetFieldByIndex(symtab,regIndex,SYM_NAME_FIELD), ", ", (char*)SymGetFieldByIndex(symtab,slotIndex,SYM_NAME_FIELD));
 	dlinkAppend(instList,dlinkNodeAlloc(inst));
 
+	freeIntegerRegister((int)SymGetFieldByIndex(symtab,slotIndex,SYMTAB_REGISTER_INDEX_FIELD));
+
 	return regIndex;
 
 }

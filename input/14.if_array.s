@@ -1,9 +1,3 @@
-Offset for 1 is 400
-Offset for 1 is 400
-Offset for 1 is 400
-Offset for 1 is 400
-Offset for 1 is 400
-Offset for 1 is 400
 	.section	.rodata
 	.int_wformat: .string "%d\n"
 	.str_wformat: .string "%s\n"
@@ -62,28 +56,28 @@ label0: nop
 	addq $0, %r8
 	imull %r9d, $4
 	addq %r8d, %r9d
-	movq $_gp,%r10
-	addq $400, %r10
-	movl (%r10), %r11d
-	movl $2, %r10d
-	imull %r10d, %r11d
-	movl %r11d, (%r8)
+	movq $_gp,%r9
+	addq $400, %r9
+	movl (%r9), %r10d
+	movl $2, %r9d
+	imull %r9d, %r10d
+	movl %r10d, (%r8)
 	movl $5, %r8d
-	movq $_gp,%r10
-	addq $0, %r10
+	movq $_gp,%r9
+	addq $0, %r9
 	imull %r8d, $4
-	addq %r10d, %r8d
-	movl $5, %r11d
-	movl %r11d, (%r10)
-	movq $_gp,%r10
-	addq $400, %r10
-	movl (%r10), %r11d
-	movq $_gp,%r10
-	addq $0, %r10
-	imull %r11d, $4
-	addq %r10d, %r11d
-	movl (%r10), %r12d
-	movl %r12d, %esi
+	addq %r9d, %r8d
+	movl $5, %r8d
+	movl %r8d, (%r9)
+	movq $_gp,%r8
+	addq $400, %r8
+	movl (%r8), %r9d
+	movq $_gp,%r8
+	addq $0, %r8
+	imull %r9d, $4
+	addq %r8d, %r9d
+	movl (%r8), %r9d
+	movl %r9d, %esi
 	movl $0, %eax
 	movl $.int_wformat, %edi
 	call printf
