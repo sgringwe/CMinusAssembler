@@ -1,8 +1,9 @@
-WRITE LPAREN Expr RPAREN SEMICOLON
-WRITE LPAREN Expr RPAREN SEMICOLON
-WRITE LPAREN Expr RPAREN SEMICOLON
-WRITE LPAREN Expr RPAREN SEMICOLON
-WRITE LPAREN Expr RPAREN SEMICOLON
+Offset for 0 is 0
+Offset for 1 is 4
+Offset for 0 is 0
+Offset for 0 is 0
+Offset for 1 is 4
+Offset for 0 is 0
 	.section	.rodata
 	.int_wformat: .string "%d\n"
 	.str_wformat: .string "%s\n"

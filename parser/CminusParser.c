@@ -1925,8 +1925,8 @@ yyreduce:
   case 64:
 #line 418 "CminusParser.y"
     {
-			int symIndex = SymQueryIndex(symtab,(yyvsp[(1) - (4)].name) + ((yyvsp[(3) - (4)].symIndex) * 4));
-      (yyval.symIndex) = emitComputeVariableAddress(instList,symtab,symIndex);
+			int symIndex = SymQueryIndex(symtab,(yyvsp[(1) - (4)].name));
+      (yyval.symIndex) = emitComputeArrayVariableAddress(instList,symtab,symIndex,(yyvsp[(3) - (4)].symIndex));
 		;}
     break;
 

@@ -416,8 +416,8 @@ Variable        : IDENTIFIER
 		}
                 | IDENTIFIER LBRACKET Expr RBRACKET    
 		{
-			int symIndex = SymQueryIndex(symtab,$1 + ($3 * 4));
-      $$ = emitComputeVariableAddress(instList,symtab,symIndex);
+			int symIndex = SymQueryIndex(symtab,$1);
+      $$ = emitComputeArrayVariableAddress(instList,symtab,symIndex,$3);
 		}
                 ;			       
 

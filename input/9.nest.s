@@ -1,17 +1,20 @@
-WhileToken  : WHILE
-WhileExpr : LPAREN Expr RPAREN
-WhileToken  : WHILE
-WhileExpr : LPAREN Expr RPAREN
-WRITE LPAREN Expr RPAREN SEMICOLON
-WhileStatement  : WhileToken WhileExpr Statement
-Statement : WhileStatement
-WhileToken  : WHILE
-WhileExpr : LPAREN Expr RPAREN
-WRITE LPAREN Expr RPAREN SEMICOLON
-WhileStatement  : WhileToken WhileExpr Statement
-Statement : WhileStatement
-WhileStatement  : WhileToken WhileExpr Statement
-Statement : WhileStatement
+Offset for 0 is 0
+Offset for 0 is 0
+Offset for 1 is 4
+Offset for 1 is 4
+Offset for 0 is 0
+Offset for 1 is 4
+Offset for 1 is 4
+Offset for 1 is 4
+Offset for 2 is 8
+Offset for 1 is 4
+Offset for 2 is 8
+Offset for 1 is 4
+Offset for 2 is 8
+Offset for 2 is 8
+Offset for 2 is 8
+Offset for 0 is 0
+Offset for 0 is 0
 	.section	.rodata
 	.int_wformat: .string "%d\n"
 	.str_wformat: .string "%s\n"

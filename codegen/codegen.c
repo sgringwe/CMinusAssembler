@@ -515,23 +515,60 @@ int emitDivideExpression(DList instList, SymTable symtab, int leftOperand, int r
  * @return the symbol table index of the result register
  */
 int emitComputeVariableAddress(DList instList, SymTable symtab, int varIndex) {
-	
-
 	int regIndex = getFreeIntegerRegisterIndex(symtab);
 	
 	char* regName = malloc(sizeof(char) * 7); // Assume 7 is largest reg name
 	get64bitIntegerRegisterName(symtab, regIndex, regName);
 
 	int offset = (int)SymGetFieldByIndex(symtab,varIndex,SYMTAB_OFFSET_FIELD);
+	printf("Offset for %d is %d\n", varIndex, offset);
 	char offsetStr[10];
 	char *inst; 
 
 	snprintf(offsetStr,9,"%d",offset);
 
-        inst = nssave(2,"\tmovq $_gp,", regName);
+  inst = nssave(2,"\tmovq $_gp,", regName);
 
 	dlinkAppend(instList,dlinkNodeAlloc(inst));
 	inst = nssave(4,"\taddq $", offsetStr, ", ", regName);
+	dlinkAppend(instList,dlinkNodeAlloc(inst));
+
+	return regIndex;
+
+}
+
+/**
+ * Add an instruction to compute the address of an array at slot a.
+ *
+ * @param instList a Dlist of instructions
+ * @param symtab a symbol table
+ * @param varIndex the symbol table index for a variable
+ * @param slotIndex the index of register containing the array index/slot
+ * @return the symbol table index of the result register
+ */
+int emitComputeArrayVariableAddress(DList instList, SymTable symtab, int varIndex, int slotIndex) {
+	int regIndex = getFreeIntegerRegisterIndex(symtab);
+	
+	char* regName = malloc(sizeof(char) * 7); // Assume 7 is largest reg name
+	get64bitIntegerRegisterName(symtab, regIndex, regName);
+
+	int offset = (int)SymGetFieldByIndex(symtab,varIndex,SYMTAB_OFFSET_FIELD);
+	// printf("Offset for %d is %d\n", varIndex, offset);
+	char offsetStr[10];
+	char *inst;
+
+	snprintf(offsetStr,9,"%d",offset);
+
+  inst = nssave(2,"\tmovq $_gp,", regName);
+	dlinkAppend(instList,dlinkNodeAlloc(inst));
+
+	inst = nssave(4,"\taddq $", offsetStr, ", ", regName);
+	dlinkAppend(instList,dlinkNodeAlloc(inst));
+
+	inst = nssave(3, "\timull ", (char*)SymGetFieldByIndex(symtab,slotIndex,SYM_NAME_FIELD), ", $4");
+	dlinkAppend(instList,dlinkNodeAlloc(inst));
+
+	inst = nssave(4, "\taddq ", (char*)SymGetFieldByIndex(symtab,regIndex,SYM_NAME_FIELD), ", ", (char*)SymGetFieldByIndex(symtab,slotIndex,SYM_NAME_FIELD));
 	dlinkAppend(instList,dlinkNodeAlloc(inst));
 
 	return regIndex;
