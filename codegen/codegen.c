@@ -521,7 +521,7 @@ int emitComputeVariableAddress(DList instList, SymTable symtab, int varIndex) {
 	get64bitIntegerRegisterName(symtab, regIndex, regName);
 
 	int offset = (int)SymGetFieldByIndex(symtab,varIndex,SYMTAB_OFFSET_FIELD);
-	printf("Offset for %d is %d\n", varIndex, offset);
+	// printf("Offset for %d is %d\n", varIndex, offset);
 	char offsetStr[10];
 	char *inst; 
 
