@@ -134,6 +134,8 @@ int emitTest(DList instList, SymTable symtab, int exprRegister) {
 	inst = nssave(2, "\tje ", (char*)SymGetFieldByIndex(symtab,num,SYMTAB_LABEL_FIELD));
 	dlinkAppend(instList,dlinkNodeAlloc(inst));
 
+	freeIntegerRegister((int)SymGetFieldByIndex(symtab,regIndex,SYMTAB_REGISTER_INDEX_FIELD));
+
 	return num;
 
 	// freeIntegerRegister((int)SymGetFieldByIndex(symtab,rhsRegIndex,SYMTAB_REGISTER_INDEX_FIELD));

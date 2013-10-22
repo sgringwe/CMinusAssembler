@@ -33,21 +33,21 @@ main:	nop
 	movl $-1 , %ebx
 	testl %ecx, %ebx
 	je label0
-	movl $1, %r8d
-	movl %r8d, %esi
+	movl $1, %ebx
+	movl %ebx, %esi
 	movl $0, %eax
 	movl $.int_wformat, %edi
 	call printf
 	jmp label1
 label0: nop
-	movl $0, %r8d
-	movl %r8d, %esi
+	movl $0, %ebx
+	movl %ebx, %esi
 	movl $0, %eax
 	movl $.int_wformat, %edi
 	call printf
 label1: nop
-	movl $.string_const1, %r8d
-	movl %r8d, %esi
+	movl $.string_const1, %ebx
+	movl %ebx, %esi
 	movl $0, %eax
 	movl $.str_wformat, %edi
 	call printf

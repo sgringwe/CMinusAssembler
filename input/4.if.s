@@ -27,48 +27,48 @@ main:	nop
 	movl $-1 , %ebx
 	testl %ecx, %ebx
 	je label0
-	movl $1, %r8d
-	movl %r8d, %esi
+	movl $1, %ebx
+	movl %ebx, %esi
 	movl $0, %eax
 	movl $.int_wformat, %edi
 	call printf
 	jmp label1
 label0: nop
-	movl $0, %r8d
-	movl %r8d, %esi
+	movl $0, %ebx
+	movl %ebx, %esi
 	movl $0, %eax
 	movl $.int_wformat, %edi
 	call printf
 label1: nop
-	movq $_gp,%r8
-	addq $4, %r8
-	movl (%r8), %r9d
-	movl $-1 , %r8d
-	testl %r9d, %r8d
+	movq $_gp,%rbx
+	addq $4, %rbx
+	movl (%rbx), %r8d
+	movl $-1 , %ebx
+	testl %r8d, %ebx
 	je label2
-	movq $_gp,%r10
-	addq $0, %r10
-	movl (%r10), %r11d
-	movl $-1 , %r10d
-	testl %r11d, %r10d
+	movq $_gp,%rbx
+	addq $0, %rbx
+	movl (%rbx), %r9d
+	movl $-1 , %ebx
+	testl %r9d, %ebx
 	je label3
-	movl $0, %r12d
-	movl %r12d, %esi
+	movl $0, %ebx
+	movl %ebx, %esi
 	movl $0, %eax
 	movl $.int_wformat, %edi
 	call printf
 	jmp label4
 label3: nop
-	movl $1, %r12d
-	movl %r12d, %esi
+	movl $1, %ebx
+	movl %ebx, %esi
 	movl $0, %eax
 	movl $.int_wformat, %edi
 	call printf
 label4: nop
 	jmp label5
 label2: nop
-	movl $0, %r12d
-	movl %r12d, %esi
+	movl $0, %ebx
+	movl %ebx, %esi
 	movl $0, %eax
 	movl $.int_wformat, %edi
 	call printf

@@ -27,33 +27,33 @@ main:	nop
 	movl $-1 , %ebx
 	testl %ecx, %ebx
 	je label0
-	movq $_gp,%r8
-	addq $4, %r8
-	movl $0, %r9d
-	movq $_gp,%r10
-	addq $0, %r10
-	movl (%r10), %r11d
-	subl %r11d, %r9d
-	movl %r9d, (%r8)
-	movq $_gp,%r8
-	addq $4, %r8
-	movl (%r8), %r9d
-	movl %r9d, %esi
+	movq $_gp,%rbx
+	addq $4, %rbx
+	movl $0, %r8d
+	movq $_gp,%r9
+	addq $0, %r9
+	movl (%r9), %r10d
+	subl %r10d, %r8d
+	movl %r8d, (%rbx)
+	movq $_gp,%rbx
+	addq $4, %rbx
+	movl (%rbx), %r8d
+	movl %r8d, %esi
 	movl $0, %eax
 	movl $.int_wformat, %edi
 	call printf
 	jmp label1
 label0: nop
+	movq $_gp,%rbx
+	addq $4, %rbx
 	movq $_gp,%r8
-	addq $4, %r8
-	movq $_gp,%r9
-	addq $0, %r9
-	movl (%r9), %r10d
-	movl %r10d, (%r8)
-	movq $_gp,%r8
-	addq $4, %r8
+	addq $0, %r8
 	movl (%r8), %r9d
-	movl %r9d, %esi
+	movl %r9d, (%rbx)
+	movq $_gp,%rbx
+	addq $4, %rbx
+	movl (%rbx), %r8d
+	movl %r8d, %esi
 	movl $0, %eax
 	movl $.int_wformat, %edi
 	call printf

@@ -42,42 +42,42 @@ main:	nop
 	movl $-1 , %ebx
 	testl %ecx, %ebx
 	je label0
-	movl $.string_const1, %r8d
-	movl %r8d, %esi
+	movl $.string_const1, %ebx
+	movl %ebx, %esi
 	movl $0, %eax
 	movl $.str_wformat, %edi
 	call printf
 	jmp label1
 label0: nop
-	movq $_gp,%r8
-	addq $400, %r8
-	movl (%r8), %r9d
-	movq $_gp,%r8
-	addq $0, %r8
-	imull %r9d, $4
-	addl %r9d, %r8d
-	movq $_gp,%r9
-	addq $400, %r9
-	movl (%r9), %r10d
-	movl $2, %r9d
-	imull %r9d, %r10d
-	movl %r10d, (%r8)
-	movl $5, %r8d
-	movq $_gp,%r9
-	addq $0, %r9
+	movq $_gp,%rbx
+	addq $400, %rbx
+	movl (%rbx), %r8d
+	movq $_gp,%rbx
+	addq $0, %rbx
 	imull %r8d, $4
-	addl %r8d, %r9d
-	movl $5, %r8d
-	movl %r8d, (%r9)
+	addl %r8d, %ebx
 	movq $_gp,%r8
 	addq $400, %r8
 	movl (%r8), %r9d
+	movl $2, %r8d
+	imull %r8d, %r9d
+	movl %r9d, (%rbx)
+	movl $5, %ebx
 	movq $_gp,%r8
 	addq $0, %r8
-	imull %r9d, $4
-	addl %r9d, %r8d
-	movl (%r8), %r9d
-	movl %r9d, %esi
+	imull %ebx, $4
+	addl %ebx, %r8d
+	movl $5, %ebx
+	movl %ebx, (%r8)
+	movq $_gp,%rbx
+	addq $400, %rbx
+	movl (%rbx), %r8d
+	movq $_gp,%rbx
+	addq $0, %rbx
+	imull %r8d, $4
+	addl %r8d, %ebx
+	movl (%rbx), %r8d
+	movl %r8d, %esi
 	movl $0, %eax
 	movl $.int_wformat, %edi
 	call printf
