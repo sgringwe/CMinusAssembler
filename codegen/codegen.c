@@ -93,6 +93,12 @@ void emitExit(DList instList) {
   dlinkAppend(instList,dlinkNodeAlloc(inst));
 }
 
+/**
+ * Adds a new label to the symbol table and returns its index
+ *
+ * @param symtab a symbol table
+ * @return Index of the label in symtab
+ */
 int addLabelToSymtab(SymTable symtab) {
 	static int stringNum = 0;
 	int num = stringNum;
@@ -138,9 +144,6 @@ int emitTest(DList instList, SymTable symtab, int exprRegister) {
 	freeIntegerRegister((int)SymGetFieldByIndex(symtab,exprRegister,SYMTAB_REGISTER_INDEX_FIELD));
 
 	return num;
-
-	// freeIntegerRegister((int)SymGetFieldByIndex(symtab,rhsRegIndex,SYMTAB_REGISTER_INDEX_FIELD));
-	// freeIntegerRegister((int)SymGetFieldByIndex(symtab,lhsRegIndex,SYMTAB_REGISTER_INDEX_FIELD));
 }
 
 /**
@@ -153,10 +156,6 @@ int emitTest(DList instList, SymTable symtab, int exprRegister) {
  * @return 
  */
 int emitTestAndThen(DList instList, SymTable symtab,int elseLabel) {
-	// printf("emitTestAndThen: Result register: %d\n", resultRegister);
-	// printf("emitTestAndThen: After label: %d\n", afterLabelIndex);
-
-	// Allocate a new label for after label for when if is done executing
 	int num = addLabelToSymtab(symtab);
 
 	char *inst;
@@ -167,23 +166,29 @@ int emitTestAndThen(DList instList, SymTable symtab,int elseLabel) {
 	emitStatementLabel(instList,symtab,elseLabel);
 
 	return num;
-
-	// inst = nssave(5,  "\tmovl ", (char*)SymGetFieldByIndex(symtab,regIndex,SYM_NAME_FIELD),
-	// 		", (", regName, ")");
-	// dlinkAppend(instList,dlinkNodeAlloc(inst));
-
-	// freeIntegerRegister((int)SymGetFieldByIndex(symtab,rhsRegIndex,SYMTAB_REGISTER_INDEX_FIELD));
-	// freeIntegerRegister((int)SymGetFieldByIndex(symtab,lhsRegIndex,SYMTAB_REGISTER_INDEX_FIELD));
 }
 
-
+/**
+ * Emits label for while token.
+ *
+ * @param instList a DList of instructions
+ * @param symtab a symbol table
+ * @return Index of label at beginning of while
+ */
 int emitWhileToken(DList instList, SymTable symtab) {
 	int num = addLabelToSymtab(symtab);
 	emitStatementLabel(instList,symtab,num);
 	return num;
 }
 
-
+/**
+ * Emits label for after while statement and jmp to go back to check condition
+ *
+ * @param instList a DList of instructions
+ * @param symtab a symbol table
+ * @param checkLabel the index of the check label
+ * @param afterLabel the index of the after label
+ */
 void emitWhileStatement(DList instList, SymTable symtab, int checkLabel, int afterLabel) {
 	char *inst;
 	inst = nssave(2, "\tjmp ", (char*)SymGetFieldByIndex(symtab,checkLabel,SYMTAB_LABEL_FIELD));
@@ -524,7 +529,6 @@ int emitComputeVariableAddress(DList instList, SymTable symtab, int varIndex) {
 	get64bitIntegerRegisterName(symtab, regIndex, regName);
 
 	int offset = (int)SymGetFieldByIndex(symtab,varIndex,SYMTAB_OFFSET_FIELD);
-	// printf("Offset for %d is %d\n", varIndex, offset);
 	char offsetStr[10];
 	char *inst; 
 
@@ -557,7 +561,6 @@ int emitComputeArrayVariableAddress(DList instList, SymTable symtab, int varInde
 	get64bitIntegerRegisterName(symtab, regIndex, regName);
 
 	int offset = (int)SymGetFieldByIndex(symtab,varIndex,SYMTAB_OFFSET_FIELD);
-	// printf("Offset for %d is %d\n", varIndex, offset);
 	char offsetStr[10];
 	char *inst;
 

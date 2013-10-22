@@ -52,6 +52,7 @@ EXTERN(int, emitMultiplyExpression, (DList instList, SymTable symtab, int leftOp
 EXTERN(int, emitDivideExpression, (DList instList, SymTable symtab, int leftOperand, int rightOperand));
 
 EXTERN(int, emitComputeVariableAddress,(DList instList, SymTable symtab, int varIndex));
+EXTERN(int, emitComputeArrayVariableAddress,(DList instList, SymTable symtab, int varIndex, int slotIndex));
 EXTERN(int, emitLoadVariable,(DList instList, SymTable symtab, int varIndex));
 EXTERN(int, emitLoadIntegerConstant,(DList instList, SymTable symtab, int intIndex));
 
