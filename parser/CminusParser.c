@@ -1717,7 +1717,7 @@ yyreduce:
 #line 266 "CminusParser.y"
     {
       // printf("WhileExpr : LPAREN Expr RPAREN\n");
-      (yyval.symIndex) = emitTest(instList,symtab, (yyvsp[(2) - (3)].symIndex));
+      (yyval.symIndex) = emitTest(instList,symtab,(yyvsp[(2) - (3)].symIndex));
     ;}
     break;
 

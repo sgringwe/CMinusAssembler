@@ -42,15 +42,15 @@ label0: nop
 label1: nop
 	movq $_gp,%rbx
 	addq $4, %rbx
-	movl (%rbx), %r8d
+	movl (%rbx), %ecx
 	movl $-1 , %ebx
-	testl %r8d, %ebx
+	testl %ecx, %ebx
 	je label2
 	movq $_gp,%rbx
 	addq $0, %rbx
-	movl (%rbx), %r9d
+	movl (%rbx), %ecx
 	movl $-1 , %ebx
-	testl %r9d, %ebx
+	testl %ecx, %ebx
 	je label3
 	movl $0, %ebx
 	movl %ebx, %esi

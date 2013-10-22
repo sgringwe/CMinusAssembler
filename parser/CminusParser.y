@@ -265,7 +265,7 @@ WhileStatement  : WhileToken WhileExpr Statement
 WhileExpr	: LPAREN Expr RPAREN
     {
       // printf("WhileExpr : LPAREN Expr RPAREN\n");
-      $$ = emitTest(instList,symtab, $2);
+      $$ = emitTest(instList,symtab,$2);
     }
 		;
 				

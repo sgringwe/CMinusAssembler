@@ -12,6 +12,7 @@ main:	nop
 	movl $3, %ebx
 	movq $_gp,%rcx
 	addq $0, %rcx
+	movl $4, %r8d
 	imull %r8d, %ebx
 	addl %ebx, %ecx
 	movl $4, %ebx
@@ -19,6 +20,7 @@ main:	nop
 	movl $3, %ebx
 	movq $_gp,%rcx
 	addq $0, %rcx
+	movl $4, %r8d
 	imull %r8d, %ebx
 	addl %ebx, %ecx
 	movl (%rcx), %ebx

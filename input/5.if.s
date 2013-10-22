@@ -52,14 +52,14 @@ main:	nop
 	je label0
 	movq $_gp,%rbx
 	addq $0, %rbx
-	movl (%rbx), %r8d
+	movl (%rbx), %ecx
 	movl $0, %ebx
-	cmpl %ebx, %r8d
-	movl $0, %r8d
+	cmpl %ebx, %ecx
+	movl $0, %ecx
 	movl $1, %ebx
-	cmovg %ebx, %r8d
+	cmovg %ebx, %ecx
 	movl $-1 , %ebx
-	testl %r8d, %ebx
+	testl %ecx, %ebx
 	je label1
 	movl $.string_const2, %ebx
 	movl %ebx, %esi
@@ -68,8 +68,8 @@ main:	nop
 	call printf
 	movq $_gp,%rbx
 	addq $0, %rbx
-	movl (%rbx), %r9d
-	movl %r9d, %esi
+	movl (%rbx), %ecx
+	movl %ecx, %esi
 	movl $0, %eax
 	movl $.int_wformat, %edi
 	call printf
@@ -82,8 +82,8 @@ label1: nop
 	call printf
 	movq $_gp,%rbx
 	addq $4, %rbx
-	movl (%rbx), %r9d
-	movl %r9d, %esi
+	movl (%rbx), %ecx
+	movl %ecx, %esi
 	movl $0, %eax
 	movl $.int_wformat, %edi
 	call printf
@@ -92,14 +92,14 @@ label2: nop
 label0: nop
 	movq $_gp,%rbx
 	addq $0, %rbx
-	movl (%rbx), %r9d
+	movl (%rbx), %ecx
 	movl $0, %ebx
-	cmpl %ebx, %r9d
-	movl $0, %r9d
+	cmpl %ebx, %ecx
+	movl $0, %ecx
 	movl $1, %ebx
-	cmovl %ebx, %r9d
+	cmovl %ebx, %ecx
 	movl $-1 , %ebx
-	testl %r9d, %ebx
+	testl %ecx, %ebx
 	je label4
 	movl $.string_const4, %ebx
 	movl %ebx, %esi
@@ -108,8 +108,8 @@ label0: nop
 	call printf
 	movq $_gp,%rbx
 	addq $0, %rbx
-	movl (%rbx), %r10d
-	movl %r10d, %esi
+	movl (%rbx), %ecx
+	movl %ecx, %esi
 	movl $0, %eax
 	movl $.int_wformat, %edi
 	call printf
@@ -122,8 +122,8 @@ label4: nop
 	call printf
 	movq $_gp,%rbx
 	addq $4, %rbx
-	movl (%rbx), %r10d
-	movl %r10d, %esi
+	movl (%rbx), %ecx
+	movl %ecx, %esi
 	movl $0, %eax
 	movl $.int_wformat, %edi
 	call printf

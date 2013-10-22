@@ -29,16 +29,16 @@ main:	nop
 	je label0
 	movq $_gp,%rbx
 	addq $4, %rbx
-	movl $0, %r8d
-	movq $_gp,%r9
-	addq $0, %r9
-	movl (%r9), %r10d
-	subl %r10d, %r8d
-	movl %r8d, (%rbx)
+	movl $0, %ecx
+	movq $_gp,%r8
+	addq $0, %r8
+	movl (%r8), %r9d
+	subl %r9d, %ecx
+	movl %ecx, (%rbx)
 	movq $_gp,%rbx
 	addq $4, %rbx
-	movl (%rbx), %r8d
-	movl %r8d, %esi
+	movl (%rbx), %ecx
+	movl %ecx, %esi
 	movl $0, %eax
 	movl $.int_wformat, %edi
 	call printf
@@ -46,14 +46,14 @@ main:	nop
 label0: nop
 	movq $_gp,%rbx
 	addq $4, %rbx
-	movq $_gp,%r8
-	addq $0, %r8
-	movl (%r8), %r9d
-	movl %r9d, (%rbx)
+	movq $_gp,%rcx
+	addq $0, %rcx
+	movl (%rcx), %r8d
+	movl %r8d, (%rbx)
 	movq $_gp,%rbx
 	addq $4, %rbx
-	movl (%rbx), %r8d
-	movl %r8d, %esi
+	movl (%rbx), %ecx
+	movl %ecx, %esi
 	movl $0, %eax
 	movl $.int_wformat, %edi
 	call printf

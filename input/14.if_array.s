@@ -51,33 +51,36 @@ main:	nop
 label0: nop
 	movq $_gp,%rbx
 	addq $400, %rbx
-	movl (%rbx), %r8d
+	movl (%rbx), %ecx
 	movq $_gp,%rbx
 	addq $0, %rbx
-	imull %r9d, %r8d
-	addl %r8d, %ebx
-	movq $_gp,%r8
-	addq $400, %r8
-	movl (%r8), %r9d
-	movl $2, %r8d
-	imull %r8d, %r9d
-	movl %r9d, (%rbx)
+	movl $4, %r8d
+	imull %r8d, %ecx
+	addl %ecx, %ebx
+	movq $_gp,%rcx
+	addq $400, %rcx
+	movl (%rcx), %r8d
+	movl $2, %ecx
+	imull %ecx, %r8d
+	movl %r8d, (%rbx)
 	movl $5, %ebx
-	movq $_gp,%r8
-	addq $0, %r8
-	imull %r9d, %ebx
-	addl %ebx, %r8d
+	movq $_gp,%rcx
+	addq $0, %rcx
+	movl $4, %r8d
+	imull %r8d, %ebx
+	addl %ebx, %ecx
 	movl $5, %ebx
-	movl %ebx, (%r8)
+	movl %ebx, (%rcx)
 	movq $_gp,%rbx
 	addq $400, %rbx
-	movl (%rbx), %r8d
+	movl (%rbx), %ecx
 	movq $_gp,%rbx
 	addq $0, %rbx
-	imull %r9d, %r8d
-	addl %r8d, %ebx
-	movl (%rbx), %r8d
-	movl %r8d, %esi
+	movl $4, %r8d
+	imull %r8d, %ecx
+	addl %ecx, %ebx
+	movl (%rbx), %ecx
+	movl %ecx, %esi
 	movl $0, %eax
 	movl $.int_wformat, %edi
 	call printf

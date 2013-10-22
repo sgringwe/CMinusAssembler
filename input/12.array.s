@@ -12,6 +12,7 @@ main:	nop
 	movl $3, %ebx
 	movq $_gp,%rcx
 	addq $0, %rcx
+	movl $4, %r8d
 	imull %r8d, %ebx
 	addl %ebx, %ecx
 	movl $4, %ebx
@@ -19,6 +20,7 @@ main:	nop
 	movl $3, %ebx
 	movq $_gp,%rcx
 	addq $0, %rcx
+	movl $4, %r8d
 	imull %r8d, %ebx
 	addl %ebx, %ecx
 	movl (%rcx), %ebx
@@ -35,6 +37,7 @@ main:	nop
 	movl (%rbx), %ecx
 	movq $_gp,%rbx
 	addq $0, %rbx
+	movl $4, %r8d
 	imull %r8d, %ecx
 	addl %ecx, %ebx
 	movl $7, %ecx
@@ -44,6 +47,7 @@ main:	nop
 	movl (%rbx), %ecx
 	movq $_gp,%rbx
 	addq $0, %rbx
+	movl $4, %r8d
 	imull %r8d, %ecx
 	addl %ecx, %ebx
 	movl (%rbx), %ecx
@@ -64,6 +68,7 @@ main:	nop
 	movl (%rbx), %ecx
 	movq $_gp,%rbx
 	addq $0, %rbx
+	movl $4, %r8d
 	imull %r8d, %ecx
 	addl %ecx, %ebx
 	movl $22, %ecx
@@ -71,6 +76,7 @@ main:	nop
 	movl $5, %ebx
 	movq $_gp,%rcx
 	addq $0, %rcx
+	movl $4, %r8d
 	imull %r8d, %ebx
 	addl %ebx, %ecx
 	movl (%rcx), %ebx

@@ -43,95 +43,95 @@ main:	nop
 	je label0
 	movq $_gp,%rbx
 	addq $4, %rbx
-	movl $1, %r8d
-	movl %r8d, (%rbx)
+	movl $1, %ecx
+	movl %ecx, (%rbx)
 	movq $_gp,%rbx
 	addq $0, %rbx
-	movl $0, %r8d
-	movl %r8d, (%rbx)
+	movl $0, %ecx
+	movl %ecx, (%rbx)
 label1: nop
 	movq $_gp,%rbx
 	addq $4, %rbx
-	movl (%rbx), %r8d
+	movl (%rbx), %ecx
 	movq $_gp,%rbx
 	addq $8, %rbx
-	movl (%rbx), %r9d
-	cmpl %r9d, %r8d
-	movl $0, %r8d
+	movl (%rbx), %r8d
+	cmpl %r8d, %ecx
+	movl $0, %ecx
 	movl $1, %ebx
-	cmovle %ebx, %r8d
+	cmovle %ebx, %ecx
 	movl $-1 , %ebx
-	testl %r8d, %ebx
+	testl %ecx, %ebx
 	je label2
 	movq $_gp,%rbx
 	addq $0, %rbx
-	movq $_gp,%r9
-	addq $0, %r9
-	movl (%r9), %r10d
-	movq $_gp,%r9
-	addq $4, %r9
-	movl (%r9), %r11d
-	addl %r11d, %r10d
-	movl %r10d, (%rbx)
+	movq $_gp,%rcx
+	addq $0, %rcx
+	movl (%rcx), %r8d
+	movq $_gp,%rcx
+	addq $4, %rcx
+	movl (%rcx), %r9d
+	addl %r9d, %r8d
+	movl %r8d, (%rbx)
 	movq $_gp,%rbx
 	addq $4, %rbx
-	movq $_gp,%r9
-	addq $4, %r9
-	movl (%r9), %r10d
-	movl $1, %r9d
-	addl %r9d, %r10d
-	movl %r10d, (%rbx)
+	movq $_gp,%rcx
+	addq $4, %rcx
+	movl (%rcx), %r8d
+	movl $1, %ecx
+	addl %ecx, %r8d
+	movl %r8d, (%rbx)
 	jmp label1
 label2: nop
 	jmp label3
 label0: nop
 	movq $_gp,%rbx
 	addq $4, %rbx
-	movl $1, %r9d
-	movl %r9d, (%rbx)
+	movl $1, %ecx
+	movl %ecx, (%rbx)
 	movq $_gp,%rbx
 	addq $0, %rbx
-	movl $1, %r9d
-	movl %r9d, (%rbx)
+	movl $1, %ecx
+	movl %ecx, (%rbx)
 label4: nop
 	movq $_gp,%rbx
 	addq $4, %rbx
-	movl (%rbx), %r9d
+	movl (%rbx), %ecx
 	movq $_gp,%rbx
 	addq $8, %rbx
-	movl (%rbx), %r10d
-	cmpl %r10d, %r9d
-	movl $0, %r9d
+	movl (%rbx), %r8d
+	cmpl %r8d, %ecx
+	movl $0, %ecx
 	movl $1, %ebx
-	cmovle %ebx, %r9d
+	cmovle %ebx, %ecx
 	movl $-1 , %ebx
-	testl %r9d, %ebx
+	testl %ecx, %ebx
 	je label5
 	movq $_gp,%rbx
 	addq $0, %rbx
-	movq $_gp,%r10
-	addq $0, %r10
-	movl (%r10), %r11d
-	movq $_gp,%r10
-	addq $4, %r10
-	movl (%r10), %r12d
-	imull %r12d, %r11d
-	movl %r11d, (%rbx)
+	movq $_gp,%rcx
+	addq $0, %rcx
+	movl (%rcx), %r8d
+	movq $_gp,%rcx
+	addq $4, %rcx
+	movl (%rcx), %r9d
+	imull %r9d, %r8d
+	movl %r8d, (%rbx)
 	movq $_gp,%rbx
 	addq $4, %rbx
-	movq $_gp,%r10
-	addq $4, %r10
-	movl (%r10), %r11d
-	movl $1, %r10d
-	addl %r10d, %r11d
-	movl %r11d, (%rbx)
+	movq $_gp,%rcx
+	addq $4, %rcx
+	movl (%rcx), %r8d
+	movl $1, %ecx
+	addl %ecx, %r8d
+	movl %r8d, (%rbx)
 	jmp label4
 label5: nop
 label3: nop
 	movq $_gp,%rbx
 	addq $0, %rbx
-	movl (%rbx), %r10d
-	movl %r10d, %esi
+	movl (%rbx), %ecx
+	movl %ecx, %esi
 	movl $0, %eax
 	movl $.int_wformat, %edi
 	call printf

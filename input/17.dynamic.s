@@ -12,6 +12,7 @@ main:	nop
 	movl $0, %ebx
 	movq $_gp,%rcx
 	addq $0, %rcx
+	movl $4, %r8d
 	imull %r8d, %ebx
 	addl %ebx, %ecx
 	movl $0, %ebx
@@ -19,6 +20,7 @@ main:	nop
 	movl $1, %ebx
 	movq $_gp,%rcx
 	addq $0, %rcx
+	movl $4, %r8d
 	imull %r8d, %ebx
 	addl %ebx, %ecx
 	movl $1, %ebx
@@ -26,6 +28,7 @@ main:	nop
 	movl $2, %ebx
 	movq $_gp,%rcx
 	addq $0, %rcx
+	movl $4, %r8d
 	imull %r8d, %ebx
 	addl %ebx, %ecx
 	movl $2, %ebx
@@ -33,6 +36,7 @@ main:	nop
 	movl $3, %ebx
 	movq $_gp,%rcx
 	addq $0, %rcx
+	movl $4, %r8d
 	imull %r8d, %ebx
 	addl %ebx, %ecx
 	movl $3, %ebx
@@ -40,6 +44,7 @@ main:	nop
 	movl $4, %ebx
 	movq $_gp,%rcx
 	addq $0, %rcx
+	movl $4, %r8d
 	imull %r8d, %ebx
 	addl %ebx, %ecx
 	movl $4, %ebx
@@ -47,6 +52,7 @@ main:	nop
 	movl $5, %ebx
 	movq $_gp,%rcx
 	addq $0, %rcx
+	movl $4, %r8d
 	imull %r8d, %ebx
 	addl %ebx, %ecx
 	movl $5, %ebx
@@ -54,6 +60,7 @@ main:	nop
 	movl $6, %ebx
 	movq $_gp,%rcx
 	addq $0, %rcx
+	movl $4, %r8d
 	imull %r8d, %ebx
 	addl %ebx, %ecx
 	movl $6, %ebx
@@ -61,6 +68,7 @@ main:	nop
 	movl $7, %ebx
 	movq $_gp,%rcx
 	addq $0, %rcx
+	movl $4, %r8d
 	imull %r8d, %ebx
 	addl %ebx, %ecx
 	movl $7, %ebx
@@ -68,6 +76,7 @@ main:	nop
 	movl $8, %ebx
 	movq $_gp,%rcx
 	addq $0, %rcx
+	movl $4, %r8d
 	imull %r8d, %ebx
 	addl %ebx, %ecx
 	movl $8, %ebx
@@ -75,6 +84,7 @@ main:	nop
 	movl $9, %ebx
 	movq $_gp,%rcx
 	addq $0, %rcx
+	movl $4, %r8d
 	imull %r8d, %ebx
 	addl %ebx, %ecx
 	movl $9, %ebx
@@ -82,6 +92,7 @@ main:	nop
 	movl $10, %ebx
 	movq $_gp,%rcx
 	addq $0, %rcx
+	movl $4, %r8d
 	imull %r8d, %ebx
 	addl %ebx, %ecx
 	movl $8, %ebx
@@ -89,6 +100,7 @@ main:	nop
 	movl $11, %ebx
 	movq $_gp,%rcx
 	addq $0, %rcx
+	movl $4, %r8d
 	imull %r8d, %ebx
 	addl %ebx, %ecx
 	movl $7, %ebx
@@ -96,6 +108,7 @@ main:	nop
 	movl $12, %ebx
 	movq $_gp,%rcx
 	addq $0, %rcx
+	movl $4, %r8d
 	imull %r8d, %ebx
 	addl %ebx, %ecx
 	movl $6, %ebx
@@ -103,6 +116,7 @@ main:	nop
 	movl $13, %ebx
 	movq $_gp,%rcx
 	addq $0, %rcx
+	movl $4, %r8d
 	imull %r8d, %ebx
 	addl %ebx, %ecx
 	movl $5, %ebx
@@ -110,6 +124,7 @@ main:	nop
 	movl $14, %ebx
 	movq $_gp,%rcx
 	addq $0, %rcx
+	movl $4, %r8d
 	imull %r8d, %ebx
 	addl %ebx, %ecx
 	movl $4, %ebx
@@ -117,6 +132,7 @@ main:	nop
 	movl $15, %ebx
 	movq $_gp,%rcx
 	addq $0, %rcx
+	movl $4, %r8d
 	imull %r8d, %ebx
 	addl %ebx, %ecx
 	movl $3, %ebx
@@ -124,6 +140,7 @@ main:	nop
 	movl $16, %ebx
 	movq $_gp,%rcx
 	addq $0, %rcx
+	movl $4, %r8d
 	imull %r8d, %ebx
 	addl %ebx, %ecx
 	movl $2, %ebx
@@ -131,6 +148,7 @@ main:	nop
 	movl $17, %ebx
 	movq $_gp,%rcx
 	addq $0, %rcx
+	movl $4, %r8d
 	imull %r8d, %ebx
 	addl %ebx, %ecx
 	movl $1, %ebx
@@ -138,6 +156,7 @@ main:	nop
 	movl $18, %ebx
 	movq $_gp,%rcx
 	addq $0, %rcx
+	movl $4, %r8d
 	imull %r8d, %ebx
 	addl %ebx, %ecx
 	movl $0, %ebx
@@ -145,6 +164,7 @@ main:	nop
 	movl $0, %ebx
 	movq $_gp,%rcx
 	addq $76, %rcx
+	movl $4, %r8d
 	imull %r8d, %ebx
 	addl %ebx, %ecx
 	movl $0, %ebx
@@ -152,6 +172,7 @@ main:	nop
 	movl $1, %ebx
 	movq $_gp,%rcx
 	addq $76, %rcx
+	movl $4, %r8d
 	imull %r8d, %ebx
 	addl %ebx, %ecx
 	movl $1, %ebx
@@ -159,6 +180,7 @@ main:	nop
 	movl $2, %ebx
 	movq $_gp,%rcx
 	addq $76, %rcx
+	movl $4, %r8d
 	imull %r8d, %ebx
 	addl %ebx, %ecx
 	movl $3, %ebx
@@ -166,6 +188,7 @@ main:	nop
 	movl $3, %ebx
 	movq $_gp,%rcx
 	addq $76, %rcx
+	movl $4, %r8d
 	imull %r8d, %ebx
 	addl %ebx, %ecx
 	movl $5, %ebx
@@ -173,6 +196,7 @@ main:	nop
 	movl $4, %ebx
 	movq $_gp,%rcx
 	addq $76, %rcx
+	movl $4, %r8d
 	imull %r8d, %ebx
 	addl %ebx, %ecx
 	movl $7, %ebx
@@ -180,6 +204,7 @@ main:	nop
 	movl $5, %ebx
 	movq $_gp,%rcx
 	addq $76, %rcx
+	movl $4, %r8d
 	imull %r8d, %ebx
 	addl %ebx, %ecx
 	movl $9, %ebx
@@ -187,6 +212,7 @@ main:	nop
 	movl $6, %ebx
 	movq $_gp,%rcx
 	addq $76, %rcx
+	movl $4, %r8d
 	imull %r8d, %ebx
 	addl %ebx, %ecx
 	movl $11, %ebx
@@ -194,6 +220,7 @@ main:	nop
 	movl $7, %ebx
 	movq $_gp,%rcx
 	addq $76, %rcx
+	movl $4, %r8d
 	imull %r8d, %ebx
 	addl %ebx, %ecx
 	movl $4, %ebx
@@ -201,6 +228,7 @@ main:	nop
 	movl $8, %ebx
 	movq $_gp,%rcx
 	addq $76, %rcx
+	movl $4, %r8d
 	imull %r8d, %ebx
 	addl %ebx, %ecx
 	movl $3, %ebx
@@ -208,6 +236,7 @@ main:	nop
 	movl $9, %ebx
 	movq $_gp,%rcx
 	addq $76, %rcx
+	movl $4, %r8d
 	imull %r8d, %ebx
 	addl %ebx, %ecx
 	movl $2, %ebx
@@ -215,6 +244,7 @@ main:	nop
 	movl $10, %ebx
 	movq $_gp,%rcx
 	addq $76, %rcx
+	movl $4, %r8d
 	imull %r8d, %ebx
 	addl %ebx, %ecx
 	movl $1, %ebx
@@ -222,6 +252,7 @@ main:	nop
 	movl $11, %ebx
 	movq $_gp,%rcx
 	addq $76, %rcx
+	movl $4, %r8d
 	imull %r8d, %ebx
 	addl %ebx, %ecx
 	movl $9, %ebx
@@ -229,6 +260,7 @@ main:	nop
 	movl $12, %ebx
 	movq $_gp,%rcx
 	addq $76, %rcx
+	movl $4, %r8d
 	imull %r8d, %ebx
 	addl %ebx, %ecx
 	movl $8, %ebx
@@ -236,6 +268,7 @@ main:	nop
 	movl $13, %ebx
 	movq $_gp,%rcx
 	addq $76, %rcx
+	movl $4, %r8d
 	imull %r8d, %ebx
 	addl %ebx, %ecx
 	movl $7, %ebx
@@ -243,6 +276,7 @@ main:	nop
 	movl $14, %ebx
 	movq $_gp,%rcx
 	addq $76, %rcx
+	movl $4, %r8d
 	imull %r8d, %ebx
 	addl %ebx, %ecx
 	movl $6, %ebx
@@ -250,6 +284,7 @@ main:	nop
 	movl $15, %ebx
 	movq $_gp,%rcx
 	addq $76, %rcx
+	movl $4, %r8d
 	imull %r8d, %ebx
 	addl %ebx, %ecx
 	movl $0, %ebx
@@ -270,6 +305,7 @@ label0: nop
 	addl %ebx, %ecx
 	movq $_gp,%rbx
 	addq $0, %rbx
+	movl $4, %r8d
 	imull %r8d, %ecx
 	addl %ecx, %ebx
 	movl (%rbx), %ecx
@@ -283,432 +319,450 @@ label0: nop
 	je label1
 	movq $_gp,%rbx
 	addq $1740, %rbx
-	movl (%rbx), %r8d
+	movl (%rbx), %ecx
 	movq $_gp,%rbx
 	addq $140, %rbx
-	imull %r9d, %r8d
-	addl %r8d, %ebx
-	movq $_gp,%r8
-	addq $1740, %r8
-	movl (%r8), %r9d
-	movl %r9d, (%rbx)
+	movl $4, %r8d
+	imull %r8d, %ecx
+	addl %ecx, %ebx
+	movq $_gp,%rcx
+	addq $1740, %rcx
+	movl (%rcx), %r8d
+	movl %r8d, (%rbx)
 	movq $_gp,%rbx
 	addq $1740, %rbx
-	movq $_gp,%r8
-	addq $1740, %r8
-	movl (%r8), %r9d
-	movl $1, %r8d
-	addl %r8d, %r9d
-	movl %r9d, (%rbx)
+	movq $_gp,%rcx
+	addq $1740, %rcx
+	movl (%rcx), %r8d
+	movl $1, %ecx
+	addl %ecx, %r8d
+	movl %r8d, (%rbx)
 	jmp label0
 label1: nop
 	movq $_gp,%rbx
 	addq $1740, %rbx
-	movq $_gp,%r8
-	addq $1740, %r8
-	movl (%r8), %r9d
-	movl $1, %r8d
-	subl %r8d, %r9d
-	movl %r9d, (%rbx)
+	movq $_gp,%rcx
+	addq $1740, %rcx
+	movl (%rcx), %r8d
+	movl $1, %ecx
+	subl %ecx, %r8d
+	movl %r8d, (%rbx)
 	movq $_gp,%rbx
 	addq $1744, %rbx
-	movl $0, %r8d
-	movl %r8d, (%rbx)
+	movl $0, %ecx
+	movl %ecx, (%rbx)
 label2: nop
 	movq $_gp,%rbx
 	addq $1744, %rbx
-	movl (%rbx), %r8d
+	movl (%rbx), %ecx
 	movl $1, %ebx
-	addl %ebx, %r8d
+	addl %ebx, %ecx
 	movq $_gp,%rbx
 	addq $76, %rbx
-	imull %r9d, %r8d
-	addl %r8d, %ebx
-	movl (%rbx), %r8d
+	movl $4, %r8d
+	imull %r8d, %ecx
+	addl %ecx, %ebx
+	movl (%rbx), %ecx
 	movl $0, %ebx
-	cmpl %ebx, %r8d
-	movl $0, %r8d
+	cmpl %ebx, %ecx
+	movl $0, %ecx
 	movl $1, %ebx
-	cmovne %ebx, %r8d
+	cmovne %ebx, %ecx
 	movl $-1 , %ebx
-	testl %r8d, %ebx
+	testl %ecx, %ebx
 	je label3
 	movq $_gp,%rbx
 	addq $1744, %rbx
-	movl (%rbx), %r9d
+	movl (%rbx), %ecx
 	movq $_gp,%rbx
 	addq $1756, %rbx
-	movl (%rbx), %r10d
-	imull %r10d, %r9d
+	movl (%rbx), %r8d
+	imull %r8d, %ecx
 	movq $_gp,%rbx
 	addq $140, %rbx
-	imull %r10d, %r9d
-	addl %r9d, %ebx
-	movq $_gp,%r9
-	addq $1744, %r9
-	movl (%r9), %r10d
-	movl %r10d, (%rbx)
+	movl $4, %r8d
+	imull %r8d, %ecx
+	addl %ecx, %ebx
+	movq $_gp,%rcx
+	addq $1744, %rcx
+	movl (%rcx), %r8d
+	movl %r8d, (%rbx)
 	movq $_gp,%rbx
 	addq $1744, %rbx
-	movq $_gp,%r9
-	addq $1744, %r9
-	movl (%r9), %r10d
-	movl $1, %r9d
-	addl %r9d, %r10d
-	movl %r10d, (%rbx)
+	movq $_gp,%rcx
+	addq $1744, %rcx
+	movl (%rcx), %r8d
+	movl $1, %ecx
+	addl %ecx, %r8d
+	movl %r8d, (%rbx)
 	jmp label2
 label3: nop
 	movq $_gp,%rbx
 	addq $1744, %rbx
-	movq $_gp,%r9
-	addq $1744, %r9
-	movl (%r9), %r10d
-	movl $1, %r9d
-	subl %r9d, %r10d
-	movl %r10d, (%rbx)
+	movq $_gp,%rcx
+	addq $1744, %rcx
+	movl (%rcx), %r8d
+	movl $1, %ecx
+	subl %ecx, %r8d
+	movl %r8d, (%rbx)
 	movq $_gp,%rbx
 	addq $1748, %rbx
-	movl $1, %r9d
-	movl %r9d, (%rbx)
+	movl $1, %ecx
+	movl %ecx, (%rbx)
 label4: nop
 	movq $_gp,%rbx
 	addq $1748, %rbx
-	movl (%rbx), %r9d
+	movl (%rbx), %ecx
 	movq $_gp,%rbx
 	addq $1744, %rbx
-	movl (%rbx), %r10d
-	cmpl %r10d, %r9d
-	movl $0, %r9d
+	movl (%rbx), %r8d
+	cmpl %r8d, %ecx
+	movl $0, %ecx
 	movl $1, %ebx
-	cmovle %ebx, %r9d
+	cmovle %ebx, %ecx
 	movl $-1 , %ebx
-	testl %r9d, %ebx
+	testl %ecx, %ebx
 	je label5
 	movq $_gp,%rbx
 	addq $1752, %rbx
-	movl $1, %r10d
-	movl %r10d, (%rbx)
+	movl $1, %ecx
+	movl %ecx, (%rbx)
 label6: nop
 	movq $_gp,%rbx
 	addq $1752, %rbx
-	movl (%rbx), %r10d
+	movl (%rbx), %ecx
 	movq $_gp,%rbx
 	addq $1740, %rbx
-	movl (%rbx), %r11d
-	cmpl %r11d, %r10d
-	movl $0, %r10d
+	movl (%rbx), %r8d
+	cmpl %r8d, %ecx
+	movl $0, %ecx
 	movl $1, %ebx
-	cmovle %ebx, %r10d
+	cmovle %ebx, %ecx
 	movl $-1 , %ebx
-	testl %r10d, %ebx
+	testl %ecx, %ebx
 	je label7
 	movq $_gp,%rbx
 	addq $1748, %rbx
-	movl (%rbx), %r11d
+	movl (%rbx), %ecx
 	movq $_gp,%rbx
 	addq $1756, %rbx
-	movl (%rbx), %r12d
-	imull %r12d, %r11d
+	movl (%rbx), %r8d
+	imull %r8d, %ecx
 	movq $_gp,%rbx
 	addq $1752, %rbx
-	movl (%rbx), %r12d
-	addl %r12d, %r11d
+	movl (%rbx), %r8d
+	addl %r8d, %ecx
 	movq $_gp,%rbx
 	addq $140, %rbx
-	imull %r12d, %r11d
-	addl %r11d, %ebx
-	movq $_gp,%r11
-	addq $1748, %r11
-	movl (%r11), %r12d
-	movl $1, %r11d
-	subl %r11d, %r12d
-	movq $_gp,%r11
-	addq $1756, %r11
-	movl (%r11), %r13d
-	imull %r13d, %r12d
-	movq $_gp,%r11
-	addq $1752, %r11
-	movl (%r11), %r13d
-	addl %r13d, %r12d
-	movl $1, %r11d
-	subl %r11d, %r12d
-	movq $_gp,%r11
-	addq $140, %r11
-	imull %r13d, %r12d
-	addl %r12d, %r11d
-	movl (%r11), %r12d
-	movl %r12d, (%rbx)
+	movl $4, %r8d
+	imull %r8d, %ecx
+	addl %ecx, %ebx
+	movq $_gp,%rcx
+	addq $1748, %rcx
+	movl (%rcx), %r8d
+	movl $1, %ecx
+	subl %ecx, %r8d
+	movq $_gp,%rcx
+	addq $1756, %rcx
+	movl (%rcx), %r9d
+	imull %r9d, %r8d
+	movq $_gp,%rcx
+	addq $1752, %rcx
+	movl (%rcx), %r9d
+	addl %r9d, %r8d
+	movl $1, %ecx
+	subl %ecx, %r8d
+	movq $_gp,%rcx
+	addq $140, %rcx
+	movl $4, %r9d
+	imull %r9d, %r8d
+	addl %r8d, %ecx
+	movl (%rcx), %r8d
+	movl %r8d, (%rbx)
 	movq $_gp,%rbx
 	addq $1748, %rbx
-	movl (%rbx), %r11d
+	movl (%rbx), %ecx
 	movq $_gp,%rbx
 	addq $76, %rbx
-	imull %r12d, %r11d
-	addl %r11d, %ebx
-	movl (%rbx), %r11d
+	movl $4, %r8d
+	imull %r8d, %ecx
+	addl %ecx, %ebx
+	movl (%rbx), %ecx
 	movq $_gp,%rbx
 	addq $1752, %rbx
-	movl (%rbx), %r12d
+	movl (%rbx), %r8d
 	movq $_gp,%rbx
 	addq $0, %rbx
-	imull %r13d, %r12d
-	addl %r12d, %ebx
-	movl (%rbx), %r12d
-	cmpl %r12d, %r11d
-	movl $0, %r11d
+	movl $4, %r9d
+	imull %r9d, %r8d
+	addl %r8d, %ebx
+	movl (%rbx), %r8d
+	cmpl %r8d, %ecx
+	movl $0, %ecx
 	movl $1, %ebx
-	cmovne %ebx, %r11d
+	cmovne %ebx, %ecx
 	movl $-1 , %ebx
-	testl %r11d, %ebx
+	testl %ecx, %ebx
 	je label8
 	movq $_gp,%rbx
 	addq $1748, %rbx
-	movl (%rbx), %r12d
+	movl (%rbx), %ecx
 	movq $_gp,%rbx
 	addq $1756, %rbx
-	movl (%rbx), %r13d
-	imull %r13d, %r12d
+	movl (%rbx), %r8d
+	imull %r8d, %ecx
 	movq $_gp,%rbx
 	addq $1752, %rbx
-	movl (%rbx), %r13d
-	addl %r13d, %r12d
+	movl (%rbx), %r8d
+	addl %r8d, %ecx
 	movq $_gp,%rbx
 	addq $140, %rbx
-	imull %r13d, %r12d
-	addl %r12d, %ebx
-	movq $_gp,%r12
-	addq $1748, %r12
-	movl (%r12), %r13d
-	movq $_gp,%r12
-	addq $1756, %r12
-	movl (%r12), %r14d
-	imull %r14d, %r13d
-	movq $_gp,%r12
-	addq $1752, %r12
-	movl (%r12), %r14d
-	addl %r14d, %r13d
-	movq $_gp,%r12
-	addq $140, %r12
-	imull %r14d, %r13d
-	addl %r13d, %r12d
-	movl (%r12), %r13d
-	movl $1, %r12d
-	addl %r12d, %r13d
-	movl %r13d, (%rbx)
+	movl $4, %r8d
+	imull %r8d, %ecx
+	addl %ecx, %ebx
+	movq $_gp,%rcx
+	addq $1748, %rcx
+	movl (%rcx), %r8d
+	movq $_gp,%rcx
+	addq $1756, %rcx
+	movl (%rcx), %r9d
+	imull %r9d, %r8d
+	movq $_gp,%rcx
+	addq $1752, %rcx
+	movl (%rcx), %r9d
+	addl %r9d, %r8d
+	movq $_gp,%rcx
+	addq $140, %rcx
+	movl $4, %r9d
+	imull %r9d, %r8d
+	addl %r8d, %ecx
+	movl (%rcx), %r8d
+	movl $1, %ecx
+	addl %ecx, %r8d
+	movl %r8d, (%rbx)
 	jmp label9
 label8: nop
 label9: nop
 	movq $_gp,%rbx
 	addq $1748, %rbx
-	movl (%rbx), %r12d
+	movl (%rbx), %ecx
 	movl $1, %ebx
-	subl %ebx, %r12d
+	subl %ebx, %ecx
 	movq $_gp,%rbx
 	addq $1756, %rbx
-	movl (%rbx), %r13d
-	imull %r13d, %r12d
+	movl (%rbx), %r8d
+	imull %r8d, %ecx
 	movq $_gp,%rbx
 	addq $1752, %rbx
-	movl (%rbx), %r13d
-	addl %r13d, %r12d
+	movl (%rbx), %r8d
+	addl %r8d, %ecx
 	movq $_gp,%rbx
 	addq $140, %rbx
-	imull %r13d, %r12d
-	addl %r12d, %ebx
-	movl (%rbx), %r12d
+	movl $4, %r8d
+	imull %r8d, %ecx
+	addl %ecx, %ebx
+	movl (%rbx), %ecx
 	movq $_gp,%rbx
 	addq $1748, %rbx
-	movl (%rbx), %r13d
+	movl (%rbx), %r8d
 	movq $_gp,%rbx
 	addq $1756, %rbx
-	movl (%rbx), %r14d
-	imull %r14d, %r13d
+	movl (%rbx), %r9d
+	imull %r9d, %r8d
 	movq $_gp,%rbx
 	addq $1752, %rbx
-	movl (%rbx), %r14d
-	addl %r14d, %r13d
+	movl (%rbx), %r9d
+	addl %r9d, %r8d
 	movq $_gp,%rbx
 	addq $140, %rbx
-	imull %r14d, %r13d
-	addl %r13d, %ebx
-	movl (%rbx), %r13d
-	cmpl %r13d, %r12d
-	movl $0, %r12d
+	movl $4, %r9d
+	imull %r9d, %r8d
+	addl %r8d, %ebx
+	movl (%rbx), %r8d
+	cmpl %r8d, %ecx
+	movl $0, %ecx
 	movl $1, %ebx
-	cmovl %ebx, %r12d
+	cmovl %ebx, %ecx
 	movl $-1 , %ebx
-	testl %r12d, %ebx
+	testl %ecx, %ebx
 	je label10
 	movq $_gp,%rbx
 	addq $1748, %rbx
-	movl (%rbx), %r13d
+	movl (%rbx), %ecx
 	movq $_gp,%rbx
 	addq $1756, %rbx
-	movl (%rbx), %r14d
-	imull %r14d, %r13d
+	movl (%rbx), %r8d
+	imull %r8d, %ecx
 	movq $_gp,%rbx
 	addq $1752, %rbx
-	movl (%rbx), %r14d
-	addl %r14d, %r13d
+	movl (%rbx), %r8d
+	addl %r8d, %ecx
 	movq $_gp,%rbx
 	addq $140, %rbx
-	imull %r14d, %r13d
-	addl %r13d, %ebx
-	movq $_gp,%r13
-	addq $1748, %r13
-	movl (%r13), %r14d
-	movl $1, %r13d
-	subl %r13d, %r14d
-	movq $_gp,%r13
-	addq $1756, %r13
-	movl (%r13), %r15d
-	imull %r15d, %r14d
-	movq $_gp,%r13
-	addq $1752, %r13
-	movl (%r13), %r15d
-	addl %r15d, %r14d
-	movq $_gp,%r13
-	addq $140, %r13
-	imull %r15d, %r14d
-	addl %r14d, %r13d
-	movl (%r13), %r14d
-	movl $1, %r13d
-	addl %r13d, %r14d
-	movl %r14d, (%rbx)
+	movl $4, %r8d
+	imull %r8d, %ecx
+	addl %ecx, %ebx
+	movq $_gp,%rcx
+	addq $1748, %rcx
+	movl (%rcx), %r8d
+	movl $1, %ecx
+	subl %ecx, %r8d
+	movq $_gp,%rcx
+	addq $1756, %rcx
+	movl (%rcx), %r9d
+	imull %r9d, %r8d
+	movq $_gp,%rcx
+	addq $1752, %rcx
+	movl (%rcx), %r9d
+	addl %r9d, %r8d
+	movq $_gp,%rcx
+	addq $140, %rcx
+	movl $4, %r9d
+	imull %r9d, %r8d
+	addl %r8d, %ecx
+	movl (%rcx), %r8d
+	movl $1, %ecx
+	addl %ecx, %r8d
+	movl %r8d, (%rbx)
 	jmp label11
 label10: nop
 label11: nop
 	movq $_gp,%rbx
 	addq $1748, %rbx
-	movl (%rbx), %r13d
+	movl (%rbx), %ecx
 	movq $_gp,%rbx
 	addq $1756, %rbx
-	movl (%rbx), %r14d
-	imull %r14d, %r13d
+	movl (%rbx), %r8d
+	imull %r8d, %ecx
 	movq $_gp,%rbx
 	addq $1752, %rbx
-	movl (%rbx), %r14d
-	addl %r14d, %r13d
+	movl (%rbx), %r8d
+	addl %r8d, %ecx
 	movl $1, %ebx
-	subl %ebx, %r13d
+	subl %ebx, %ecx
 	movq $_gp,%rbx
 	addq $140, %rbx
-	imull %r14d, %r13d
-	addl %r13d, %ebx
-	movl (%rbx), %r13d
+	movl $4, %r8d
+	imull %r8d, %ecx
+	addl %ecx, %ebx
+	movl (%rbx), %ecx
 	movq $_gp,%rbx
 	addq $1748, %rbx
-	movl (%rbx), %r14d
+	movl (%rbx), %r8d
 	movq $_gp,%rbx
 	addq $1756, %rbx
-	movl (%rbx), %r15d
-	imull %r15d, %r14d
+	movl (%rbx), %r9d
+	imull %r9d, %r8d
 	movq $_gp,%rbx
 	addq $1752, %rbx
-	movl (%rbx), %r15d
-	addl %r15d, %r14d
+	movl (%rbx), %r9d
+	addl %r9d, %r8d
 	movq $_gp,%rbx
 	addq $140, %rbx
-	imull %r15d, %r14d
-	addl %r14d, %ebx
-	movl (%rbx), %r14d
-	cmpl %r14d, %r13d
-	movl $0, %r13d
+	movl $4, %r9d
+	imull %r9d, %r8d
+	addl %r8d, %ebx
+	movl (%rbx), %r8d
+	cmpl %r8d, %ecx
+	movl $0, %ecx
 	movl $1, %ebx
-	cmovl %ebx, %r13d
+	cmovl %ebx, %ecx
 	movl $-1 , %ebx
-	testl %r13d, %ebx
+	testl %ecx, %ebx
 	je label12
 	movq $_gp,%rbx
 	addq $1748, %rbx
-	movl (%rbx), %r14d
+	movl (%rbx), %ecx
 	movq $_gp,%rbx
 	addq $1756, %rbx
-	movl (%rbx), %r15d
-	imull %r15d, %r14d
+	movl (%rbx), %r8d
+	imull %r8d, %ecx
 	movq $_gp,%rbx
 	addq $1752, %rbx
-	movl (%rbx), %r15d
-	addl %r15d, %r14d
+	movl (%rbx), %r8d
+	addl %r8d, %ecx
 	movq $_gp,%rbx
 	addq $140, %rbx
-	imull %r15d, %r14d
-	addl %r14d, %ebx
-	movq $_gp,%r14
-	addq $1748, %r14
-	movl (%r14), %r15d
-	movq $_gp,%r14
-	addq $1756, %r14
-	movl (%r14), bogus
-	imull bogus, %r15d
-	movq $_gp,%r14
-	addq $1752, %r14
-	movl (%r14), bogus
-	addl bogus, %r15d
-	movl $1, %r14d
-	subl %r14d, %r15d
-	movq $_gp,%r14
-	addq $140, %r14
-	imull bogus, %r15d
-	addl %r15d, %r14d
-	movl (%r14), %r15d
-	movl $1, %r14d
-	addl %r14d, %r15d
-	movl %r15d, (%rbx)
+	movl $4, %r8d
+	imull %r8d, %ecx
+	addl %ecx, %ebx
+	movq $_gp,%rcx
+	addq $1748, %rcx
+	movl (%rcx), %r8d
+	movq $_gp,%rcx
+	addq $1756, %rcx
+	movl (%rcx), %r9d
+	imull %r9d, %r8d
+	movq $_gp,%rcx
+	addq $1752, %rcx
+	movl (%rcx), %r9d
+	addl %r9d, %r8d
+	movl $1, %ecx
+	subl %ecx, %r8d
+	movq $_gp,%rcx
+	addq $140, %rcx
+	movl $4, %r9d
+	imull %r9d, %r8d
+	addl %r8d, %ecx
+	movl (%rcx), %r8d
+	movl $1, %ecx
+	addl %ecx, %r8d
+	movl %r8d, (%rbx)
 	jmp label13
 label12: nop
 label13: nop
 	movq $_gp,%rbx
 	addq $1752, %rbx
-	movq $_gp,%r14
-	addq $1752, %r14
-	movl (%r14), %r15d
-	movl $1, %r14d
-	addl %r14d, %r15d
-	movl %r15d, (%rbx)
+	movq $_gp,%rcx
+	addq $1752, %rcx
+	movl (%rcx), %r8d
+	movl $1, %ecx
+	addl %ecx, %r8d
+	movl %r8d, (%rbx)
 	jmp label6
 label7: nop
 	movq $_gp,%rbx
 	addq $1748, %rbx
-	movq $_gp,%r14
-	addq $1748, %r14
-	movl (%r14), %r15d
-	movl $1, %r14d
-	addl %r14d, %r15d
-	movl %r15d, (%rbx)
+	movq $_gp,%rcx
+	addq $1748, %rcx
+	movl (%rcx), %r8d
+	movl $1, %ecx
+	addl %ecx, %r8d
+	movl %r8d, (%rbx)
 	jmp label4
 label5: nop
 	movq $_gp,%rbx
 	addq $1744, %rbx
-	movl (%rbx), %r14d
-	movl %r14d, %esi
+	movl (%rbx), %ecx
+	movl %ecx, %esi
 	movl $0, %eax
 	movl $.int_wformat, %edi
 	call printf
 	movq $_gp,%rbx
 	addq $1740, %rbx
-	movl (%rbx), %r14d
-	movl %r14d, %esi
+	movl (%rbx), %ecx
+	movl %ecx, %esi
 	movl $0, %eax
 	movl $.int_wformat, %edi
 	call printf
 	movq $_gp,%rbx
 	addq $1744, %rbx
-	movl (%rbx), %r14d
+	movl (%rbx), %ecx
 	movq $_gp,%rbx
 	addq $1756, %rbx
-	movl (%rbx), %r15d
-	imull %r15d, %r14d
+	movl (%rbx), %r8d
+	imull %r8d, %ecx
 	movq $_gp,%rbx
 	addq $1740, %rbx
-	movl (%rbx), %r15d
-	addl %r15d, %r14d
+	movl (%rbx), %r8d
+	addl %r8d, %ecx
 	movq $_gp,%rbx
 	addq $140, %rbx
-	imull %r15d, %r14d
-	addl %r14d, %ebx
-	movl (%rbx), %r14d
-	movl %r14d, %esi
+	movl $4, %r8d
+	imull %r8d, %ecx
+	addl %ecx, %ebx
+	movl (%rbx), %ecx
+	movl %ecx, %esi
 	movl $0, %eax
 	movl $.int_wformat, %edi
 	call printf
