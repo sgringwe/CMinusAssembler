@@ -45,7 +45,7 @@ label0: nop
 	movq $_gp,%r8
 	addq $240, %r8
 	imull %r9d, $4
-	addq %r8d, %r9d
+	addl %r9d, %r8d
 	movq $_gp,%r9
 	addq $3848, %r9
 	movl (%r9), %r10d
@@ -56,7 +56,7 @@ label0: nop
 	movq $_gp,%r8
 	addq $0, %r8
 	imull %r9d, $4
-	addq %r8d, %r9d
+	addl %r9d, %r8d
 	movq $_gp,%r9
 	addq $3848, %r9
 	movl (%r9), %r10d
@@ -97,7 +97,7 @@ label2: nop
 	movq $_gp,%r10
 	addq $240, %r10
 	imull %r11d, $4
-	addq %r10d, %r11d
+	addl %r11d, %r10d
 	movq $_gp,%r11
 	addq $3852, %r11
 	movl (%r11), %r12d
@@ -108,7 +108,7 @@ label2: nop
 	movq $_gp,%r10
 	addq $120, %r10
 	imull %r11d, $4
-	addq %r10d, %r11d
+	addl %r11d, %r10d
 	movl $2, %r11d
 	movq $_gp,%r12
 	addq $3852, %r12
@@ -177,7 +177,7 @@ label6: nop
 	movq $_gp,%r14
 	addq $240, %r14
 	imull %r15d, $4
-	addq %r14d, %r15d
+	addl %r15d, %r14d
 	movq $_gp,%r15
 	addq $3848, %r15
 	movl (%r15), bogus
@@ -196,7 +196,7 @@ label6: nop
 	movq $_gp,%r15
 	addq $240, %r15
 	imull bogus, $4
-	addq %r15d, bogus
+	addl bogus, %r15d
 	movl (%r15), bogus
 	movl bogus, (%r14)
 	movq $_gp,%r14
@@ -205,7 +205,7 @@ label6: nop
 	movq $_gp,%r14
 	addq $120, %r14
 	imull %r15d, $4
-	addq %r14d, %r15d
+	addl %r15d, %r14d
 	movl (%r14), %r15d
 	movq $_gp,%r14
 	addq $3852, %r14
@@ -213,7 +213,7 @@ label6: nop
 	movq $_gp,%r14
 	addq $0, %r14
 	imull bogus, $4
-	addq %r14d, bogus
+	addl bogus, %r14d
 	movl (%r14), bogus
 	cmpl bogus, %r15d
 	movl $0, %r15d
@@ -236,7 +236,7 @@ label6: nop
 	movq $_gp,bogus
 	addq $240, bogus
 	imull bogus, $4
-	addq bogus, bogus
+	addl bogus, bogus
 	movq $_gp,bogus
 	addq $3848, bogus
 	movl (bogus), bogus
@@ -251,7 +251,7 @@ label6: nop
 	movq $_gp,bogus
 	addq $240, bogus
 	imull bogus, $4
-	addq bogus, bogus
+	addl bogus, bogus
 	movl (bogus), bogus
 	movl $1, bogus
 	addl bogus, bogus
@@ -275,7 +275,7 @@ label9: nop
 	movq $_gp,bogus
 	addq $240, bogus
 	imull bogus, $4
-	addq bogus, bogus
+	addl bogus, bogus
 	movl (bogus), bogus
 	movq $_gp,bogus
 	addq $3848, bogus
@@ -291,7 +291,7 @@ label9: nop
 	movq $_gp,bogus
 	addq $240, bogus
 	imull bogus, $4
-	addq bogus, bogus
+	addl bogus, bogus
 	movl (bogus), bogus
 	cmpl bogus, bogus
 	movl $0, bogus
@@ -314,7 +314,7 @@ label9: nop
 	movq $_gp,bogus
 	addq $240, bogus
 	imull bogus, $4
-	addq bogus, bogus
+	addl bogus, bogus
 	movq $_gp,bogus
 	addq $3848, bogus
 	movl (bogus), bogus
@@ -331,7 +331,7 @@ label9: nop
 	movq $_gp,bogus
 	addq $240, bogus
 	imull bogus, $4
-	addq bogus, bogus
+	addl bogus, bogus
 	movl (bogus), bogus
 	movl $1, bogus
 	addl bogus, bogus
@@ -355,7 +355,7 @@ label11: nop
 	movq $_gp,bogus
 	addq $240, bogus
 	imull bogus, $4
-	addq bogus, bogus
+	addl bogus, bogus
 	movl (bogus), bogus
 	movq $_gp,bogus
 	addq $3848, bogus
@@ -371,7 +371,7 @@ label11: nop
 	movq $_gp,bogus
 	addq $240, bogus
 	imull bogus, $4
-	addq bogus, bogus
+	addl bogus, bogus
 	movl (bogus), bogus
 	cmpl bogus, bogus
 	movl $0, bogus
@@ -394,7 +394,7 @@ label11: nop
 	movq $_gp,bogus
 	addq $240, bogus
 	imull bogus, $4
-	addq bogus, bogus
+	addl bogus, bogus
 	movq $_gp,bogus
 	addq $3848, bogus
 	movl (bogus), bogus
@@ -411,7 +411,7 @@ label11: nop
 	movq $_gp,bogus
 	addq $240, bogus
 	imull bogus, $4
-	addq bogus, bogus
+	addl bogus, bogus
 	movl (bogus), bogus
 	movl $1, bogus
 	addl bogus, bogus
@@ -443,7 +443,7 @@ label5: nop
 	movq $_gp,bogus
 	addq $240, bogus
 	imull bogus, $4
-	addq bogus, bogus
+	addl bogus, bogus
 	movl (bogus), bogus
 	movl bogus, %esi
 	movl $0, %eax

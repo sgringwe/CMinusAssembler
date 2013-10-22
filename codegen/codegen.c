@@ -568,8 +568,7 @@ int emitComputeArrayVariableAddress(DList instList, SymTable symtab, int varInde
 	inst = nssave(3, "\timull ", (char*)SymGetFieldByIndex(symtab,slotIndex,SYM_NAME_FIELD), ", $4");
 	dlinkAppend(instList,dlinkNodeAlloc(inst));
 
-	inst = nssave(4, "\taddq ", (char*)SymGetFieldByIndex(symtab,regIndex,SYM_NAME_FIELD), ", ", (char*)SymGetFieldByIndex(symtab,slotIndex,SYM_NAME_FIELD));
-	dlinkAppend(instList,dlinkNodeAlloc(inst));
+	emitAddExpression(instList, symtab, regIndex, slotIndex);
 
 	freeIntegerRegister((int)SymGetFieldByIndex(symtab,slotIndex,SYMTAB_REGISTER_INDEX_FIELD));
 
