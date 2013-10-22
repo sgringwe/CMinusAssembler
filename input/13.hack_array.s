@@ -46,7 +46,7 @@ main:	nop
 	movl (%rbx), %ecx
 	movq $_gp,%rbx
 	addq $12, %rbx
-	imull %ecx, $4
+	imull %r8d, %ecx
 	addl %ecx, %ebx
 	movl (%rbx), %ecx
 	movl %ecx, %esi
@@ -56,7 +56,7 @@ main:	nop
 	movl $11, %ebx
 	movq $_gp,%rcx
 	addq $12, %rcx
-	imull %ebx, $4
+	imull %r8d, %ebx
 	addl %ebx, %ecx
 	movl (%rcx), %ebx
 	movl %ebx, %esi
@@ -73,7 +73,7 @@ main:	nop
 	movl $12, %ebx
 	movq $_gp,%rcx
 	addq $12, %rcx
-	imull %ebx, $4
+	imull %r8d, %ebx
 	addl %ebx, %ecx
 	movl $100, %ebx
 	movl %ebx, (%rcx)

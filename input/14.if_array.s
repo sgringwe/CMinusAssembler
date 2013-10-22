@@ -54,7 +54,7 @@ label0: nop
 	movl (%rbx), %r8d
 	movq $_gp,%rbx
 	addq $0, %rbx
-	imull %r8d, $4
+	imull %r9d, %r8d
 	addl %r8d, %ebx
 	movq $_gp,%r8
 	addq $400, %r8
@@ -65,7 +65,7 @@ label0: nop
 	movl $5, %ebx
 	movq $_gp,%r8
 	addq $0, %r8
-	imull %ebx, $4
+	imull %r9d, %ebx
 	addl %ebx, %r8d
 	movl $5, %ebx
 	movl %ebx, (%r8)
@@ -74,7 +74,7 @@ label0: nop
 	movl (%rbx), %r8d
 	movq $_gp,%rbx
 	addq $0, %rbx
-	imull %r8d, $4
+	imull %r9d, %r8d
 	addl %r8d, %ebx
 	movl (%rbx), %r8d
 	movl %r8d, %esi

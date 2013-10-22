@@ -44,7 +44,7 @@ label0: nop
 	imull %r9d, %r8d
 	movq $_gp,%rbx
 	addq $240, %rbx
-	imull %r8d, $4
+	imull %r9d, %r8d
 	addl %r8d, %ebx
 	movq $_gp,%r8
 	addq $3848, %r8
@@ -55,7 +55,7 @@ label0: nop
 	movl (%rbx), %r8d
 	movq $_gp,%rbx
 	addq $0, %rbx
-	imull %r8d, $4
+	imull %r9d, %r8d
 	addl %r8d, %ebx
 	movq $_gp,%r8
 	addq $3848, %r8
@@ -96,7 +96,7 @@ label2: nop
 	movl (%rbx), %r9d
 	movq $_gp,%rbx
 	addq $240, %rbx
-	imull %r9d, $4
+	imull %r10d, %r9d
 	addl %r9d, %ebx
 	movq $_gp,%r9
 	addq $3852, %r9
@@ -107,7 +107,7 @@ label2: nop
 	movl (%rbx), %r9d
 	movq $_gp,%rbx
 	addq $120, %rbx
-	imull %r9d, $4
+	imull %r10d, %r9d
 	addl %r9d, %ebx
 	movl $2, %r9d
 	movq $_gp,%r10
@@ -176,7 +176,7 @@ label6: nop
 	addl %r12d, %r11d
 	movq $_gp,%rbx
 	addq $240, %rbx
-	imull %r11d, $4
+	imull %r12d, %r11d
 	addl %r11d, %ebx
 	movq $_gp,%r11
 	addq $3848, %r11
@@ -195,7 +195,7 @@ label6: nop
 	subl %r11d, %r12d
 	movq $_gp,%r11
 	addq $240, %r11
-	imull %r12d, $4
+	imull %r13d, %r12d
 	addl %r12d, %r11d
 	movl (%r11), %r12d
 	movl %r12d, (%rbx)
@@ -204,7 +204,7 @@ label6: nop
 	movl (%rbx), %r11d
 	movq $_gp,%rbx
 	addq $120, %rbx
-	imull %r11d, $4
+	imull %r12d, %r11d
 	addl %r11d, %ebx
 	movl (%rbx), %r11d
 	movq $_gp,%rbx
@@ -212,7 +212,7 @@ label6: nop
 	movl (%rbx), %r12d
 	movq $_gp,%rbx
 	addq $0, %rbx
-	imull %r12d, $4
+	imull %r13d, %r12d
 	addl %r12d, %ebx
 	movl (%rbx), %r12d
 	cmpl %r12d, %r11d
@@ -235,7 +235,7 @@ label6: nop
 	addl %r13d, %r12d
 	movq $_gp,%rbx
 	addq $240, %rbx
-	imull %r12d, $4
+	imull %r13d, %r12d
 	addl %r12d, %ebx
 	movq $_gp,%r12
 	addq $3848, %r12
@@ -250,7 +250,7 @@ label6: nop
 	addl %r14d, %r13d
 	movq $_gp,%r12
 	addq $240, %r12
-	imull %r13d, $4
+	imull %r14d, %r13d
 	addl %r13d, %r12d
 	movl (%r12), %r13d
 	movl $1, %r12d
@@ -274,7 +274,7 @@ label9: nop
 	addl %r13d, %r12d
 	movq $_gp,%rbx
 	addq $240, %rbx
-	imull %r12d, $4
+	imull %r13d, %r12d
 	addl %r12d, %ebx
 	movl (%rbx), %r12d
 	movq $_gp,%rbx
@@ -290,7 +290,7 @@ label9: nop
 	addl %r14d, %r13d
 	movq $_gp,%rbx
 	addq $240, %rbx
-	imull %r13d, $4
+	imull %r14d, %r13d
 	addl %r13d, %ebx
 	movl (%rbx), %r13d
 	cmpl %r13d, %r12d
@@ -313,7 +313,7 @@ label9: nop
 	addl %r14d, %r13d
 	movq $_gp,%rbx
 	addq $240, %rbx
-	imull %r13d, $4
+	imull %r14d, %r13d
 	addl %r13d, %ebx
 	movq $_gp,%r13
 	addq $3848, %r13
@@ -330,7 +330,7 @@ label9: nop
 	addl %r15d, %r14d
 	movq $_gp,%r13
 	addq $240, %r13
-	imull %r14d, $4
+	imull %r15d, %r14d
 	addl %r14d, %r13d
 	movl (%r13), %r14d
 	movl $1, %r13d
@@ -354,7 +354,7 @@ label11: nop
 	subl %ebx, %r13d
 	movq $_gp,%rbx
 	addq $240, %rbx
-	imull %r13d, $4
+	imull %r14d, %r13d
 	addl %r13d, %ebx
 	movl (%rbx), %r13d
 	movq $_gp,%rbx
@@ -370,7 +370,7 @@ label11: nop
 	addl %r15d, %r14d
 	movq $_gp,%rbx
 	addq $240, %rbx
-	imull %r14d, $4
+	imull %r15d, %r14d
 	addl %r14d, %ebx
 	movl (%rbx), %r14d
 	cmpl %r14d, %r13d
@@ -393,7 +393,7 @@ label11: nop
 	addl %r15d, %r14d
 	movq $_gp,%rbx
 	addq $240, %rbx
-	imull %r14d, $4
+	imull %r15d, %r14d
 	addl %r14d, %ebx
 	movq $_gp,%r14
 	addq $3848, %r14
@@ -410,7 +410,7 @@ label11: nop
 	subl %r14d, %r15d
 	movq $_gp,%r14
 	addq $240, %r14
-	imull %r15d, $4
+	imull bogus, %r15d
 	addl %r15d, %r14d
 	movl (%r14), %r15d
 	movl $1, %r14d
@@ -442,7 +442,7 @@ label5: nop
 	movl $899, %ebx
 	movq $_gp,%r14
 	addq $240, %r14
-	imull %ebx, $4
+	imull %r15d, %ebx
 	addl %ebx, %r14d
 	movl (%r14), %ebx
 	movl %ebx, %esi

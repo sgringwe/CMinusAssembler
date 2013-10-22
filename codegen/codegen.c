@@ -569,7 +569,8 @@ int emitComputeArrayVariableAddress(DList instList, SymTable symtab, int varInde
 
 	int sizeReg = getFreeIntegerRegisterIndex(symtab);
 	inst = nssave(2, "\tmovl $4, ", (char*)SymGetFieldByIndex(symtab,sizeReg,SYM_NAME_FIELD));
-
+	dlinkAppend(instList,dlinkNodeAlloc(inst));
+	
 	// inst = nssave(3, "\timull ", (char*)SymGetFieldByIndex(symtab,slotIndex,SYM_NAME_FIELD), ", $4");
 	// dlinkAppend(instList,dlinkNodeAlloc(inst));
 	emitMultiplyExpression(instList, symtab, slotIndex, sizeReg);

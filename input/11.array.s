@@ -12,14 +12,14 @@ main:	nop
 	movl $3, %ebx
 	movq $_gp,%rcx
 	addq $0, %rcx
-	imull %ebx, $4
+	imull %r8d, %ebx
 	addl %ebx, %ecx
 	movl $4, %ebx
 	movl %ebx, (%rcx)
 	movl $3, %ebx
 	movq $_gp,%rcx
 	addq $0, %rcx
-	imull %ebx, $4
+	imull %r8d, %ebx
 	addl %ebx, %ecx
 	movl (%rcx), %ebx
 	movl %ebx, %esi

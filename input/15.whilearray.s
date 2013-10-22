@@ -30,7 +30,7 @@ label0: nop
 	movl (%rbx), %r8d
 	movq $_gp,%rbx
 	addq $4, %rbx
-	imull %r8d, $4
+	imull %r9d, %r8d
 	addl %r8d, %ebx
 	movq $_gp,%r8
 	addq $0, %r8
@@ -78,7 +78,7 @@ label2: nop
 	movl (%rbx), %r10d
 	movq $_gp,%rbx
 	addq $4, %rbx
-	imull %r10d, $4
+	imull %r11d, %r10d
 	addl %r10d, %ebx
 	movl (%rbx), %r10d
 	movl %r10d, %esi
