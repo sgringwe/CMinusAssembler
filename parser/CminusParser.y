@@ -169,12 +169,16 @@ ProcedureDecl : ProcedureHead ProcedureBody
 ProcedureHead : FunctionDecl DeclList 
 		{
 			emitProcedurePrologue(instList,symtab,$1);
+      symtab = beginScope(symtabStack);
+      initSymTable();
 			functionOffset = $2;
 			$$ = $1;
 		}
 	      | FunctionDecl
 		{
 			emitProcedurePrologue(instList,symtab,$1);
+      symtab = beginScope(symtabStack);
+      initSymTable();
 			functionOffset = 0;
 			$$ = $1;
 		}
@@ -183,8 +187,6 @@ ProcedureHead : FunctionDecl DeclList
 FunctionDecl :  Type IDENTIFIER LPAREN RPAREN LBRACE 
 		{
 			$$ = SymIndex(symtab,$2);
-      symtab = beginScope(symtabStack);
-      initSymTable();
       printf("<<FunctionDecl :  Type IDENTIFIER LPAREN RPAREN LBRACE\n");
 		}
 	      	;
