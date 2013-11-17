@@ -25,6 +25,7 @@ failedItems = []
 for fn in os.listdir(input_dir):
    if fn.endswith(".cm"):
       print("Running " + fn)
+      execution_failed = False
 
       # Files for cminus input
       file_name = "input/" + fn
@@ -45,6 +46,7 @@ for fn in os.listdir(input_dir):
         print "Compiling assembly file into executable..."
         call(["gcc", "-o", executable_name, assembly_name])
       except:
+        execution_failed = True
         print "gcc call failed"
 
       try:
@@ -52,8 +54,8 @@ for fn in os.listdir(input_dir):
         f = open(output_name, "w")
         call(["./" + executable_name], stdout=f)
       except:
+        execution_failed = True
         print "Execution of output failed"
-      # shutil.copyfile("input/" + fn.replace(".cm", ".s"), "tests/" + fn.replace(".cm", ".s"))
 
 
       ### Now compile the equivelant c files for correct output
@@ -61,6 +63,7 @@ for fn in os.listdir(input_dir):
         print "Compiling test c file into executable..."
         call(["gcc", "-o", test_executable_name, test_file_name])
       except:
+        execution_failed = True
         print "gcc call failed"
 
       try:
@@ -68,6 +71,7 @@ for fn in os.listdir(input_dir):
         f = open(test_output_name, "w")
         call(["./" + test_executable_name], stdout=f)
       except:
+        execution_failed = True
         print "Execution of output failed"
 
 
@@ -77,9 +81,10 @@ for fn in os.listdir(input_dir):
         print test_output_name
         same = filecmp.cmp(output_name, test_output_name)
       except:
+        execution_failed = True
         print "Comparision failed. No such file."
 
-      if(same):
+      if(same and not execution_failed):
         passed += 1
         passedItems.append(fn)
         print "Test passed for " + fn + "!"
