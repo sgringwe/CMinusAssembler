@@ -1,3 +1,13 @@
+<<ProcedureBody : StatementList RBRACE
+<<ProcedureDecl : ProcedureHead ProcedureBody
+<<ProcedureBody : StatementList RBRACE
+<<ProcedureDecl : ProcedureHead ProcedureBody
+<<ProcedureBody : StatementList RBRACE
+<<ProcedureDecl : ProcedureHead ProcedureBody
+<<Procedures
+<<Procedures  : ProcedureDecl Procedures
+<<Procedures  : ProcedureDecl Procedures
+<<Procedures  : ProcedureDecl Procedures
 	.section	.rodata
 	.int_wformat: .string "%d\n"
 	.str_wformat: .string "%s\n"

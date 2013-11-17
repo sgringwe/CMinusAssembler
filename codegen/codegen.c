@@ -104,8 +104,10 @@ void emitExit(DList instList) {
 void emitAssignment(DList instList,SymTable symtab,int lhsRegIndex, int rhsRegIndex) {
 	char *inst;
 	
-	 inst = nssave(5,  "\tmovl ", (char*)SymGetFieldByIndex(symtab,rhsRegIndex,SYM_NAME_FIELD),
-			", (", get64bitIntegerRegisterName(symtab, lhsRegIndex), ")");
+	char* regName = malloc(sizeof(char) * 7); // Assume 7 is largest reg name
+	get64bitIntegerRegisterName(symtab, lhsRegIndex, regName);
+	inst = nssave(5,  "\tmovl ", (char*)SymGetFieldByIndex(symtab,rhsRegIndex,SYM_NAME_FIELD),
+			", (", regName, ")");
 	dlinkAppend(instList,dlinkNodeAlloc(inst));
 
 	freeIntegerRegister((int)SymGetFieldByIndex(symtab,rhsRegIndex,SYMTAB_REGISTER_INDEX_FIELD));
@@ -550,12 +552,14 @@ int emitComputeVariableAddress(DList instList, SymTable symtab, int varIndex) {
 
 	int regIndex = getFreeIntegerRegisterIndex(symtab);
 	
-	char* regName = (char*)get64bitIntegerRegisterName(symtab, regIndex);
+	char* regName = malloc(sizeof(char) * 7); // Assume 7 is largest reg name
+	get64bitIntegerRegisterName(symtab, regIndex, regName);
 
 	int offset = (int)SymGetFieldByIndex(symtab,varIndex,SYMTAB_OFFSET_FIELD);
 	char offsetStr[10];
 	char *inst; 
 
+	printf("regName: %s\n", regName);
 	snprintf(offsetStr,9,"%d",offset);
 
         inst = nssave(2,"\tmovq $_gp,", regName);
@@ -583,7 +587,8 @@ int emitComputeArrayAddress(DList instList, SymTable varSymtab, int varIndex, Sy
 	int varTypeIndex = (int)SymGetFieldByIndex(varSymtab,varIndex,SYMTAB_TYPE_INDEX_FIELD);
 	
 	if (isArrayType(regSymtab,varTypeIndex)) {
-		char* regName = get64bitIntegerRegisterName(regSymtab, regIndex);
+		char* regName = malloc(sizeof(char) * 7); // Assume 7 is largest reg name
+		get64bitIntegerRegisterName(regSymtab, regIndex, regName);
 		int offset = (int)SymGetFieldByIndex(varSymtab,varIndex,SYMTAB_OFFSET_FIELD);
 		char offsetStr[10];
 	
@@ -601,8 +606,9 @@ int emitComputeArrayAddress(DList instList, SymTable varSymtab, int varIndex, Sy
 		dlinkAppend(instList,dlinkNodeAlloc(inst));
 
 		/* compute offset based on subscript */
-	        char* subReg32Name = (char*)SymGetFieldByIndex(regSymtab,subIndex,SYM_NAME_FIELD);
-		char* subRegName = get64bitIntegerRegisterName(regSymtab, subIndex);
+	  char* subReg32Name = (char*)SymGetFieldByIndex(regSymtab,subIndex,SYM_NAME_FIELD);
+	  char* subRegName = malloc(sizeof(char) * 7); // Assume 7 is largest reg name
+		get64bitIntegerRegisterName(regSymtab, subIndex, subRegName);
 		
 		inst = nssave(4,"\tmovslq ", subReg32Name, ", ", subRegName);
 		dlinkAppend(instList,dlinkNodeAlloc(inst));
@@ -642,7 +648,8 @@ int emitLoadVariable(DList instList, SymTable symtab, int regIndex) {
 
 	char* newRegName = (char*)SymGetFieldByIndex(symtab,newRegIndex,SYM_NAME_FIELD);
 
-	char* regName = (char*) get64bitIntegerRegisterName(symtab, regIndex);
+	char* regName = malloc(sizeof(char) * 7); // Assume 7 is largest reg name
+	get64bitIntegerRegisterName(symtab, regIndex, regName);
 
 	char *inst;
 	

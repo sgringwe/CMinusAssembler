@@ -122,13 +122,20 @@ Program		: Procedures
           ;
 
 Procedures 	: ProcedureDecl Procedures
+    {
+      printf("<<Procedures  : ProcedureDecl Procedures\n");
+    }
 	   	|
+    {
+      printf("<<Procedures\n");
+    }
 	   	;
 
 ProcedureDecl : ProcedureHead ProcedureBody
-               {
-			emitExit(instList);
-               }
+    {
+      printf("<<ProcedureDecl : ProcedureHead ProcedureBody\n");
+      emitExit(instList);
+    }
 	      ;
 
 ProcedureHead : FunctionDecl DeclList 
@@ -152,6 +159,9 @@ FunctionDecl :  Type IDENTIFIER LPAREN RPAREN LBRACE
 	      	;
 
 ProcedureBody : StatementList RBRACE
+    {
+      printf("<<ProcedureBody : StatementList RBRACE\n");
+    }
 	      ;
 
 
@@ -413,6 +423,7 @@ Factor          : Variable
 
 Variable        : IDENTIFIER
 		{
+      printf("<<Variable        : IDENTIFIER %s at %d\n", $1, Cminus_lineno);
 			int symIndex = SymQueryIndex(symtab,$1);
 			$$ = emitComputeVariableAddress(instList,symtab,symIndex);
 		}
