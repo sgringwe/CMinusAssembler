@@ -161,24 +161,27 @@ Procedures 	: ProcedureDecl Procedures
 
 ProcedureDecl : ProcedureHead ProcedureBody
     {
-      // printf("<<ProcedureDecl : ProcedureHead ProcedureBody\n");
+      printf("<<ProcedureDecl : ProcedureHead ProcedureBody\n");
       emitExit(instList);
     }
 	      ;
 
 ProcedureHead : FunctionDecl DeclList 
 		{
+			printf("ProcedureHead : FunctionDecl DeclList is %i\n", $1);
 			emitProcedurePrologue(instList,symtab,$1);
-      symtab = beginScope(symtabStack);
-      initSymTable();
+			// symtab = beginScope(symtabStack);
+			// initSymTable();
 			functionOffset = $2;
+
 			$$ = $1;
 		}
 	      | FunctionDecl
 		{
+			printf("ProcedureHead : FunctionDecl is %i\n", $1);
 			emitProcedurePrologue(instList,symtab,$1);
-      symtab = beginScope(symtabStack);
-      initSymTable();
+			// symtab = beginScope(symtabStack);
+			// initSymTable();
 			functionOffset = 0;
 			$$ = $1;
 		}
@@ -187,14 +190,14 @@ ProcedureHead : FunctionDecl DeclList
 FunctionDecl :  Type IDENTIFIER LPAREN RPAREN LBRACE 
 		{
 			$$ = SymIndex(symtab,$2);
-      printf("<<FunctionDecl :  Type IDENTIFIER LPAREN RPAREN LBRACE\n");
+			printf("<<FunctionDecl :  Type IDENTIFIER LPAREN RPAREN LBRACE\n");
 		}
 	      	;
 
 ProcedureBody : StatementList RBRACE
     {
-      symtab = endScope(symtabStack);
-      deleteSymTable();
+      // symtab = endScope(symtabStack);
+      // deleteSymTable();
 
       printf("<<ProcedureBody : StatementList RBRACE\n");
     }
@@ -211,6 +214,7 @@ DeclList 	: Type IdentifierList  SEMICOLON
 			$$ = data->offset;
 			dlinkFreeNodes($2);
 			free(data);
+
 		}		
 	   	| DeclList Type IdentifierList SEMICOLON
 	 	{
@@ -450,9 +454,9 @@ Factor          : Variable
 		}
                 | IDENTIFIER LPAREN RPAREN
 		{
-      // make the call here and return the return value register
-      printf("identifier () is %s\n", $1);
-      int symIndex = SymIndex(symtab,$1);
+			// make the call here and return the return value register
+			//  printf("<<identifier () is %s\n", $1);
+			int symIndex = SymIndex(symtab,$1);
 			$$ = emitFunctionCall(instList,symtab,symIndex);
 		}
          	| LPAREN Expr RPAREN

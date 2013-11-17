@@ -23,9 +23,9 @@ static void printDataDeclaration(DNode decl) {
 /**
  * Emit the assembly prologue for a procedure
  */
-void emitProcedurePrologue(DList instList,SymTable symtab, int index) {
+void emitProcedurePrologue(DList instList,SymTable symtab, int regIndex) {
 
-	char *name = (char*)SymGetFieldByIndex(symtab,index,SYM_NAME_FIELD); 
+	char *name = (char*)SymGetFieldByIndex(symtab,regIndex,SYM_NAME_FIELD); 
 
 	char* inst = nssave(2,"\t.globl ",name);
 	dlinkAppend(instList,dlinkNodeAlloc(inst));
@@ -38,6 +38,13 @@ void emitProcedurePrologue(DList instList,SymTable symtab, int index) {
 	dlinkAppend(instList,dlinkNodeAlloc(inst));
 	inst = ssave("\tmovq %rsp, %rbp");
 	dlinkAppend(instList,dlinkNodeAlloc(inst));
+	// inst = ssave("\tsubq $4, %esp");
+	// dlinkAppend(instList,dlinkNodeAlloc(inst));
+	// inst = ssave("\tpushq %rbp");
+	// dlinkAppend(instList,dlinkNodeAlloc(inst));
+	// inst = ssave("\tpushq %rbp");
+	// dlinkAppend(instList,dlinkNodeAlloc(inst));
+
 }
 
 /**
@@ -677,9 +684,12 @@ int emitFunctionCall(DList instList, SymTable symtab, int regIndex) {
 	get64bitIntegerRegisterName(symtab, regIndex, regName);
 
 	char *inst;
-	
+
 	inst = nssave(4,"\tmovl (",regName,"), ", newRegName);
 	dlinkAppend(instList,dlinkNodeAlloc(inst));
+	
+	// inst = nssave(4,"\tmovl (",regName,"), ", newRegName);
+	// dlinkAppend(instList,dlinkNodeAlloc(inst));
 
 	freeIntegerRegister((int)SymGetFieldByIndex(symtab,regIndex,SYMTAB_REGISTER_INDEX_FIELD));
 
