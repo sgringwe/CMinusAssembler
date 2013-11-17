@@ -559,7 +559,6 @@ int emitComputeVariableAddress(DList instList, SymTable symtab, int varIndex) {
 	char offsetStr[10];
 	char *inst; 
 
-	printf("regName: %s\n", regName);
 	snprintf(offsetStr,9,"%d",offset);
 
         inst = nssave(2,"\tmovq $_gp,", regName);
@@ -646,6 +645,32 @@ int emitLoadVariable(DList instList, SymTable symtab, int regIndex) {
 
 	int newRegIndex = getFreeIntegerRegisterIndex(symtab);
 
+	char* newRegName = (char*)SymGetFieldByIndex(symtab,newRegIndex,SYM_NAME_FIELD);
+
+	char* regName = malloc(sizeof(char) * 7); // Assume 7 is largest reg name
+	get64bitIntegerRegisterName(symtab, regIndex, regName);
+
+	char *inst;
+	
+	inst = nssave(4,"\tmovl (",regName,"), ", newRegName);
+	dlinkAppend(instList,dlinkNodeAlloc(inst));
+
+	freeIntegerRegister((int)SymGetFieldByIndex(symtab,regIndex,SYMTAB_REGISTER_INDEX_FIELD));
+
+	return newRegIndex;
+
+}
+
+/**
+ * Add an instruction to call a function and return result
+ *
+ * @param instList a Dlist of instructions
+ * @param symtab a symbol table
+ * @param regIndex the symbol table index for the address of a function
+ * @return the symbol table index of the result register of the function cal
+ */
+int emitFunctionCall(DList instList, SymTable symtab, int regIndex) {
+	int newRegIndex = getFreeIntegerRegisterIndex(symtab);
 	char* newRegName = (char*)SymGetFieldByIndex(symtab,newRegIndex,SYM_NAME_FIELD);
 
 	char* regName = malloc(sizeof(char) * 7); // Assume 7 is largest reg name

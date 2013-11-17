@@ -22,6 +22,7 @@ typedef struct AddIdType {
         SymTable symtab;
 } AddIdStruct, *AddIdStructPtr;
 
+EXTERN(int, emitFunctionCall, (DList instList, SymTable symtab, int functionIndex));
 
 EXTERN(void, emitDataPrologue, (DList dataList));
 EXTERN(void, emitInstructions,(DList list));

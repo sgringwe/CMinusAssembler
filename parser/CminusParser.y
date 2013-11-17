@@ -27,7 +27,11 @@ EXTERN(void,Cminus_error,(char*));
 
 EXTERN(int,Cminus_lex,(void));
 
+// Assigned to be the current symtab stack symbol table
 SymTable symtab;
+
+// Grows with scope
+SymtabStack symtabStack;
 
 static DList instList;
 static DList dataList;
@@ -123,17 +127,17 @@ Program		: Procedures
 
 Procedures 	: ProcedureDecl Procedures
     {
-      printf("<<Procedures  : ProcedureDecl Procedures\n");
+      // printf("<<Procedures  : ProcedureDecl Procedures\n");
     }
 	   	|
     {
-      printf("<<Procedures\n");
+      // printf("<<Procedures\n");
     }
 	   	;
 
 ProcedureDecl : ProcedureHead ProcedureBody
     {
-      printf("<<ProcedureDecl : ProcedureHead ProcedureBody\n");
+      // printf("<<ProcedureDecl : ProcedureHead ProcedureBody\n");
       emitExit(instList);
     }
 	      ;
@@ -155,11 +159,17 @@ ProcedureHead : FunctionDecl DeclList
 FunctionDecl :  Type IDENTIFIER LPAREN RPAREN LBRACE 
 		{
 			$$ = SymIndex(symtab,$2);
+      symtab = beginScope(symtabStack);
+      // initSymTable();
+      printf("<<FunctionDecl :  Type IDENTIFIER LPAREN RPAREN LBRACE\n");
 		}
 	      	;
 
 ProcedureBody : StatementList RBRACE
     {
+      symtab = endScope(symtabStack);
+      // deleteSymTable();
+
       printf("<<ProcedureBody : StatementList RBRACE\n");
     }
 	      ;
@@ -249,6 +259,7 @@ Statement 	: Assignment
 
 Assignment      : Variable ASSIGN Expr SEMICOLON
 		{
+      printf("Assigning %i to be %i\n", $1, $3);
 			emitAssignment(instList,symtab,$1,$3);
 		}
                 ;
@@ -413,7 +424,10 @@ Factor          : Variable
 		}
                 | IDENTIFIER LPAREN RPAREN
 		{
-			$$ = SYM_INVALID_INDEX;
+      // make the call here and return the return value register
+      printf("identifier () is %s\n", $1);
+      int symIndex = SymIndex(symtab,$1);
+			$$ = emitFunctionCall(instList,symtab,symIndex);
 		}
          	| LPAREN Expr RPAREN
 		{
@@ -423,7 +437,6 @@ Factor          : Variable
 
 Variable        : IDENTIFIER
 		{
-      printf("<<Variable        : IDENTIFIER %s at %d\n", $1, Cminus_lineno);
 			int symIndex = SymQueryIndex(symtab,$1);
 			$$ = emitComputeVariableAddress(instList,symtab,symIndex);
 		}
@@ -463,23 +476,20 @@ int Cminus_wrap() {
 }
 
 static void initSymTable() {
-
-	symtab = SymInit(SYMTABLE_SIZE); 
-
-	SymInitField(symtab,SYMTAB_OFFSET_FIELD,(Generic)-1,NULL);
+  SymInitField(symtab,SYMTAB_OFFSET_FIELD,(Generic)-1,NULL);
 	SymInitField(symtab,SYMTAB_REGISTER_INDEX_FIELD,(Generic)-1,NULL);
 
 	int intIndex = SymIndex(symtab,SYMTAB_INTEGER_TYPE_STRING);
-        int errorIndex = SymIndex(symtab,SYMTAB_ERROR_TYPE_STRING);
-        int voidIndex = SymIndex(symtab,SYMTAB_VOID_TYPE_STRING);
+  int errorIndex = SymIndex(symtab,SYMTAB_ERROR_TYPE_STRING);
+  int voidIndex = SymIndex(symtab,SYMTAB_VOID_TYPE_STRING);
 
-        SymPutFieldByIndex(symtab,intIndex,SYMTAB_SIZE_FIELD,(Generic)INTEGER_SIZE);
-        SymPutFieldByIndex(symtab,errorIndex,SYMTAB_SIZE_FIELD,(Generic)0);
-        SymPutFieldByIndex(symtab,voidIndex,SYMTAB_SIZE_FIELD,(Generic)0);
+  SymPutFieldByIndex(symtab,intIndex,SYMTAB_SIZE_FIELD,(Generic)INTEGER_SIZE);
+  SymPutFieldByIndex(symtab,errorIndex,SYMTAB_SIZE_FIELD,(Generic)0);
+  SymPutFieldByIndex(symtab,voidIndex,SYMTAB_SIZE_FIELD,(Generic)0);
 
-        SymPutFieldByIndex(symtab,intIndex,SYMTAB_BASIC_TYPE_FIELD,(Generic)INTEGER_TYPE);
-        SymPutFieldByIndex(symtab,errorIndex,SYMTAB_BASIC_TYPE_FIELD,(Generic)ERROR_TYPE);
-        SymPutFieldByIndex(symtab,voidIndex,SYMTAB_BASIC_TYPE_FIELD,(Generic)VOID_TYPE);
+  SymPutFieldByIndex(symtab,intIndex,SYMTAB_BASIC_TYPE_FIELD,(Generic)INTEGER_TYPE);
+  SymPutFieldByIndex(symtab,errorIndex,SYMTAB_BASIC_TYPE_FIELD,(Generic)ERROR_TYPE);
+  SymPutFieldByIndex(symtab,voidIndex,SYMTAB_BASIC_TYPE_FIELD,(Generic)VOID_TYPE);
 }
 
 static void deleteSymTable() {
@@ -500,12 +510,16 @@ static void initialize(char* inputFileName) {
 	char* dotChar = rindex(inputFileName,'.');
 	int endIndex = strlen(inputFileName) - strlen(dotChar);
 	char *outputFileName = nssave(2,substr(inputFileName,0,endIndex),".s");
-	stdout = freopen(outputFileName,"w", stdout);
-        if (stdout == NULL) {
-          fprintf(stderr,"Error: Could not open file %s\n",outputFileName);
-          exit(-1);
-       } 
+	// stdout = freopen(outputFileName,"w", stdout);
+ //        if (stdout == NULL) {
+ //          fprintf(stderr,"Error: Could not open file %s\n",outputFileName);
+ //          exit(-1);
+ //       } 
 
+  symtabStack = symtabStackInit();
+
+  // Begin global scope
+  symtab = beginScope(symtabStack);
 	initSymTable();
 	
 	initRegisters();
@@ -520,6 +534,8 @@ static void finalize() {
     fclose(stdin);
     /*fclose(stdout);*/
     
+    // end global scope
+    symtab = endScope(symtabStack);
     deleteSymTable();
  
     cleanupRegisters();
@@ -535,10 +551,10 @@ int main(int argc, char** argv)
 	fileName = argv[1];
 	initialize(fileName);
 	
-        Cminus_parse();
+  Cminus_parse();
   
-  	finalize();
+  finalize();
   
-  	return 0;
+  return 0;
 }
 /******************END OF C ROUTINES**********************/
