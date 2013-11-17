@@ -46,6 +46,30 @@ extern union YYSTYPE yylval;
 
 extern int Cminus_lineno;
 
+static void initSymTable() {
+  SymInitField(symtab,SYMTAB_OFFSET_FIELD,(Generic)-1,NULL);
+  SymInitField(symtab,SYMTAB_REGISTER_INDEX_FIELD,(Generic)-1,NULL);
+
+  int intIndex = SymIndex(symtab,SYMTAB_INTEGER_TYPE_STRING);
+  int errorIndex = SymIndex(symtab,SYMTAB_ERROR_TYPE_STRING);
+  int voidIndex = SymIndex(symtab,SYMTAB_VOID_TYPE_STRING);
+
+  SymPutFieldByIndex(symtab,intIndex,SYMTAB_SIZE_FIELD,(Generic)INTEGER_SIZE);
+  SymPutFieldByIndex(symtab,errorIndex,SYMTAB_SIZE_FIELD,(Generic)0);
+  SymPutFieldByIndex(symtab,voidIndex,SYMTAB_SIZE_FIELD,(Generic)0);
+
+  SymPutFieldByIndex(symtab,intIndex,SYMTAB_BASIC_TYPE_FIELD,(Generic)INTEGER_TYPE);
+  SymPutFieldByIndex(symtab,errorIndex,SYMTAB_BASIC_TYPE_FIELD,(Generic)ERROR_TYPE);
+  SymPutFieldByIndex(symtab,voidIndex,SYMTAB_BASIC_TYPE_FIELD,(Generic)VOID_TYPE);
+}
+
+static void deleteSymTable() {
+    SymKillField(symtab,SYMTAB_REGISTER_INDEX_FIELD);
+    SymKillField(symtab,SYMTAB_OFFSET_FIELD);
+    SymKill(symtab);
+
+}
+
 %}
 
 %name-prefix="Cminus_"
@@ -160,7 +184,7 @@ FunctionDecl :  Type IDENTIFIER LPAREN RPAREN LBRACE
 		{
 			$$ = SymIndex(symtab,$2);
       symtab = beginScope(symtabStack);
-      // initSymTable();
+      initSymTable();
       printf("<<FunctionDecl :  Type IDENTIFIER LPAREN RPAREN LBRACE\n");
 		}
 	      	;
@@ -168,7 +192,7 @@ FunctionDecl :  Type IDENTIFIER LPAREN RPAREN LBRACE
 ProcedureBody : StatementList RBRACE
     {
       symtab = endScope(symtabStack);
-      // deleteSymTable();
+      deleteSymTable();
 
       printf("<<ProcedureBody : StatementList RBRACE\n");
     }
@@ -475,29 +499,29 @@ int Cminus_wrap() {
 	return 1;
 }
 
-static void initSymTable() {
-  SymInitField(symtab,SYMTAB_OFFSET_FIELD,(Generic)-1,NULL);
-	SymInitField(symtab,SYMTAB_REGISTER_INDEX_FIELD,(Generic)-1,NULL);
+// static void initSymTable() {
+//   SymInitField(symtab,SYMTAB_OFFSET_FIELD,(Generic)-1,NULL);
+// 	SymInitField(symtab,SYMTAB_REGISTER_INDEX_FIELD,(Generic)-1,NULL);
 
-	int intIndex = SymIndex(symtab,SYMTAB_INTEGER_TYPE_STRING);
-  int errorIndex = SymIndex(symtab,SYMTAB_ERROR_TYPE_STRING);
-  int voidIndex = SymIndex(symtab,SYMTAB_VOID_TYPE_STRING);
+// 	int intIndex = SymIndex(symtab,SYMTAB_INTEGER_TYPE_STRING);
+//   int errorIndex = SymIndex(symtab,SYMTAB_ERROR_TYPE_STRING);
+//   int voidIndex = SymIndex(symtab,SYMTAB_VOID_TYPE_STRING);
 
-  SymPutFieldByIndex(symtab,intIndex,SYMTAB_SIZE_FIELD,(Generic)INTEGER_SIZE);
-  SymPutFieldByIndex(symtab,errorIndex,SYMTAB_SIZE_FIELD,(Generic)0);
-  SymPutFieldByIndex(symtab,voidIndex,SYMTAB_SIZE_FIELD,(Generic)0);
+//   SymPutFieldByIndex(symtab,intIndex,SYMTAB_SIZE_FIELD,(Generic)INTEGER_SIZE);
+//   SymPutFieldByIndex(symtab,errorIndex,SYMTAB_SIZE_FIELD,(Generic)0);
+//   SymPutFieldByIndex(symtab,voidIndex,SYMTAB_SIZE_FIELD,(Generic)0);
 
-  SymPutFieldByIndex(symtab,intIndex,SYMTAB_BASIC_TYPE_FIELD,(Generic)INTEGER_TYPE);
-  SymPutFieldByIndex(symtab,errorIndex,SYMTAB_BASIC_TYPE_FIELD,(Generic)ERROR_TYPE);
-  SymPutFieldByIndex(symtab,voidIndex,SYMTAB_BASIC_TYPE_FIELD,(Generic)VOID_TYPE);
-}
+//   SymPutFieldByIndex(symtab,intIndex,SYMTAB_BASIC_TYPE_FIELD,(Generic)INTEGER_TYPE);
+//   SymPutFieldByIndex(symtab,errorIndex,SYMTAB_BASIC_TYPE_FIELD,(Generic)ERROR_TYPE);
+//   SymPutFieldByIndex(symtab,voidIndex,SYMTAB_BASIC_TYPE_FIELD,(Generic)VOID_TYPE);
+// }
 
-static void deleteSymTable() {
-    SymKillField(symtab,SYMTAB_REGISTER_INDEX_FIELD);
-    SymKillField(symtab,SYMTAB_OFFSET_FIELD);
-    SymKill(symtab);
+// static void deleteSymTable() {
+//     SymKillField(symtab,SYMTAB_REGISTER_INDEX_FIELD);
+//     SymKillField(symtab,SYMTAB_OFFSET_FIELD);
+//     SymKill(symtab);
 
-}
+// }
 
 static void initialize(char* inputFileName) {
 

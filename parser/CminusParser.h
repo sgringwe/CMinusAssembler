@@ -122,7 +122,7 @@
 
 #if ! defined YYSTYPE && ! defined YYSTYPE_IS_DECLARED
 typedef union YYSTYPE
-#line 100 "CminusParser.y"
+#line 124 "CminusParser.y"
 {
 	char*	name;
 	int     symIndex;
