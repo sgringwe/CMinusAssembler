@@ -51,6 +51,12 @@
 <tr><td class="memItemLeft" align="right" valign="top">&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="codegen_8h.html#af3f2bb42d53ad9b8b29a241e0d3555d9">EXTERN</a> (void, emitReadVariable,(<a class="el" href="struct_d_link_list__struct.html">DList</a> instList, <a class="el" href="struct_sym_table__internal__structure.html">SymTable</a> symtab, int addrIndex))</td></tr>
 <tr><td class="memItemLeft" align="right" valign="top">&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="codegen_8h.html#ae29d908a65541cb5b39d2ed9a36409f1">EXTERN</a> (void, emitWriteExpression,(<a class="el" href="struct_d_link_list__struct.html">DList</a> instList, <a class="el" href="struct_sym_table__internal__structure.html">SymTable</a> symtab, int index, char *syscallService))</td></tr>
 <tr><td class="memItemLeft" align="right" valign="top">&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="codegen_8h.html#affd66d73573d8ff0fc3e4b1927dea297">EXTERN</a> (void, emitWriteString,(<a class="el" href="struct_d_link_list__struct.html">DList</a> instList, <a class="el" href="struct_sym_table__internal__structure.html">SymTable</a> symtab, int index, <a class="el" href="struct_d_link_list__struct.html">DList</a> dataList))</td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="codegen_8h.html#a7b6d64b3b2036847a34967fbe2ceec5b">EXTERN</a> (int, emitIfTest,(<a class="el" href="struct_d_link_list__struct.html">DList</a> instList, <a class="el" href="struct_sym_table__internal__structure.html">SymTable</a> symtab, int regIndex))</td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="codegen_8h.html#aa1cfe8e2e8f6141026404330c369b0b7">EXTERN</a> (void, emitEndBranchTarget,(<a class="el" href="struct_d_link_list__struct.html">DList</a> instList, <a class="el" href="struct_sym_table__internal__structure.html">SymTable</a> symtab, int endLabelIndex))</td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="codegen_8h.html#ab498d6f2dab4c88383c8f217df62110f">EXTERN</a> (int, emitThenBranch,(<a class="el" href="struct_d_link_list__struct.html">DList</a> instList, <a class="el" href="struct_sym_table__internal__structure.html">SymTable</a> symtab, int elseLabelIndex))</td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="codegen_8h.html#a49750a8c77a94e397d3a939f51668359">EXTERN</a> (int, emitWhileLoopLandingPad,(<a class="el" href="struct_d_link_list__struct.html">DList</a> instList, <a class="el" href="struct_sym_table__internal__structure.html">SymTable</a> symtab))</td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="codegen_8h.html#a6f9b6d97012dc620d5621dd61de56bfb">EXTERN</a> (int, emitWhileLoopTest,(<a class="el" href="struct_d_link_list__struct.html">DList</a> instList, <a class="el" href="struct_sym_table__internal__structure.html">SymTable</a> symtab, int regIndex))</td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="codegen_8h.html#accb1bed921da908b10138eee28c529bf">EXTERN</a> (void, emitWhileLoopBackBranch,(<a class="el" href="struct_d_link_list__struct.html">DList</a> instList, <a class="el" href="struct_sym_table__internal__structure.html">SymTable</a> symtab, int beginLabelIndex, int endLabelIndex))</td></tr>
 <tr><td class="memItemLeft" align="right" valign="top">&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="codegen_8h.html#a3d19eb8070ebd5973488407c5cf425c9">EXTERN</a> (int, emitOrExpression,(<a class="el" href="struct_d_link_list__struct.html">DList</a> instList, <a class="el" href="struct_sym_table__internal__structure.html">SymTable</a> symtab, int leftOperand, int rightOperand))</td></tr>
 <tr><td class="memItemLeft" align="right" valign="top">&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="codegen_8h.html#aa71138debacc6612cb6e9e57fe5be7ae">EXTERN</a> (int, emitAndExpression,(<a class="el" href="struct_d_link_list__struct.html">DList</a> instList, <a class="el" href="struct_sym_table__internal__structure.html">SymTable</a> symtab, int leftOperand, int rightOperand))</td></tr>
 <tr><td class="memItemLeft" align="right" valign="top">&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="codegen_8h.html#ae4e73ca73ccea22c99df51a2a1063a17">EXTERN</a> (int, emitNotExpression,(<a class="el" href="struct_d_link_list__struct.html">DList</a> instList, <a class="el" href="struct_sym_table__internal__structure.html">SymTable</a> symtab, int operand))</td></tr>
@@ -64,10 +70,12 @@
 <tr><td class="memItemLeft" align="right" valign="top">&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="codegen_8h.html#a20786fce03fb087bb04a8ed3261b093c">EXTERN</a> (int, emitSubtractExpression,(<a class="el" href="struct_d_link_list__struct.html">DList</a> instList, <a class="el" href="struct_sym_table__internal__structure.html">SymTable</a> symtab, int leftOperand, int rightOperand))</td></tr>
 <tr><td class="memItemLeft" align="right" valign="top">&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="codegen_8h.html#aca26a944a58291496dabf2e0390057ad">EXTERN</a> (int, emitMultiplyExpression,(<a class="el" href="struct_d_link_list__struct.html">DList</a> instList, <a class="el" href="struct_sym_table__internal__structure.html">SymTable</a> symtab, int leftOperand, int rightOperand))</td></tr>
 <tr><td class="memItemLeft" align="right" valign="top">&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="codegen_8h.html#ad74e24401550090931b9c48dd9e3a7d9">EXTERN</a> (int, emitDivideExpression,(<a class="el" href="struct_d_link_list__struct.html">DList</a> instList, <a class="el" href="struct_sym_table__internal__structure.html">SymTable</a> symtab, int leftOperand, int rightOperand))</td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="codegen_8h.html#a339ce8b050a82b55c896decee5b32dc2">EXTERN</a> (int, emitComputeArrayAddress,(<a class="el" href="struct_d_link_list__struct.html">DList</a> instList, <a class="el" href="struct_sym_table__internal__structure.html">SymTable</a> symtab, int varIndex, <a class="el" href="struct_sym_table__internal__structure.html">SymTable</a> regSymtab, int subIndex))</td></tr>
 <tr><td class="memItemLeft" align="right" valign="top">&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="codegen_8h.html#aa39185276f77ab8d29c36e0dbeb68787">EXTERN</a> (int, emitComputeVariableAddress,(<a class="el" href="struct_d_link_list__struct.html">DList</a> instList, <a class="el" href="struct_sym_table__internal__structure.html">SymTable</a> symtab, int varIndex))</td></tr>
 <tr><td class="memItemLeft" align="right" valign="top">&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="codegen_8h.html#ac8c46ee935ffff6fd4b490ad9d1786f8">EXTERN</a> (int, emitLoadVariable,(<a class="el" href="struct_d_link_list__struct.html">DList</a> instList, <a class="el" href="struct_sym_table__internal__structure.html">SymTable</a> symtab, int varIndex))</td></tr>
 <tr><td class="memItemLeft" align="right" valign="top">&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="codegen_8h.html#afd16f661c49846c5e3525603e355cb81">EXTERN</a> (int, emitLoadIntegerConstant,(<a class="el" href="struct_d_link_list__struct.html">DList</a> instList, <a class="el" href="struct_sym_table__internal__structure.html">SymTable</a> symtab, int intIndex))</td></tr>
 <tr><td class="memItemLeft" align="right" valign="top">&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="codegen_8h.html#a5429a62b6e1bc0557add06caf823f296">EXTERN</a> (void, addIdToSymtab,(<a class="el" href="struct_d_link_node__struct.html">DNode</a> node, <a class="el" href="struct_add_id_type.html">AddIdStructPtr</a> data))</td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="codegen_8h.html#a99a31f8e45e6b0351fd79360502808ac">EXTERN</a> (<a class="el" href="general_8h.html#af6a258d8f3ee5206d682d799316314b1">bool</a>, isArrayType,(<a class="el" href="struct_sym_table__internal__structure.html">SymTable</a> symtab, int typeIndex))</td></tr>
 </table>
 <hr/><h2>Define Documentation</h2>
 <a class="anchor" id="a96563225294a619d47247495a759a26b"></a><!-- doxytag: member="codegen.h::PRINT_FLOAT_FMT" ref="a96563225294a619d47247495a759a26b" args="" -->
@@ -253,6 +261,39 @@
 </div>
 </div>
 <hr/><h2>Function Documentation</h2>
+<a class="anchor" id="a99a31f8e45e6b0351fd79360502808ac"></a><!-- doxytag: member="codegen.h::EXTERN" ref="a99a31f8e45e6b0351fd79360502808ac" args="(bool, isArrayType,(SymTable symtab, int typeIndex))" -->
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">EXTERN </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="general_8h.html#af6a258d8f3ee5206d682d799316314b1">bool</a>&nbsp;</td>
+          <td class="paramname">, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">isArrayType&nbsp;</td>
+          <td class="paramname">, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">(<a class="el" href="struct_sym_table__internal__structure.html">SymTable</a> symtab, int typeIndex)&nbsp;</td>
+          <td class="paramname"></td><td>&nbsp;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td><td></td>
+        </tr>
+      </table>
+</div>
+<div class="memdoc">
+
+</div>
+</div>
 <a class="anchor" id="a5429a62b6e1bc0557add06caf823f296"></a><!-- doxytag: member="codegen.h::EXTERN" ref="a5429a62b6e1bc0557add06caf823f296" args="(void, addIdToSymtab,(DNode node, AddIdStructPtr data))" -->
 <div class="memitem">
 <div class="memproto">
@@ -372,6 +413,39 @@
           <td class="paramkey"></td>
           <td></td>
           <td class="paramtype">(<a class="el" href="struct_d_link_list__struct.html">DList</a> instList, <a class="el" href="struct_sym_table__internal__structure.html">SymTable</a> symtab, int varIndex)&nbsp;</td>
+          <td class="paramname"></td><td>&nbsp;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td><td></td>
+        </tr>
+      </table>
+</div>
+<div class="memdoc">
+
+</div>
+</div>
+<a class="anchor" id="a339ce8b050a82b55c896decee5b32dc2"></a><!-- doxytag: member="codegen.h::EXTERN" ref="a339ce8b050a82b55c896decee5b32dc2" args="(int, emitComputeArrayAddress,(DList instList, SymTable symtab, int varIndex, SymTable regSymtab, int subIndex))" -->
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">EXTERN </td>
+          <td>(</td>
+          <td class="paramtype">int&nbsp;</td>
+          <td class="paramname">, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">emitComputeArrayAddress&nbsp;</td>
+          <td class="paramname">, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">(<a class="el" href="struct_d_link_list__struct.html">DList</a> instList, <a class="el" href="struct_sym_table__internal__structure.html">SymTable</a> symtab, int varIndex, <a class="el" href="struct_sym_table__internal__structure.html">SymTable</a> regSymtab, int subIndex)&nbsp;</td>
           <td class="paramname"></td><td>&nbsp;</td>
         </tr>
         <tr>
@@ -801,6 +875,204 @@
           <td class="paramkey"></td>
           <td></td>
           <td class="paramtype">(<a class="el" href="struct_d_link_list__struct.html">DList</a> instList, <a class="el" href="struct_sym_table__internal__structure.html">SymTable</a> symtab, int leftOperand, int rightOperand)&nbsp;</td>
+          <td class="paramname"></td><td>&nbsp;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td><td></td>
+        </tr>
+      </table>
+</div>
+<div class="memdoc">
+
+</div>
+</div>
+<a class="anchor" id="accb1bed921da908b10138eee28c529bf"></a><!-- doxytag: member="codegen.h::EXTERN" ref="accb1bed921da908b10138eee28c529bf" args="(void, emitWhileLoopBackBranch,(DList instList, SymTable symtab, int beginLabelIndex, int endLabelIndex))" -->
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">EXTERN </td>
+          <td>(</td>
+          <td class="paramtype">void&nbsp;</td>
+          <td class="paramname">, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">emitWhileLoopBackBranch&nbsp;</td>
+          <td class="paramname">, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">(<a class="el" href="struct_d_link_list__struct.html">DList</a> instList, <a class="el" href="struct_sym_table__internal__structure.html">SymTable</a> symtab, int beginLabelIndex, int endLabelIndex)&nbsp;</td>
+          <td class="paramname"></td><td>&nbsp;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td><td></td>
+        </tr>
+      </table>
+</div>
+<div class="memdoc">
+
+</div>
+</div>
+<a class="anchor" id="a6f9b6d97012dc620d5621dd61de56bfb"></a><!-- doxytag: member="codegen.h::EXTERN" ref="a6f9b6d97012dc620d5621dd61de56bfb" args="(int, emitWhileLoopTest,(DList instList, SymTable symtab, int regIndex))" -->
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">EXTERN </td>
+          <td>(</td>
+          <td class="paramtype">int&nbsp;</td>
+          <td class="paramname">, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">emitWhileLoopTest&nbsp;</td>
+          <td class="paramname">, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">(<a class="el" href="struct_d_link_list__struct.html">DList</a> instList, <a class="el" href="struct_sym_table__internal__structure.html">SymTable</a> symtab, int regIndex)&nbsp;</td>
+          <td class="paramname"></td><td>&nbsp;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td><td></td>
+        </tr>
+      </table>
+</div>
+<div class="memdoc">
+
+</div>
+</div>
+<a class="anchor" id="a49750a8c77a94e397d3a939f51668359"></a><!-- doxytag: member="codegen.h::EXTERN" ref="a49750a8c77a94e397d3a939f51668359" args="(int, emitWhileLoopLandingPad,(DList instList, SymTable symtab))" -->
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">EXTERN </td>
+          <td>(</td>
+          <td class="paramtype">int&nbsp;</td>
+          <td class="paramname">, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">emitWhileLoopLandingPad&nbsp;</td>
+          <td class="paramname">, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">(<a class="el" href="struct_d_link_list__struct.html">DList</a> instList, <a class="el" href="struct_sym_table__internal__structure.html">SymTable</a> symtab)&nbsp;</td>
+          <td class="paramname"></td><td>&nbsp;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td><td></td>
+        </tr>
+      </table>
+</div>
+<div class="memdoc">
+
+</div>
+</div>
+<a class="anchor" id="ab498d6f2dab4c88383c8f217df62110f"></a><!-- doxytag: member="codegen.h::EXTERN" ref="ab498d6f2dab4c88383c8f217df62110f" args="(int, emitThenBranch,(DList instList, SymTable symtab, int elseLabelIndex))" -->
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">EXTERN </td>
+          <td>(</td>
+          <td class="paramtype">int&nbsp;</td>
+          <td class="paramname">, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">emitThenBranch&nbsp;</td>
+          <td class="paramname">, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">(<a class="el" href="struct_d_link_list__struct.html">DList</a> instList, <a class="el" href="struct_sym_table__internal__structure.html">SymTable</a> symtab, int elseLabelIndex)&nbsp;</td>
+          <td class="paramname"></td><td>&nbsp;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td><td></td>
+        </tr>
+      </table>
+</div>
+<div class="memdoc">
+
+</div>
+</div>
+<a class="anchor" id="aa1cfe8e2e8f6141026404330c369b0b7"></a><!-- doxytag: member="codegen.h::EXTERN" ref="aa1cfe8e2e8f6141026404330c369b0b7" args="(void, emitEndBranchTarget,(DList instList, SymTable symtab, int endLabelIndex))" -->
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">EXTERN </td>
+          <td>(</td>
+          <td class="paramtype">void&nbsp;</td>
+          <td class="paramname">, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">emitEndBranchTarget&nbsp;</td>
+          <td class="paramname">, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">(<a class="el" href="struct_d_link_list__struct.html">DList</a> instList, <a class="el" href="struct_sym_table__internal__structure.html">SymTable</a> symtab, int endLabelIndex)&nbsp;</td>
+          <td class="paramname"></td><td>&nbsp;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td><td></td>
+        </tr>
+      </table>
+</div>
+<div class="memdoc">
+
+</div>
+</div>
+<a class="anchor" id="a7b6d64b3b2036847a34967fbe2ceec5b"></a><!-- doxytag: member="codegen.h::EXTERN" ref="a7b6d64b3b2036847a34967fbe2ceec5b" args="(int, emitIfTest,(DList instList, SymTable symtab, int regIndex))" -->
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">EXTERN </td>
+          <td>(</td>
+          <td class="paramtype">int&nbsp;</td>
+          <td class="paramname">, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">emitIfTest&nbsp;</td>
+          <td class="paramname">, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">(<a class="el" href="struct_d_link_list__struct.html">DList</a> instList, <a class="el" href="struct_sym_table__internal__structure.html">SymTable</a> symtab, int regIndex)&nbsp;</td>
           <td class="paramname"></td><td>&nbsp;</td>
         </tr>
         <tr>

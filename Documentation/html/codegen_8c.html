@@ -42,6 +42,12 @@
 <tr><td class="memItemLeft" align="right" valign="top">void&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="codegen_8c.html#a682b0834c556e77454e857d05950aacc">emitExit</a> (<a class="el" href="struct_d_link_list__struct.html">DList</a> instList)</td></tr>
 <tr><td class="memItemLeft" align="right" valign="top">void&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="codegen_8c.html#a3c23f6756878892c861471a8f3fa5593">emitAssignment</a> (<a class="el" href="struct_d_link_list__struct.html">DList</a> instList, <a class="el" href="struct_sym_table__internal__structure.html">SymTable</a> symtab, int lhsRegIndex, int rhsRegIndex)</td></tr>
 <tr><td class="memItemLeft" align="right" valign="top">void&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="codegen_8c.html#a72c09838916b1eb002909817715d8fc8">emitReadVariable</a> (<a class="el" href="struct_d_link_list__struct.html">DList</a> instList, <a class="el" href="struct_sym_table__internal__structure.html">SymTable</a> symtab, int addrIndex)</td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">int&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="codegen_8c.html#ab22493ff04794719c727a4b96975b950">emitIfTest</a> (<a class="el" href="struct_d_link_list__struct.html">DList</a> instList, <a class="el" href="struct_sym_table__internal__structure.html">SymTable</a> symtab, int regIndex)</td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">void&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="codegen_8c.html#ae137f9112cca4891537d0fb8b2cd9aae">emitEndBranchTarget</a> (<a class="el" href="struct_d_link_list__struct.html">DList</a> instList, <a class="el" href="struct_sym_table__internal__structure.html">SymTable</a> symtab, int endLabelIndex)</td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">int&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="codegen_8c.html#af64fc36d572ea01575dc281303be0ed1">emitThenBranch</a> (<a class="el" href="struct_d_link_list__struct.html">DList</a> instList, <a class="el" href="struct_sym_table__internal__structure.html">SymTable</a> symtab, int elseLabelIndex)</td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">int&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="codegen_8c.html#a4947f1d65fc513ee7c486e66f1cd7a3d">emitWhileLoopLandingPad</a> (<a class="el" href="struct_d_link_list__struct.html">DList</a> instList, <a class="el" href="struct_sym_table__internal__structure.html">SymTable</a> symtab)</td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">int&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="codegen_8c.html#a218027b9515aef520212b53747e9a00b">emitWhileLoopTest</a> (<a class="el" href="struct_d_link_list__struct.html">DList</a> instList, <a class="el" href="struct_sym_table__internal__structure.html">SymTable</a> symtab, int regIndex)</td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">void&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="codegen_8c.html#abb49d2a3d5e09aebc0f1ad98d7eb7f44">emitWhileLoopBackBranch</a> (<a class="el" href="struct_d_link_list__struct.html">DList</a> instList, <a class="el" href="struct_sym_table__internal__structure.html">SymTable</a> symtab, int beginLabelIndex, int endLabelIndex)</td></tr>
 <tr><td class="memItemLeft" align="right" valign="top">void&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="codegen_8c.html#abeee6dd8e1c200e5f14e9f097130fd63">emitWriteExpression</a> (<a class="el" href="struct_d_link_list__struct.html">DList</a> instList, <a class="el" href="struct_sym_table__internal__structure.html">SymTable</a> symtab, int regIndex, char *syscallService)</td></tr>
 <tr><td class="memItemLeft" align="right" valign="top">int&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="codegen_8c.html#aa0eec5af0bc9d0ea6a241c42021d49c3">emitOrExpression</a> (<a class="el" href="struct_d_link_list__struct.html">DList</a> instList, <a class="el" href="struct_sym_table__internal__structure.html">SymTable</a> symtab, int leftOperand, int rightOperand)</td></tr>
 <tr><td class="memItemLeft" align="right" valign="top">int&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="codegen_8c.html#a4da13f221af34f419095ce8201a6c3e0">emitAndExpression</a> (<a class="el" href="struct_d_link_list__struct.html">DList</a> instList, <a class="el" href="struct_sym_table__internal__structure.html">SymTable</a> symtab, int leftOperand, int rightOperand)</td></tr>
@@ -57,10 +63,12 @@
 <tr><td class="memItemLeft" align="right" valign="top">int&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="codegen_8c.html#aa8ed958446e6fbebcf54d943b22c58bf">emitMultiplyExpression</a> (<a class="el" href="struct_d_link_list__struct.html">DList</a> instList, <a class="el" href="struct_sym_table__internal__structure.html">SymTable</a> symtab, int leftOperand, int rightOperand)</td></tr>
 <tr><td class="memItemLeft" align="right" valign="top">int&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="codegen_8c.html#a5cbc0e198b01744c10b6b8f1c41be869">emitDivideExpression</a> (<a class="el" href="struct_d_link_list__struct.html">DList</a> instList, <a class="el" href="struct_sym_table__internal__structure.html">SymTable</a> symtab, int leftOperand, int rightOperand)</td></tr>
 <tr><td class="memItemLeft" align="right" valign="top">int&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="codegen_8c.html#a36f6684268085cd10734fbbd595d23b1">emitComputeVariableAddress</a> (<a class="el" href="struct_d_link_list__struct.html">DList</a> instList, <a class="el" href="struct_sym_table__internal__structure.html">SymTable</a> symtab, int varIndex)</td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">int&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="codegen_8c.html#a05c00f49fe87cb9f12975763b5a5d657">emitComputeArrayAddress</a> (<a class="el" href="struct_d_link_list__struct.html">DList</a> instList, <a class="el" href="struct_sym_table__internal__structure.html">SymTable</a> varSymtab, int varIndex, <a class="el" href="struct_sym_table__internal__structure.html">SymTable</a> regSymtab, int subIndex)</td></tr>
 <tr><td class="memItemLeft" align="right" valign="top">int&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="codegen_8c.html#a79a5b7dede9cb542e4f4586c862fe027">emitLoadVariable</a> (<a class="el" href="struct_d_link_list__struct.html">DList</a> instList, <a class="el" href="struct_sym_table__internal__structure.html">SymTable</a> symtab, int regIndex)</td></tr>
 <tr><td class="memItemLeft" align="right" valign="top">int&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="codegen_8c.html#aeb96ea44cbf7180eede741fdffb4db14">emitLoadIntegerConstant</a> (<a class="el" href="struct_d_link_list__struct.html">DList</a> instList, <a class="el" href="struct_sym_table__internal__structure.html">SymTable</a> symtab, int intIndex)</td></tr>
 <tr><td class="memItemLeft" align="right" valign="top">int&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="codegen_8c.html#a73955b6c625ba18e9ba4db5126231ddf">emitLoadStringConstantAddress</a> (<a class="el" href="struct_d_link_list__struct.html">DList</a> instList, <a class="el" href="struct_d_link_list__struct.html">DList</a> dataList, <a class="el" href="struct_sym_table__internal__structure.html">SymTable</a> symtab, int stringIndex)</td></tr>
 <tr><td class="memItemLeft" align="right" valign="top">void&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="codegen_8c.html#a2d008d2555e00723ce2a76758e65faac">addIdToSymtab</a> (<a class="el" href="struct_d_link_node__struct.html">DNode</a> node, <a class="el" href="struct_add_id_type.html">AddIdStructPtr</a> data)</td></tr>
+<tr><td class="memItemLeft" align="right" valign="top"><a class="el" href="general_8h.html#af6a258d8f3ee5206d682d799316314b1">bool</a>&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="codegen_8c.html#aae3456f1a55e10ca2f35c798683c8822">isArrayType</a> (<a class="el" href="struct_sym_table__internal__structure.html">SymTable</a> symtab, int typeIndex)</td></tr>
 <tr><td colspan="2"><h2>Variables</h2></td></tr>
 <tr><td class="memItemLeft" align="right" valign="top">int&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="codegen_8c.html#aa901dda5f4161641b041561410deb78b">globalOffset</a></td></tr>
 </table>
@@ -249,6 +257,62 @@
 
 </div>
 </div>
+<a class="anchor" id="a05c00f49fe87cb9f12975763b5a5d657"></a><!-- doxytag: member="codegen.c::emitComputeArrayAddress" ref="a05c00f49fe87cb9f12975763b5a5d657" args="(DList instList, SymTable varSymtab, int varIndex, SymTable regSymtab, int subIndex)" -->
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">int emitComputeArrayAddress </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="struct_d_link_list__struct.html">DList</a>&nbsp;</td>
+          <td class="paramname"> <em>instList</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="struct_sym_table__internal__structure.html">SymTable</a>&nbsp;</td>
+          <td class="paramname"> <em>varSymtab</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">int&nbsp;</td>
+          <td class="paramname"> <em>varIndex</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="struct_sym_table__internal__structure.html">SymTable</a>&nbsp;</td>
+          <td class="paramname"> <em>regSymtab</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">int&nbsp;</td>
+          <td class="paramname"> <em>subIndex</em></td><td>&nbsp;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td><td></td>
+        </tr>
+      </table>
+</div>
+<div class="memdoc">
+<p>Compute the address of an array element and store it in a register.</p>
+<dl><dt><b>Parameters:</b></dt><dd>
+  <table border="0" cellspacing="2" cellpadding="0">
+    <tr><td valign="top"></td><td valign="top"><em>instList</em>&nbsp;</td><td>a list of instructions </td></tr>
+    <tr><td valign="top"></td><td valign="top"><em>symtab</em>&nbsp;</td><td>a symbol table </td></tr>
+    <tr><td valign="top"></td><td valign="top"><em>varIndex</em>&nbsp;</td><td>the symbol table index of the array variable </td></tr>
+    <tr><td valign="top"></td><td valign="top"><em>subIndex</em>&nbsp;</td><td>the symbol table index of the register holding the subscript value </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="return"><dt><b>Returns:</b></dt><dd>the symbol table index of the register holding the address of the array element. </dd></dl>
+
+</div>
+</div>
 <a class="anchor" id="a36f6684268085cd10734fbbd595d23b1"></a><!-- doxytag: member="codegen.c::emitComputeVariableAddress" ref="a36f6684268085cd10734fbbd595d23b1" args="(DList instList, SymTable symtab, int varIndex)" -->
 <div class="memitem">
 <div class="memproto">
@@ -365,6 +429,48 @@
   </dd>
 </dl>
 <dl class="return"><dt><b>Returns:</b></dt><dd>the symbol table index for the result register </dd></dl>
+
+</div>
+</div>
+<a class="anchor" id="ae137f9112cca4891537d0fb8b2cd9aae"></a><!-- doxytag: member="codegen.c::emitEndBranchTarget" ref="ae137f9112cca4891537d0fb8b2cd9aae" args="(DList instList, SymTable symtab, int endLabelIndex)" -->
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void emitEndBranchTarget </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="struct_d_link_list__struct.html">DList</a>&nbsp;</td>
+          <td class="paramname"> <em>instList</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="struct_sym_table__internal__structure.html">SymTable</a>&nbsp;</td>
+          <td class="paramname"> <em>symtab</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">int&nbsp;</td>
+          <td class="paramname"> <em>endLabelIndex</em></td><td>&nbsp;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td><td></td>
+        </tr>
+      </table>
+</div>
+<div class="memdoc">
+<p>Insert a nop as a branch target in the list of instructions.</p>
+<dl><dt><b>Parameters:</b></dt><dd>
+  <table border="0" cellspacing="2" cellpadding="0">
+    <tr><td valign="top"></td><td valign="top"><em>instList</em>&nbsp;</td><td>a list of instructions </td></tr>
+    <tr><td valign="top"></td><td valign="top"><em>symtab</em>&nbsp;</td><td>a symbol table </td></tr>
+    <tr><td valign="top"></td><td valign="top"><em>endLabelIndex</em>&nbsp;</td><td>the symbol table index of the label for the nop </td></tr>
+  </table>
+  </dd>
+</dl>
 
 </div>
 </div>
@@ -533,6 +639,49 @@
   </dd>
 </dl>
 <dl class="return"><dt><b>Returns:</b></dt><dd>the symbol table index for the result register </dd></dl>
+
+</div>
+</div>
+<a class="anchor" id="ab22493ff04794719c727a4b96975b950"></a><!-- doxytag: member="codegen.c::emitIfTest" ref="ab22493ff04794719c727a4b96975b950" args="(DList instList, SymTable symtab, int regIndex)" -->
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">int emitIfTest </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="struct_d_link_list__struct.html">DList</a>&nbsp;</td>
+          <td class="paramname"> <em>instList</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="struct_sym_table__internal__structure.html">SymTable</a>&nbsp;</td>
+          <td class="paramname"> <em>symtab</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">int&nbsp;</td>
+          <td class="paramname"> <em>regIndex</em></td><td>&nbsp;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td><td></td>
+        </tr>
+      </table>
+</div>
+<div class="memdoc">
+<p>Insert instructions to test whether the expression of a if-statement is false, if false, branch around the then-part of the if-statement.</p>
+<dl><dt><b>Parameters:</b></dt><dd>
+  <table border="0" cellspacing="2" cellpadding="0">
+    <tr><td valign="top"></td><td valign="top"><em>instList</em>&nbsp;</td><td>a list of instructions </td></tr>
+    <tr><td valign="top"></td><td valign="top"><em>symtab</em>&nbsp;</td><td>a symbol table </td></tr>
+    <tr><td valign="top"></td><td valign="top"><em>regIndex</em>&nbsp;</td><td>the symbol table index of the register holding the rest of the test expression of an if-statement </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="return"><dt><b>Returns:</b></dt><dd>the symbol table index of the label that must follow the then-part of an if-statement </dd></dl>
 
 </div>
 </div>
@@ -1116,6 +1265,177 @@
 
 </div>
 </div>
+<a class="anchor" id="af64fc36d572ea01575dc281303be0ed1"></a><!-- doxytag: member="codegen.c::emitThenBranch" ref="af64fc36d572ea01575dc281303be0ed1" args="(DList instList, SymTable symtab, int elseLabelIndex)" -->
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">int emitThenBranch </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="struct_d_link_list__struct.html">DList</a>&nbsp;</td>
+          <td class="paramname"> <em>instList</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="struct_sym_table__internal__structure.html">SymTable</a>&nbsp;</td>
+          <td class="paramname"> <em>symtab</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">int&nbsp;</td>
+          <td class="paramname"> <em>elseLabelIndex</em></td><td>&nbsp;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td><td></td>
+        </tr>
+      </table>
+</div>
+<div class="memdoc">
+<p>Insert a branch to an ending label after the else-part of an if-statement.</p>
+<dl><dt><b>Parameters:</b></dt><dd>
+  <table border="0" cellspacing="2" cellpadding="0">
+    <tr><td valign="top"></td><td valign="top"><em>instList</em>&nbsp;</td><td>a list of instructions </td></tr>
+    <tr><td valign="top"></td><td valign="top"><em>symtab</em>&nbsp;</td><td>a symbol table </td></tr>
+    <tr><td valign="top"></td><td valign="top"><em>elseLabelIndex</em>&nbsp;</td><td>the symbol table index of the label for the beginning of the else-part of an if-statement </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="return"><dt><b>Returns:</b></dt><dd>a symbol table index for the end label of an if-statement </dd></dl>
+
+</div>
+</div>
+<a class="anchor" id="abb49d2a3d5e09aebc0f1ad98d7eb7f44"></a><!-- doxytag: member="codegen.c::emitWhileLoopBackBranch" ref="abb49d2a3d5e09aebc0f1ad98d7eb7f44" args="(DList instList, SymTable symtab, int beginLabelIndex, int endLabelIndex)" -->
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void emitWhileLoopBackBranch </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="struct_d_link_list__struct.html">DList</a>&nbsp;</td>
+          <td class="paramname"> <em>instList</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="struct_sym_table__internal__structure.html">SymTable</a>&nbsp;</td>
+          <td class="paramname"> <em>symtab</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">int&nbsp;</td>
+          <td class="paramname"> <em>beginLabelIndex</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">int&nbsp;</td>
+          <td class="paramname"> <em>endLabelIndex</em></td><td>&nbsp;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td><td></td>
+        </tr>
+      </table>
+</div>
+<div class="memdoc">
+<p>Insert a branch back to the the landing pad of a while loop, followed by a branch target for loop exit.</p>
+<dl><dt><b>Parameters:</b></dt><dd>
+  <table border="0" cellspacing="2" cellpadding="0">
+    <tr><td valign="top"></td><td valign="top"><em>instList</em>&nbsp;</td><td>a list of instructions </td></tr>
+    <tr><td valign="top"></td><td valign="top"><em>symtab</em>&nbsp;</td><td>a symbol table </td></tr>
+    <tr><td valign="top"></td><td valign="top"><em>beginLabelIndex</em>&nbsp;</td><td>a symbol table index of the label for the while loop landing pad </td></tr>
+    <tr><td valign="top"></td><td valign="top"><em>endLabelIndex</em>&nbsp;</td><td>a symbol table index of the lable for the exit of the while loop </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a class="anchor" id="a4947f1d65fc513ee7c486e66f1cd7a3d"></a><!-- doxytag: member="codegen.c::emitWhileLoopLandingPad" ref="a4947f1d65fc513ee7c486e66f1cd7a3d" args="(DList instList, SymTable symtab)" -->
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">int emitWhileLoopLandingPad </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="struct_d_link_list__struct.html">DList</a>&nbsp;</td>
+          <td class="paramname"> <em>instList</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="struct_sym_table__internal__structure.html">SymTable</a>&nbsp;</td>
+          <td class="paramname"> <em>symtab</em></td><td>&nbsp;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td><td></td>
+        </tr>
+      </table>
+</div>
+<div class="memdoc">
+<p>Insert a nop to serve as a target of the backwards branch of a while-statement</p>
+<dl><dt><b>Parameters:</b></dt><dd>
+  <table border="0" cellspacing="2" cellpadding="0">
+    <tr><td valign="top"></td><td valign="top"><em>instList</em>&nbsp;</td><td>a list of instructions </td></tr>
+    <tr><td valign="top"></td><td valign="top"><em>symtab</em>&nbsp;</td><td>a symbol table </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="return"><dt><b>Returns:</b></dt><dd>the label for the backwards branch target </dd></dl>
+
+</div>
+</div>
+<a class="anchor" id="a218027b9515aef520212b53747e9a00b"></a><!-- doxytag: member="codegen.c::emitWhileLoopTest" ref="a218027b9515aef520212b53747e9a00b" args="(DList instList, SymTable symtab, int regIndex)" -->
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">int emitWhileLoopTest </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="struct_d_link_list__struct.html">DList</a>&nbsp;</td>
+          <td class="paramname"> <em>instList</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="struct_sym_table__internal__structure.html">SymTable</a>&nbsp;</td>
+          <td class="paramname"> <em>symtab</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">int&nbsp;</td>
+          <td class="paramname"> <em>regIndex</em></td><td>&nbsp;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td><td></td>
+        </tr>
+      </table>
+</div>
+<div class="memdoc">
+<p>Insert a test to enter a while loop. If the test is false, branch to a label after the loop.</p>
+<dl><dt><b>Parameters:</b></dt><dd>
+  <table border="0" cellspacing="2" cellpadding="0">
+    <tr><td valign="top"></td><td valign="top"><em>instList</em>&nbsp;</td><td>a list of instructions </td></tr>
+    <tr><td valign="top"></td><td valign="top"><em>symtab</em>&nbsp;</td><td>a symbol table </td></tr>
+    <tr><td valign="top"></td><td valign="top"><em>regIndex</em>&nbsp;</td><td>a symbol table index for the register holding the result of the test expression of a while-statement </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="return"><dt><b>Returns:</b></dt><dd>a symbol table index for the label at the end of the while-loop </dd></dl>
+
+</div>
+</div>
 <a class="anchor" id="abeee6dd8e1c200e5f14e9f097130fd63"></a><!-- doxytag: member="codegen.c::emitWriteExpression" ref="abeee6dd8e1c200e5f14e9f097130fd63" args="(DList instList, SymTable symtab, int regIndex, char *syscallService)" -->
 <div class="memitem">
 <div class="memproto">
@@ -1162,6 +1482,42 @@
   </table>
   </dd>
 </dl>
+
+</div>
+</div>
+<a class="anchor" id="aae3456f1a55e10ca2f35c798683c8822"></a><!-- doxytag: member="codegen.c::isArrayType" ref="aae3456f1a55e10ca2f35c798683c8822" args="(SymTable symtab, int typeIndex)" -->
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="general_8h.html#af6a258d8f3ee5206d682d799316314b1">bool</a> isArrayType </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="struct_sym_table__internal__structure.html">SymTable</a>&nbsp;</td>
+          <td class="paramname"> <em>symtab</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">int&nbsp;</td>
+          <td class="paramname"> <em>typeIndex</em></td><td>&nbsp;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td><td></td>
+        </tr>
+      </table>
+</div>
+<div class="memdoc">
+<p>* Return true if a type is an array, false otherwise. * * </p>
+<dl><dt><b>Parameters:</b></dt><dd>
+  <table border="0" cellspacing="2" cellpadding="0">
+    <tr><td valign="top"></td><td valign="top"><em>symtab</em>&nbsp;</td><td>a symbol table * </td></tr>
+    <tr><td valign="top"></td><td valign="top"><em>typeIndex</em>&nbsp;</td><td>a symbol table index for a type * </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="return"><dt><b>Returns:</b></dt><dd>see above </dd></dl>
 
 </div>
 </div>

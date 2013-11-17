@@ -6,7 +6,6 @@
 #define SYMTAB_SIZE_FIELD "Cminus_size"							/**< The symbol table field for data size */
 #define SYMTAB_OFFSET_FIELD "Cminus_offset"						/**< The symbol table field for stack offset */
 #define SYMTAB_REGISTER_INDEX_FIELD "Cminus_register_index"		/**< The symbol table field for register index number */
-#define SYMTAB_LABEL_FIELD "Cminus_label"               /**< The symbol table for code block labels **/
 
 #define SYMTAB_INTEGER_TYPE_STRING "__symtab_int"				/**< An integer type for the symbol table */
 #define SYMTAB_ERROR_TYPE_STRING "__symtab_error"				/**< An error type for the symbol table */

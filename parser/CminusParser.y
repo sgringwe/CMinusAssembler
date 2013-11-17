@@ -101,9 +101,8 @@ extern int Cminus_lineno;
 }
 
 %type <idList> IdentifierList
-%type <symIndex> Expr SimpleExpr AddExpr
-%type <symIndex> MulExpr Factor Variable StringConstant Constant VarDecl FunctionDecl ProcedureHead 
-%type <symIndex> CompoundStatement TestAndThen Test WhileToken WhileExpr
+%type <symIndex> Type TestAndThen Test WhileExpr WhileToken Expr SimpleExpr AddExpr
+%type <symIndex> MulExpr Factor Variable StringConstant Constant VarDecl FunctionDecl ProcedureHead
 %type <offset> DeclList
 %type <name> IDENTIFIER STRING FLOATCON INTCON 
 
@@ -134,13 +133,13 @@ ProcedureDecl : ProcedureHead ProcedureBody
 
 ProcedureHead : FunctionDecl DeclList 
 		{
-			emitProcedurePrologue(instList,symtab,$1,$2);
+			emitProcedurePrologue(instList,symtab,$1);
 			functionOffset = $2;
 			$$ = $1;
 		}
 	      | FunctionDecl
 		{
-			emitProcedurePrologue(instList,symtab,$1,0);
+			emitProcedurePrologue(instList,symtab,$1);
 			functionOffset = 0;
 			$$ = $1;
 		}
@@ -161,6 +160,7 @@ DeclList 	: Type IdentifierList  SEMICOLON
 			AddIdStructPtr data = (AddIdStructPtr)malloc(sizeof(AddIdStruct));
 			data->offset = 0;
 			data->symtab = symtab;
+                        data->typeIndex = $1;
 			dlinkApply1($2,(DLinkApply1Func)addIdToSymtab,(Generic)data);
 			$$ = data->offset;
 			dlinkFreeNodes($2);
@@ -170,6 +170,7 @@ DeclList 	: Type IdentifierList  SEMICOLON
 	 	{
 			AddIdStructPtr data = (AddIdStructPtr)malloc(sizeof(AddIdStruct));
 			data->offset = $1;
+			data->typeIndex = $2;
 			data->symtab = symtab;
 			dlinkApply1($3,(DLinkApply1Func)addIdToSymtab,(Generic)data);
 			$$ = data->offset;
@@ -193,27 +194,43 @@ IdentifierList 	: VarDecl
                 ;
 
 VarDecl 	: IDENTIFIER
-		{
+		{ 
 			$$ = SymIndex(symtab,$1);
-      SymPutFieldByIndex(symtab,$$,SYMTAB_SIZE_FIELD,(Generic)4);
 		}
 		| IDENTIFIER LBRACKET INTCON RBRACKET
 		{
-			$$ = SymIndex(symtab,$1);
-      SymPutFieldByIndex(symtab,$$,SYMTAB_SIZE_FIELD,(Generic)(4 * atoi($3)));
+			int symIndex = SymIndex(symtab,$3);
+                	char* numElemString = 
+                		(char*)SymGetFieldByIndex(symtab,symIndex,SYM_NAME_FIELD);
+                		
+                	char* typeString = 
+                		nssave(4,SYMTAB_VOID_TYPE_STRING,"[",numElemString,"]");
+                		
+                	int typeIndex = SymIndex(symtab,typeString);
+                	SymPutFieldByIndex(symtab,typeIndex,SYMTAB_BASIC_TYPE_FIELD,(Generic)VOID_TYPE);
+                	
+                	int numElements = atoi(numElemString);
+                	SymPutFieldByIndex(symtab,typeIndex,SYMTAB_SIZE_FIELD,(Generic)(VOID_SIZE*numElements));
+                					   
+                	sfree(typeString);
+
+			symIndex = SymIndex(symtab,$1);
+                	SymPutFieldByIndex(symtab,symIndex,SYMTAB_TYPE_INDEX_FIELD,(Generic)typeIndex);
+
+			$$ = symIndex;		  
 		}
 		;
 
 Type     	: INTEGER 
+                {
+                        $$ = SymQueryIndex(symtab,SYMTAB_INTEGER_TYPE_STRING);
+                }
                 | FLOAT   
                 ;
 
 Statement 	: Assignment
                 | IfStatement
 		| WhileStatement
-    {
-      // printf("Statement : WhileStatement\n");
-    }
                 | IOStatement 
 		| ReturnStatement
 		| ExitStatement	
@@ -225,58 +242,49 @@ Assignment      : Variable ASSIGN Expr SEMICOLON
 			emitAssignment(instList,symtab,$1,$3);
 		}
                 ;
-				
+
 IfStatement	: IF TestAndThen ELSE CompoundStatement
-    {
-      emitStatementLabel(instList,symtab,$2);
-      // printf("IfStatement : IF TestAndThen ELSE CompoundStatement\n");
-    }
+		{
+			emitEndBranchTarget(instList,symtab,$2);
+		}
 		| IF TestAndThen
-    {
-      emitStatementLabel(instList,symtab,$2);
-      // printf("IF TestAndThen\n");
-    }
+		{
+			emitEndBranchTarget(instList,symtab,$2);
+		}
 		;
 		
 				
 TestAndThen	: Test CompoundStatement
-    {
-      // $1 = label for after statement
-      $$ = emitTestAndThen(instList,symtab,$1);
-      // emitStatementLabel(instList,symtab, $1);
-      // printf("TestAndThen : Test CompoundStatement\n");
-    }
+		{
+		   	$$ = emitThenBranch(instList,symtab,$1);
+		}
 		;
+				
 Test		: LPAREN Expr RPAREN
-    {
-      $$ = emitTest(instList, symtab, $2);
-      // printf("Test    : LPAREN Expr RPAREN\n");
-    }
+		{
+			$$ = emitIfTest(instList,symtab,$2);
+		}
 		;
 	
 
 WhileStatement  : WhileToken WhileExpr Statement
-    {
-      emitWhileStatement(instList,symtab,$1,$2);
-      // printf("WhileStatement  : WhileToken WhileExpr Statement\n");
-    }
+		{
+			emitWhileLoopBackBranch(instList,symtab,$1,$2);
+		}
                 ;
                 
 WhileExpr	: LPAREN Expr RPAREN
-    {
-      // printf("WhileExpr : LPAREN Expr RPAREN\n");
-      $$ = emitTest(instList,symtab,$2);
-    }
+		{
+			$$ = emitWhileLoopTest(instList,symtab,$2);
+		}
 		;
 				
 WhileToken	: WHILE
-    {
-      $$ = emitWhileToken(instList,symtab);
-      // printf("WhileToken  : WHILE\n");
-    }
+		{
+			$$ = emitWhileLoopLandingPad(instList,symtab);
+		}
 		;
-
-
+				
 IOStatement     : READ LPAREN Variable RPAREN SEMICOLON
 		{
 			emitReadVariable(instList,symtab,$3);
@@ -284,7 +292,6 @@ IOStatement     : READ LPAREN Variable RPAREN SEMICOLON
                 | WRITE LPAREN Expr RPAREN SEMICOLON
 		{
 			emitWriteExpression(instList,symtab,$3,SYSCALL_PRINT_INTEGER);
-      // printf("WRITE LPAREN Expr RPAREN SEMICOLON\n");
 		}
                 | WRITE LPAREN StringConstant RPAREN SEMICOLON         
 		{
@@ -302,11 +309,6 @@ ExitStatement 	: EXIT SEMICOLON
 		;
 
 CompoundStatement : LBRACE StatementList RBRACE
-    {
-      // create a label for AFTER this statement
-      // emitStatementLabel(instList,symtab, );
-      // printf("CompoundStatement : LBRACE StatementList RBRACE\n");
-    }
                 ;
 
 StatementList   : Statement
@@ -417,7 +419,7 @@ Variable        : IDENTIFIER
                 | IDENTIFIER LBRACKET Expr RBRACKET    
 		{
 			int symIndex = SymQueryIndex(symtab,$1);
-      $$ = emitComputeArrayVariableAddress(instList,symtab,symIndex,$3);
+			$$ = emitComputeArrayAddress(instList,symtab,symIndex,symtab,$3);	
 		}
                 ;			       
 
@@ -452,17 +454,26 @@ int Cminus_wrap() {
 static void initSymTable() {
 
 	symtab = SymInit(SYMTABLE_SIZE); 
-  SymInitField(symtab,SYMTAB_LABEL_FIELD,(Generic)-1,NULL);
+
 	SymInitField(symtab,SYMTAB_OFFSET_FIELD,(Generic)-1,NULL);
 	SymInitField(symtab,SYMTAB_REGISTER_INDEX_FIELD,(Generic)-1,NULL);
-  SymInitField(symtab,SYMTAB_SIZE_FIELD,(Generic)-1,NULL);
+
+	int intIndex = SymIndex(symtab,SYMTAB_INTEGER_TYPE_STRING);
+        int errorIndex = SymIndex(symtab,SYMTAB_ERROR_TYPE_STRING);
+        int voidIndex = SymIndex(symtab,SYMTAB_VOID_TYPE_STRING);
+
+        SymPutFieldByIndex(symtab,intIndex,SYMTAB_SIZE_FIELD,(Generic)INTEGER_SIZE);
+        SymPutFieldByIndex(symtab,errorIndex,SYMTAB_SIZE_FIELD,(Generic)0);
+        SymPutFieldByIndex(symtab,voidIndex,SYMTAB_SIZE_FIELD,(Generic)0);
+
+        SymPutFieldByIndex(symtab,intIndex,SYMTAB_BASIC_TYPE_FIELD,(Generic)INTEGER_TYPE);
+        SymPutFieldByIndex(symtab,errorIndex,SYMTAB_BASIC_TYPE_FIELD,(Generic)ERROR_TYPE);
+        SymPutFieldByIndex(symtab,voidIndex,SYMTAB_BASIC_TYPE_FIELD,(Generic)VOID_TYPE);
 }
 
 static void deleteSymTable() {
-    SymKillField(symtab,SYMTAB_SIZE_FIELD);
     SymKillField(symtab,SYMTAB_REGISTER_INDEX_FIELD);
     SymKillField(symtab,SYMTAB_OFFSET_FIELD);
-    SymKillField(symtab,SYMTAB_LABEL_FIELD);
     SymKill(symtab);
 
 }

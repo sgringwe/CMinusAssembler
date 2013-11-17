@@ -26,16 +26,16 @@ typedef struct AddIdType {
 EXTERN(void, emitDataPrologue, (DList dataList));
 EXTERN(void, emitInstructions,(DList list));
 
-EXTERN(int, emitTestAndThen, (DList instList,SymTable symtab,int elseLabel));
-EXTERN(int, emitWhileToken, (DList instList,SymTable symtab));
-EXTERN(void, emitWhileStatement, (DList instList,SymTable symtab, int checkLabel, int afterLabel));
-EXTERN(int, emitTest, (DList instList,SymTable symtab,int exprRegister));
-EXTERN(void, emitStatementLabel, (DList instList,SymTable symtab, int labelIndex));
-
 EXTERN(void, emitAssignment, (DList instList,SymTable symtab,int lhsRegIndex, int rhsRegIndex));
 EXTERN(void, emitReadVariable, (DList instList, SymTable symtab, int addrIndex));
 EXTERN(void, emitWriteExpression,(DList instList,SymTable symtab, int index, char *syscallService));
 EXTERN(void, emitWriteString,(DList instList,SymTable symtab, int index, DList dataList));
+EXTERN(int, emitIfTest, (DList instList, SymTable symtab, int regIndex));
+EXTERN(void, emitEndBranchTarget, (DList instList, SymTable symtab, int endLabelIndex));
+EXTERN(int, emitThenBranch, (DList instList, SymTable symtab, int elseLabelIndex));
+EXTERN(int, emitWhileLoopLandingPad, (DList instList,SymTable symtab));
+EXTERN(int, emitWhileLoopTest, (DList instList, SymTable symtab, int regIndex));
+EXTERN(void, emitWhileLoopBackBranch,(DList instList, SymTable symtab, int beginLabelIndex, int endLabelIndex));
 
 EXTERN(int, emitOrExpression, (DList instList, SymTable symtab, int leftOperand, int rightOperand));
 EXTERN(int, emitAndExpression, (DList instList, SymTable symtab, int leftOperand, int rightOperand));
@@ -51,11 +51,12 @@ EXTERN(int, emitSubtractExpression, (DList instList, SymTable symtab, int leftOp
 EXTERN(int, emitMultiplyExpression, (DList instList, SymTable symtab, int leftOperand, int rightOperand));
 EXTERN(int, emitDivideExpression, (DList instList, SymTable symtab, int leftOperand, int rightOperand));
 
+EXTERN(int, emitComputeArrayAddress, (DList instList, SymTable symtab, int varIndex, SymTable regSymtab, int subIndex));
 EXTERN(int, emitComputeVariableAddress,(DList instList, SymTable symtab, int varIndex));
-EXTERN(int, emitComputeArrayVariableAddress,(DList instList, SymTable symtab, int varIndex, int slotIndex));
 EXTERN(int, emitLoadVariable,(DList instList, SymTable symtab, int varIndex));
 EXTERN(int, emitLoadIntegerConstant,(DList instList, SymTable symtab, int intIndex));
 
 EXTERN(void, addIdToSymtab,(DNode node,AddIdStructPtr data));
+EXTERN(bool,  isArrayType, (SymTable symtab, int typeIndex));
 #endif /*CODEGEN_H_*/
 

@@ -54,8 +54,8 @@ void emitDataPrologue(DList dataList) {
 	printf("\t.str_wformat: .string \"%%s\\n\"\n");
 	printf("\t.int_rformat: .string \"%%d\"\n");
 	if (globalOffset != 0)
-		printf("\t.comm _gp, %d, 4\n",globalOffset);  // extra bytes to avoid 0 offset
-		                                                // offset < 0 local, >= 0 global
+		printf("\t.comm _gp, %d, 4\n",globalOffset);  
+		                                              
 	dlinkApply(dataList,(DLinkApplyFunc)printDataDeclaration);
 	printf("\t.text\n");
 }
@@ -94,123 +94,6 @@ void emitExit(DList instList) {
 }
 
 /**
- * Adds a new label to the symbol table and returns its index
- *
- * @param symtab a symbol table
- * @return Index of the label in symtab
- */
-int addLabelToSymtab(SymTable symtab) {
-	static int stringNum = 0;
-	int num = stringNum;
-	++stringNum;
-
-	char* strLabel = (char*)malloc(sizeof(char)*15);
-	snprintf(strLabel,15,"label%d",num);
-	SymPutFieldByIndex(symtab,num,SYMTAB_LABEL_FIELD,(Generic)(strLabel));
-
-	return num;
-}
-
-/**
- * Add test and then instruction. Allocates new label and returns after label.
- *
- * @param instList a DList of instructions
- * @param symtab a symbol table
- * @param exprRegister The register containing the expression result
- * @return 
- */
-int emitTest(DList instList, SymTable symtab, int exprRegister) {
-	// printf("emitTest: Expression register: %d\n", exprRegister);
-
-	// Allocate a register for -1
-	int regIndex = getFreeIntegerRegisterIndex(symtab);
-	char *inst;
-
-	// Compare expression to -1
-	inst = nssave(4,  "\tmovl ", "$-1 ", ", ", (char*)SymGetFieldByIndex(symtab,regIndex,SYM_NAME_FIELD));
-	dlinkAppend(instList,dlinkNodeAlloc(inst));
-
-	inst = nssave(4, "\ttestl ", (char*)SymGetFieldByIndex(symtab,exprRegister,SYM_NAME_FIELD), ", ", (char*)SymGetFieldByIndex(symtab,regIndex,SYM_NAME_FIELD));
-	dlinkAppend(instList,dlinkNodeAlloc(inst));
-
-	// Allocate a new label for else statement/after statement
-	int num = addLabelToSymtab(symtab);
-
-	// Output a jump to the elseLabel if equal (false)
-	inst = nssave(2, "\tje ", (char*)SymGetFieldByIndex(symtab,num,SYMTAB_LABEL_FIELD));
-	dlinkAppend(instList,dlinkNodeAlloc(inst));
-
-	freeIntegerRegister((int)SymGetFieldByIndex(symtab,regIndex,SYMTAB_REGISTER_INDEX_FIELD));
-	freeIntegerRegister((int)SymGetFieldByIndex(symtab,exprRegister,SYMTAB_REGISTER_INDEX_FIELD));
-
-	return num;
-}
-
-/**
- * Add test and then instruction.
- *
- * @param instList a DList of instructions
- * @param symtab a symbol table
- * @param resultRegister The register containing the result of the test
- * @param afterLabelIndex The index of the label that is directly after code block
- * @return 
- */
-int emitTestAndThen(DList instList, SymTable symtab,int elseLabel) {
-	int num = addLabelToSymtab(symtab);
-
-	char *inst;
-	inst = nssave(2, "\tjmp ", (char*)SymGetFieldByIndex(symtab,num,SYMTAB_LABEL_FIELD));
-	dlinkAppend(instList,dlinkNodeAlloc(inst));
-
-	// Output the else
-	emitStatementLabel(instList,symtab,elseLabel);
-
-	return num;
-}
-
-/**
- * Emits label for while token.
- *
- * @param instList a DList of instructions
- * @param symtab a symbol table
- * @return Index of label at beginning of while
- */
-int emitWhileToken(DList instList, SymTable symtab) {
-	int num = addLabelToSymtab(symtab);
-	emitStatementLabel(instList,symtab,num);
-	return num;
-}
-
-/**
- * Emits label for after while statement and jmp to go back to check condition
- *
- * @param instList a DList of instructions
- * @param symtab a symbol table
- * @param checkLabel the index of the check label
- * @param afterLabel the index of the after label
- */
-void emitWhileStatement(DList instList, SymTable symtab, int checkLabel, int afterLabel) {
-	char *inst;
-	inst = nssave(2, "\tjmp ", (char*)SymGetFieldByIndex(symtab,checkLabel,SYMTAB_LABEL_FIELD));
-	dlinkAppend(instList,dlinkNodeAlloc(inst));
-	emitStatementLabel(instList,symtab,afterLabel);
-}
-
-/**
- * Add a label to the inst list.
- *
- * @param instList a DList of instructions
- * @param symtab a symbol table
- * @param operand the symbol table index of the register holding the operand
- * @return the symbol table index for the result register
- */
-void emitStatementLabel(DList instList, SymTable symtab, int labelIndex) {
-	char *inst;
-	inst = nssave(2, (char*)SymGetFieldByIndex(symtab,labelIndex,SYMTAB_LABEL_FIELD), ": nop");
-	dlinkAppend(instList,dlinkNodeAlloc(inst));	
-}
-
-/**
  * Add an instruction that performance an assignment.
  *
  * @param instList a DList of assembly instructions
@@ -221,10 +104,8 @@ void emitStatementLabel(DList instList, SymTable symtab, int labelIndex) {
 void emitAssignment(DList instList,SymTable symtab,int lhsRegIndex, int rhsRegIndex) {
 	char *inst;
 	
-	char* regName = malloc(sizeof(char) * 7);
-	get64bitIntegerRegisterName(symtab, lhsRegIndex, regName);
-	inst = nssave(5,  "\tmovl ", (char*)SymGetFieldByIndex(symtab,rhsRegIndex,SYM_NAME_FIELD),
-			", (", regName, ")");
+	 inst = nssave(5,  "\tmovl ", (char*)SymGetFieldByIndex(symtab,rhsRegIndex,SYM_NAME_FIELD),
+			", (", get64bitIntegerRegisterName(symtab, lhsRegIndex), ")");
 	dlinkAppend(instList,dlinkNodeAlloc(inst));
 
 	freeIntegerRegister((int)SymGetFieldByIndex(symtab,rhsRegIndex,SYMTAB_REGISTER_INDEX_FIELD));
@@ -256,6 +137,148 @@ void emitReadVariable(DList instList, SymTable symtab, int addrIndex) {
 	freeIntegerRegister((int)SymGetFieldByIndex(symtab,addrIndex,SYMTAB_REGISTER_INDEX_FIELD));
 }
 
+/**
+ * Create a unique label
+ * @param label a character array of size 20 in which the label will be stored
+ */
+static void makeLabel(char label[20]) {
+	static int labelCount = 0;
+
+	snprintf(label,19,".L%d",labelCount++);
+}
+
+/**
+ * Insert instructions to test whether the expression of a if-statement is false, if false, branch around the then-part
+ * of the if-statement.
+ *
+ * @param instList a list of instructions
+ * @param symtab a symbol table
+ * @param regIndex the symbol table index of the register holding the rest of the test expression of an if-statement
+ * @return the symbol table index of the label that must follow the then-part of an if-statement
+ */
+int emitIfTest(DList instList, SymTable symtab, int regIndex) {
+	char label[20];
+	makeLabel(label);
+
+	int treg = allocateIntegerRegister();
+	char *symReg = getIntegerRegisterName(treg);
+	int tregIndex = SymIndex(symtab,symReg);
+	SymPutFieldByIndex(symtab,tregIndex,SYMTAB_REGISTER_INDEX_FIELD,(Generic)treg);
+
+	char* inst = nssave(2,"\tmovl $-1, ", symReg);
+	dlinkAppend(instList,dlinkNodeAlloc(inst));
+
+	inst = nssave(4,"\ttestl ",(char*)SymGetFieldByIndex(symtab,regIndex,SYM_NAME_FIELD), ", ",symReg);
+	dlinkAppend(instList,dlinkNodeAlloc(inst));
+
+	freeIntegerRegister((int)SymGetFieldByIndex(symtab,regIndex,SYMTAB_REGISTER_INDEX_FIELD));
+	freeIntegerRegister(treg);
+
+	inst = nssave(2,"\tje ",label); /* jump to false*/
+	dlinkAppend(instList,dlinkNodeAlloc(inst));
+
+	return SymIndex(symtab,label);
+}
+/**
+ * Insert a nop as a branch target in the list of instructions.
+ *
+ * @param instList a list of instructions
+ * @param symtab a symbol table
+ * @param endLabelIndex the symbol table index of the label for the nop
+ */
+void emitEndBranchTarget(DList instList, SymTable symtab, int endLabelIndex) {
+	char* inst = nssave(2,SymGetFieldByIndex(symtab,endLabelIndex,SYM_NAME_FIELD),":\t nop");
+
+	dlinkAppend(instList, dlinkNodeAlloc(inst));
+}
+
+/**
+ * Insert a branch to an ending label after the else-part of an if-statement.
+ *
+ * @param instList a list of instructions
+ * @param symtab a symbol table
+ * @param elseLabelIndex the symbol table index of the label for the beginning of the else-part of an if-statement
+ * @return a symbol table index for the end label of an if-statement
+ */
+int emitThenBranch(DList instList, SymTable symtab, int elseLabelIndex) {
+	char label[20];
+	makeLabel(label);
+
+	char* inst = nssave(2,"\tjmp ",label);
+
+	dlinkAppend(instList, dlinkNodeAlloc(inst));
+
+	emitEndBranchTarget(instList,symtab,elseLabelIndex);
+
+	return SymIndex(symtab,label);
+}
+/**
+ * Insert a nop to serve as a target of the backwards branch of a while-statement
+ *
+ * @param instList a list of instructions
+ * @param symtab a symbol table
+ * @return the label for the backwards branch target
+ */
+int emitWhileLoopLandingPad(DList instList,SymTable symtab) {
+	char label[20];
+	makeLabel(label);
+
+	char *inst = nssave(2,label,":\tnop");
+
+	dlinkAppend(instList,dlinkNodeAlloc(inst));
+
+	return SymIndex(symtab,label);
+}
+
+/**
+ * Insert a test to enter a while loop. If the test is false, branch to a label after the loop.
+ *
+ * @param instList a list of instructions
+ * @param symtab a symbol table
+ * @param regIndex a symbol table index for the register holding the result of the test expression of a while-statement
+ * @return a symbol table index for the label at the end of the while-loop
+ */
+int emitWhileLoopTest(DList instList, SymTable symtab, int regIndex) {
+	char label[20];
+	makeLabel(label);
+
+	int treg = allocateIntegerRegister();
+	char *symReg = getIntegerRegisterName(treg);
+	int tregIndex = SymIndex(symtab,symReg);
+	SymPutFieldByIndex(symtab,tregIndex,SYMTAB_REGISTER_INDEX_FIELD,(Generic)treg);
+
+	char* inst = nssave(2,"\tmovl $-1, ", symReg);
+	dlinkAppend(instList,dlinkNodeAlloc(inst));
+
+	inst = nssave(4,"\ttestl ",(char*)SymGetFieldByIndex(symtab,regIndex,SYM_NAME_FIELD), ", ",symReg);
+	dlinkAppend(instList,dlinkNodeAlloc(inst));
+
+	freeIntegerRegister((int)SymGetFieldByIndex(symtab,regIndex,SYMTAB_REGISTER_INDEX_FIELD));
+	freeIntegerRegister(treg);
+
+	inst = nssave(2,"\tje ",label);
+	dlinkAppend(instList,dlinkNodeAlloc(inst));
+
+	return SymIndex(symtab,label);
+}
+
+/**
+ * Insert a branch back to the the landing pad of a while loop, followed by a branch target for loop exit.
+ *
+ * @param instList a list of instructions
+ * @param symtab a symbol table
+ * @param beginLabelIndex a symbol table index of the label for the while loop landing pad
+ * @param endLabelIndex a symbol table index of the lable for the exit of the while loop
+ */
+void emitWhileLoopBackBranch(DList instList, SymTable symtab, int beginLabelIndex, int endLabelIndex) {
+	char *inst = nssave(2,"\tjmp ",(char*)SymGetFieldByIndex(symtab,beginLabelIndex,SYM_NAME_FIELD));
+
+	dlinkAppend(instList,dlinkNodeAlloc(inst));
+
+	inst = nssave(2,(char*)SymGetFieldByIndex(symtab,endLabelIndex,SYM_NAME_FIELD),":\t nop");
+
+	dlinkAppend(instList,dlinkNodeAlloc(inst));
+}
 
 /**
  * Add the instructions needed to write a value using the print system call.
@@ -523,10 +546,11 @@ int emitDivideExpression(DList instList, SymTable symtab, int leftOperand, int r
  * @return the symbol table index of the result register
  */
 int emitComputeVariableAddress(DList instList, SymTable symtab, int varIndex) {
+	
+
 	int regIndex = getFreeIntegerRegisterIndex(symtab);
 	
-	char* regName = malloc(sizeof(char) * 7); // Assume 7 is largest reg name
-	get64bitIntegerRegisterName(symtab, regIndex, regName);
+	char* regName = (char*)get64bitIntegerRegisterName(symtab, regIndex);
 
 	int offset = (int)SymGetFieldByIndex(symtab,varIndex,SYMTAB_OFFSET_FIELD);
 	char offsetStr[10];
@@ -534,7 +558,7 @@ int emitComputeVariableAddress(DList instList, SymTable symtab, int varIndex) {
 
 	snprintf(offsetStr,9,"%d",offset);
 
-  inst = nssave(2,"\tmovq $_gp,", regName);
+        inst = nssave(2,"\tmovq $_gp,", regName);
 
 	dlinkAppend(instList,dlinkNodeAlloc(inst));
 	inst = nssave(4,"\taddq $", offsetStr, ", ", regName);
@@ -545,41 +569,60 @@ int emitComputeVariableAddress(DList instList, SymTable symtab, int varIndex) {
 }
 
 /**
- * Add an instruction to compute the address of an array at slot a.
+ * Compute the address of an array element and store it in a register.
  *
- * @param instList a Dlist of instructions
+ * @param instList a list of instructions
  * @param symtab a symbol table
- * @param varIndex the symbol table index for a variable
- * @param slotIndex the index of register containing the array index/slot
- * @return the symbol table index of the result register
+ * @param varIndex the symbol table index of the array variable
+ * @param subIndex the symbol table index of the register holding the subscript value
+ * @return the symbol table index of the register holding the address of the
+ * 		   array element.
  */
-int emitComputeArrayVariableAddress(DList instList, SymTable symtab, int varIndex, int slotIndex) {
-	int regIndex = getFreeIntegerRegisterIndex(symtab);
-	int sizeReg = getFreeIntegerRegisterIndex(symtab);
+int emitComputeArrayAddress(DList instList, SymTable varSymtab, int varIndex, SymTable regSymtab, int subIndex) {
+	int regIndex = getFreeIntegerRegisterIndex(regSymtab);
+	int varTypeIndex = (int)SymGetFieldByIndex(varSymtab,varIndex,SYMTAB_TYPE_INDEX_FIELD);
 	
-	char* regName = malloc(sizeof(char) * 7); // Assume 7 is largest reg name
-	get64bitIntegerRegisterName(symtab, regIndex, regName);
+	if (isArrayType(regSymtab,varTypeIndex)) {
+		char* regName = get64bitIntegerRegisterName(regSymtab, regIndex);
+		int offset = (int)SymGetFieldByIndex(varSymtab,varIndex,SYMTAB_OFFSET_FIELD);
+		char offsetStr[10];
+	
+		snprintf(offsetStr,9,"%d",offset);
+	
+		char *inst;
+		/* compute base address of array */
+		if (offset < 0) 
+			inst = nssave(2,"\tmovq %rbp, ",regName);
+		else 
+		 	inst = nssave(2,"\tmovq $_gp, ", regName);
 
-	int offset = (int)SymGetFieldByIndex(symtab,varIndex,SYMTAB_OFFSET_FIELD);
-	char offsetStr[10];
-	char *inst;
+		dlinkAppend(instList,dlinkNodeAlloc(inst));
+		inst = nssave(4,"\taddq $", offsetStr, ", ", regName);
+		dlinkAppend(instList,dlinkNodeAlloc(inst));
 
-	snprintf(offsetStr,9,"%d",offset);
+		/* compute offset based on subscript */
+	        char* subReg32Name = (char*)SymGetFieldByIndex(regSymtab,subIndex,SYM_NAME_FIELD);
+		char* subRegName = get64bitIntegerRegisterName(regSymtab, subIndex);
+		
+		inst = nssave(4,"\tmovslq ", subReg32Name, ", ", subRegName);
+		dlinkAppend(instList,dlinkNodeAlloc(inst));
 
-  inst = nssave(2,"\tmovq $_gp,", regName);
-	dlinkAppend(instList,dlinkNodeAlloc(inst));
+		inst = nssave(2,"\timulq $4, ", subRegName);
+		dlinkAppend(instList,dlinkNodeAlloc(inst));
 
-	inst = nssave(4,"\taddq $", offsetStr, ", ", regName);
-	dlinkAppend(instList,dlinkNodeAlloc(inst));
+		/* compute element address */
+		inst = nssave(4,"\taddq ", subRegName, ", ", regName);
+		dlinkAppend(instList,dlinkNodeAlloc(inst));
+	}
+	else {
+		char msg[80];
 
-	inst = nssave(2, "\tmovl $4, ", (char*)SymGetFieldByIndex(symtab,sizeReg,SYM_NAME_FIELD));
-	dlinkAppend(instList,dlinkNodeAlloc(inst));
-
-	emitMultiplyExpression(instList, symtab, slotIndex, sizeReg);
-	emitAddExpression(instList, symtab, regIndex, slotIndex);
-
-	freeIntegerRegister((int)SymGetFieldByIndex(symtab,sizeReg,SYMTAB_REGISTER_INDEX_FIELD));
-	freeIntegerRegister((int)SymGetFieldByIndex(symtab,slotIndex,SYMTAB_REGISTER_INDEX_FIELD));
+		snprintf(msg,80,"Scalar variable %s used as an array",
+				(char*)SymGetFieldByIndex(varSymtab,varIndex,SYM_NAME_FIELD));
+		Cminus_error(msg);
+	}
+	
+	freeIntegerRegister((int)SymGetFieldByIndex(regSymtab,subIndex,SYMTAB_REGISTER_INDEX_FIELD));
 
 	return regIndex;
 
@@ -599,9 +642,7 @@ int emitLoadVariable(DList instList, SymTable symtab, int regIndex) {
 
 	char* newRegName = (char*)SymGetFieldByIndex(symtab,newRegIndex,SYM_NAME_FIELD);
 
-	char* regName = malloc(sizeof(char) * 7);
-	get64bitIntegerRegisterName(symtab, regIndex, regName);
-	// char* regName = (char*) get64bitIntegerRegisterName(symtab, regIndex);
+	char* regName = (char*) get64bitIntegerRegisterName(symtab, regIndex);
 
 	char *inst;
 	
@@ -695,17 +736,29 @@ int emitLoadStringConstantAddress(DList instList, DList dataList, SymTable symta
 void addIdToSymtab(DNode node, AddIdStructPtr data) {
 
 	int symIndex = (int)dlinkNodeAtom(node);
-	/* int typeIndex = (int)SymGetFieldByIndex(symtab,symIndex,SYMTAB_TYPE_INDEX_FIELD);
+	int typeIndex = (int)SymGetFieldByIndex(data->symtab,symIndex,SYMTAB_TYPE_INDEX_FIELD);
 	
 	if (typeIndex == -1) {
-		SymPutFieldByIndex(symtab,symIndex,SYMTAB_TYPE_INDEX_FIELD,(Generic)data->typeIndex);
+		SymPutFieldByIndex(data->symtab,symIndex,SYMTAB_TYPE_INDEX_FIELD,(Generic)data->typeIndex);
 		typeIndex = data->typeIndex;
-	}*/
+	}
 
-  int size = (int)SymGetFieldByIndex(data->symtab,symIndex,SYMTAB_SIZE_FIELD);
-	// int size = 4;
+        int size = (int)SymGetFieldByIndex(data->symtab,typeIndex,SYMTAB_SIZE_FIELD);
 
-  SymPutFieldByIndex(data->symtab,symIndex,SYMTAB_OFFSET_FIELD,(Generic)(data->offset));
-  data->offset += size;
+        SymPutFieldByIndex(data->symtab,symIndex,SYMTAB_OFFSET_FIELD,(Generic)(data->offset));
+        data->offset += size;
+}
+
+/**
+ *  * Return true if a type is an array, false otherwise.
+ *   *
+ *    * @param symtab a symbol table
+ *     * @param typeIndex a symbol table index for a type
+ *      * @return see above
+ *       */
+bool isArrayType(SymTable symtab, int typeIndex) {
+    char *typeString = SymGetFieldByIndex(symtab,typeIndex,SYM_NAME_FIELD);
+
+    return (bool)(strchr(typeString,'[') != NULL);
 }
 

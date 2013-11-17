@@ -68,6 +68,9 @@
 <li>emitAssignment()
 : <a class="el" href="codegen_8c.html#a3c23f6756878892c861471a8f3fa5593">codegen.c</a>
 </li>
+<li>emitComputeArrayAddress()
+: <a class="el" href="codegen_8c.html#a05c00f49fe87cb9f12975763b5a5d657">codegen.c</a>
+</li>
 <li>emitComputeVariableAddress()
 : <a class="el" href="codegen_8c.html#a36f6684268085cd10734fbbd595d23b1">codegen.c</a>
 </li>
@@ -76,6 +79,9 @@
 </li>
 <li>emitDivideExpression()
 : <a class="el" href="codegen_8c.html#a5cbc0e198b01744c10b6b8f1c41be869">codegen.c</a>
+</li>
+<li>emitEndBranchTarget()
+: <a class="el" href="codegen_8c.html#ae137f9112cca4891537d0fb8b2cd9aae">codegen.c</a>
 </li>
 <li>emitEqualExpression()
 : <a class="el" href="codegen_8c.html#a78f5afe290915da74391d1a299f9458a">codegen.c</a>
@@ -88,6 +94,9 @@
 </li>
 <li>emitGreaterThanExpression()
 : <a class="el" href="codegen_8c.html#ab74525d28c062b4307a30fa930ef6047">codegen.c</a>
+</li>
+<li>emitIfTest()
+: <a class="el" href="codegen_8c.html#ab22493ff04794719c727a4b96975b950">codegen.c</a>
 </li>
 <li>emitInstructions()
 : <a class="el" href="codegen_8c.html#a78b2694d96001d1de7dfc7b345adb336">codegen.c</a>
@@ -128,6 +137,18 @@
 <li>emitSubtractExpression()
 : <a class="el" href="codegen_8c.html#a9dc65dbc919c6f01d78c194bc3994e47">codegen.c</a>
 </li>
+<li>emitThenBranch()
+: <a class="el" href="codegen_8c.html#af64fc36d572ea01575dc281303be0ed1">codegen.c</a>
+</li>
+<li>emitWhileLoopBackBranch()
+: <a class="el" href="codegen_8c.html#abb49d2a3d5e09aebc0f1ad98d7eb7f44">codegen.c</a>
+</li>
+<li>emitWhileLoopLandingPad()
+: <a class="el" href="codegen_8c.html#a4947f1d65fc513ee7c486e66f1cd7a3d">codegen.c</a>
+</li>
+<li>emitWhileLoopTest()
+: <a class="el" href="codegen_8c.html#a218027b9515aef520212b53747e9a00b">codegen.c</a>
+</li>
 <li>emitWriteExpression()
 : <a class="el" href="codegen_8c.html#abeee6dd8e1c200e5f14e9f097130fd63">codegen.c</a>
 </li>
@@ -135,10 +156,16 @@
 : <a class="el" href="symtab__stack_8c.html#ac4dc6725cd1006e8d8bbbca055935d82">symtab_stack.c</a>
 </li>
 <li>EXTERN()
-: <a class="el" href="string__utils_8h.html#a98a06a8e8f531ae94743a300b5ec3033">string_utils.h</a>
+: <a class="el" href="string__utils_8h.html#a79faefb58bf2b8f6cd615574f4a5a788">string_utils.h</a>
 , <a class="el" href="dlink_8h.html#aca439fb560ecac657433fe9f51cc3ee6">dlink.h</a>
 , <a class="el" href="reg_8h.html#a754966bcf28e63bf7920833854a2ebca">reg.h</a>
-, <a class="el" href="codegen_8h.html#a5429a62b6e1bc0557add06caf823f296">codegen.h</a>
+, <a class="el" href="codegen_8h.html#a99a31f8e45e6b0351fd79360502808ac">codegen.h</a>
+, <a class="el" href="symtab_8h.html#ac0902dcb1f3248112fd06132a08a8aaf">symtab.h</a>
+, <a class="el" href="symtab__stack_8h.html#aad2ca9622c0da931faa3f2b6cea5659f">symtab_stack.h</a>
+, <a class="el" href="string__utils_8h.html#af0eaa88f8f68768e509353023a2abd18">string_utils.h</a>
+, <a class="el" href="symtab_8h.html#ac311dbf45933ea6c2ddd12b67f422a44">symtab.h</a>
+, <a class="el" href="symtab__stack_8h.html#a1b0c92aa27ece1b2b41a78401ae36730">symtab_stack.h</a>
+, <a class="el" href="string__utils_8h.html#a2673df00f7d52b094121c888ee91c73d">string_utils.h</a>
 , <a class="el" href="symtab__stack_8h.html#a18f15c958ff70d0763f341e6126e9745">symtab_stack.h</a>
 , <a class="el" href="symtab_8h.html#ac7ac2a8d81abf0aad20aa37609a04493">symtab.h</a>
 , <a class="el" href="symtab__stack_8h.html#a9601687793be2d0f95f9d3f2e3c7e574">symtab_stack.h</a>
@@ -147,14 +174,11 @@
 , <a class="el" href="symtab_8h.html#afe338c646c68a3669179c297ac68b081">symtab.h</a>
 , <a class="el" href="symtab__stack_8h.html#a24cb2207040c5734526cfd02d4e5f622">symtab_stack.h</a>
 , <a class="el" href="symtab_8h.html#a3303f638f3d34b802a6de64bb49f9ef8">symtab.h</a>
-, <a class="el" href="symtab__stack_8h.html#aad2ca9622c0da931faa3f2b6cea5659f">symtab_stack.h</a>
-, <a class="el" href="symtab_8h.html#ac311dbf45933ea6c2ddd12b67f422a44">symtab.h</a>
-, <a class="el" href="symtab__stack_8h.html#a1b0c92aa27ece1b2b41a78401ae36730">symtab_stack.h</a>
-, <a class="el" href="string__utils_8h.html#a2673df00f7d52b094121c888ee91c73d">string_utils.h</a>
+, <a class="el" href="string__utils_8h.html#adbb54f14b0467ede4f16030986a3ac3d">string_utils.h</a>
 , <a class="el" href="symtab_8h.html#a948e85eea3bacf19cfbf009a4e98c14c">symtab.h</a>
-, <a class="el" href="string__utils_8h.html#a26b65c62d8a369be9d90f7154e498ef9">string_utils.h</a>
+, <a class="el" href="string__utils_8h.html#a696a829a3922a1e8ad592da259502588">string_utils.h</a>
 , <a class="el" href="symtab_8h.html#aa1f449969d26b078363ac9343e5c7f08">symtab.h</a>
-, <a class="el" href="string__utils_8h.html#a9a4ea506580c8f66d9e3e789333a0af9">string_utils.h</a>
+, <a class="el" href="string__utils_8h.html#a94cf923e295cacf16990101e8a6bb2ad">string_utils.h</a>
 </li>
 </ul>
 </div>
