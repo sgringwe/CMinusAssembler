@@ -1620,7 +1620,7 @@ yyreduce:
   case 7:
 #line 170 "CminusParser.y"
     {
-		// 	printf("ProcedureHead : FunctionDecl DeclList is %i\n", $1);
+			printf("ProcedureHead : FunctionDecl DeclList is %i\n", (yyvsp[(1) - (2)].symIndex));
 			emitProcedurePrologue(instList,symtab,(yyvsp[(1) - (2)].symIndex));
 			// symtab = beginScope(symtabStack);
 			// initSymTable();
@@ -1633,7 +1633,7 @@ yyreduce:
   case 8:
 #line 180 "CminusParser.y"
     {
-			// printf("ProcedureHead : FunctionDecl is %i\n", $1);
+			printf("ProcedureHead : FunctionDecl is %i\n", (yyvsp[(1) - (1)].symIndex));
 			emitProcedurePrologue(instList,symtab,(yyvsp[(1) - (1)].symIndex));
 			// symtab = beginScope(symtabStack);
 			// initSymTable();
@@ -2284,11 +2284,11 @@ static void initialize(char* inputFileName) {
 	char* dotChar = rindex(inputFileName,'.');
 	int endIndex = strlen(inputFileName) - strlen(dotChar);
 	char *outputFileName = nssave(2,substr(inputFileName,0,endIndex),".s");
-	stdout = freopen(outputFileName,"w", stdout);
-        if (stdout == NULL) {
-          fprintf(stderr,"Error: Could not open file %s\n",outputFileName);
-          exit(-1);
-       } 
+	// stdout = freopen(outputFileName,"w", stdout);
+ //        if (stdout == NULL) {
+ //          fprintf(stderr,"Error: Could not open file %s\n",outputFileName);
+ //          exit(-1);
+ //       } 
 
   symtabStack = symtabStackInit();
 
