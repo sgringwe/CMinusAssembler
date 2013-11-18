@@ -206,7 +206,7 @@ ProcedureBody : StatementList RBRACE
 
 DeclList 	: Type IdentifierList  SEMICOLON 
 		{
-      printf("Declaration list with stack size %i\n", (stackSize(symtabStack));
+      printf("Declaration list with stack size %i\n", (stackSize(symtabStack)));
 			AddIdStructPtr data = (AddIdStructPtr)malloc(sizeof(AddIdStruct));
 			data->offset = (stackSize(symtabStack) > 1) ? -4 : 0;
       printf("offset is %i\n", data->offset);
