@@ -104,7 +104,7 @@ void emitExit(DList instList) {
   inst = ssave("\tpopq %rbp");
 	dlinkAppend(instList,dlinkNodeAlloc(inst));
 
-  char *inst = ssave("\tleave");
+  inst = ssave("\tleave");
   dlinkAppend(instList,dlinkNodeAlloc(inst));
   inst = ssave("\tret");
   dlinkAppend(instList,dlinkNodeAlloc(inst));
