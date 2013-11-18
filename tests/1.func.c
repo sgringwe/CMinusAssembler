@@ -4,7 +4,7 @@ int a;
 
 int t()
 {
-  printf("inside function");
+  printf("inside function\n");
   return 10;
 }
 

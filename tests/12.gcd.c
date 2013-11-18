@@ -17,15 +17,15 @@ int gcd() {
 }
 
 int main() {
-         write("enter x:");
+         write("enter x:\n");
          read (x);
-	 write("enter y:");
+	 write("enter y:\n");
          read (y);
          while ((x != 0) || (y != 0)) {
 	       printf("%d\n", gcd());
-	       write("enter x:");
+	       write("enter x:\n");
                read (x);
-	       write("enter y:");
+	       write("enter y:\n");
                read (y);
          }
 }

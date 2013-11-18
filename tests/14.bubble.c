@@ -42,7 +42,7 @@ int input()
    s = 3;
    e = 7;
    i = s;
-   write("Enter a[3:7]");
+   write("Enter a[3:7]\n");
    while (i <= e) {
      scanf("%d",a[i]);
      i = i+1;
@@ -65,14 +65,14 @@ int initialize()
 int main()
 { 
   p = initialize();
-  write("After initialization");
+  write("After initialization\n");
   p = output();
   p = input();
-  write("After input");
+  write("After input\n");
   p = output();
   s=0;
   e=20;
   p = sort();
-  write("After sorting"); 
+  write("After sorting\n"); 
   p = output();
 }
