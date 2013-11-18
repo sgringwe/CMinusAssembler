@@ -41,6 +41,7 @@ char *fileName;
 static int functionOffset;
 int globalOffset = 0;
 static char* functionName;
+static int isMain = 0;
 
 extern union YYSTYPE yylval;
 

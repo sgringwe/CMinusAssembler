@@ -38,20 +38,22 @@ void emitProcedurePrologue(DList instList,SymTable symtab, int regIndex) {
 	dlinkAppend(instList,dlinkNodeAlloc(inst));
 	inst = ssave("\tmovq %rsp, %rbp");
 	dlinkAppend(instList,dlinkNodeAlloc(inst));
-	inst = ssave("\tsubq $16, %rsp");
-	dlinkAppend(instList,dlinkNodeAlloc(inst));
-	inst = ssave("\tpushq %rbx");
-	dlinkAppend(instList,dlinkNodeAlloc(inst));
-	inst = ssave("\tpushq %r12");
-	dlinkAppend(instList,dlinkNodeAlloc(inst));
-	inst = ssave("\tpushq %r13");
-	dlinkAppend(instList,dlinkNodeAlloc(inst));
-	inst = ssave("\tpushq %r14");
-	dlinkAppend(instList,dlinkNodeAlloc(inst));
-	inst = ssave("\tpushq %r15");
-	dlinkAppend(instList,dlinkNodeAlloc(inst));
-	inst = ssave("\tsubq $8, %rsp");
-	dlinkAppend(instList,dlinkNodeAlloc(inst));
+	if(isMainFunction(symtab, regIndex)) {
+		inst = ssave("\tsubq $16, %rsp");
+		dlinkAppend(instList,dlinkNodeAlloc(inst));
+		inst = ssave("\tpushq %rbx");
+		dlinkAppend(instList,dlinkNodeAlloc(inst));
+		inst = ssave("\tpushq %r12");
+		dlinkAppend(instList,dlinkNodeAlloc(inst));
+		inst = ssave("\tpushq %r13");
+		dlinkAppend(instList,dlinkNodeAlloc(inst));
+		inst = ssave("\tpushq %r14");
+		dlinkAppend(instList,dlinkNodeAlloc(inst));
+		inst = ssave("\tpushq %r15");
+		dlinkAppend(instList,dlinkNodeAlloc(inst));
+		inst = ssave("\tsubq $8, %rsp");
+		dlinkAppend(instList,dlinkNodeAlloc(inst));
+	}
 
 	// inst = ssave("\tsubq $SIZE_FOR_LOCALS, %rsp");
 	// dlinkAppend(instList,dlinkNodeAlloc(inst));
@@ -838,3 +840,20 @@ bool isArrayType(SymTable symtab, int typeIndex) {
     return (bool)(strchr(typeString,'[') != NULL);
 }
 
+/**
+ *  * Return true if a type is an array, false otherwise.
+ *   *
+ *    * @param symtab a symbol table
+ *     * @param typeIndex a symbol table index for a type
+ *      * @return see above
+ *       */
+bool isMainFunction(SymTable symtab, int regIndex) {
+    char *functionName = SymGetFieldByIndex(symtab,regIndex,SYM_NAME_FIELD);
+    printf("function name is %s\n", functionName);
+    if(strcmp(functionName,"main") == 0) {
+      return (bool)1;
+    }
+    else {
+      return (bool)0;
+    }
+}
