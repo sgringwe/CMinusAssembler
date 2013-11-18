@@ -210,7 +210,7 @@ ProcedureBody : StatementList RBRACE
 DeclList 	: Type IdentifierList  SEMICOLON 
 		{
 			AddIdStructPtr data = (AddIdStructPtr)malloc(sizeof(AddIdStruct));
-			data->offset = 0;
+			data->offset = (stackSize(symtabStack) > 1) ? 0 : -4;
 			data->symtab = currentSymtab(symtabStack);
       data->typeIndex = $1;
       data->isLocal = (stackSize(symtabStack) > 1) ? 1 : 0;
