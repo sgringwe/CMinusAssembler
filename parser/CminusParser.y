@@ -161,14 +161,14 @@ Procedures 	: ProcedureDecl Procedures
 
 ProcedureDecl : ProcedureHead ProcedureBody
     {
-      printf("<<ProcedureDecl : ProcedureHead ProcedureBody\n");
+      // printf("<<ProcedureDecl : ProcedureHead ProcedureBody\n");
       emitExit(instList);
     }
 	      ;
 
 ProcedureHead : FunctionDecl DeclList 
 		{
-			printf("ProcedureHead : FunctionDecl DeclList is %i\n", $1);
+		// 	printf("ProcedureHead : FunctionDecl DeclList is %i\n", $1);
 			emitProcedurePrologue(instList,symtab,$1);
 			// symtab = beginScope(symtabStack);
 			// initSymTable();
@@ -178,7 +178,7 @@ ProcedureHead : FunctionDecl DeclList
 		}
 	      | FunctionDecl
 		{
-			printf("ProcedureHead : FunctionDecl is %i\n", $1);
+			// printf("ProcedureHead : FunctionDecl is %i\n", $1);
 			emitProcedurePrologue(instList,symtab,$1);
 			// symtab = beginScope(symtabStack);
 			// initSymTable();
@@ -190,7 +190,7 @@ ProcedureHead : FunctionDecl DeclList
 FunctionDecl :  Type IDENTIFIER LPAREN RPAREN LBRACE 
 		{
 			$$ = SymIndex(symtab,$2);
-			printf("<<FunctionDecl :  Type IDENTIFIER LPAREN RPAREN LBRACE\n");
+			// printf("<<FunctionDecl :  Type IDENTIFIER LPAREN RPAREN LBRACE\n");
 		}
 	      	;
 
@@ -199,7 +199,7 @@ ProcedureBody : StatementList RBRACE
       // symtab = endScope(symtabStack);
       // deleteSymTable();
 
-      printf("<<ProcedureBody : StatementList RBRACE\n");
+      // printf("<<ProcedureBody : StatementList RBRACE\n");
     }
 	      ;
 
@@ -289,7 +289,7 @@ Statement 	: Assignment
 
 Assignment      : Variable ASSIGN Expr SEMICOLON
 		{
-      printf("Assigning %i to be %i\n", $1, $3);
+      // printf("Assigning %i to be %i\n", $1, $3);
 			emitAssignment(instList,symtab,$1,$3);
 		}
                 ;
@@ -351,6 +351,9 @@ IOStatement     : READ LPAREN Variable RPAREN SEMICOLON
                 ;
 
 ReturnStatement : RETURN Expr SEMICOLON
+    {
+      emitReturnExpression(instList,symtab,$2);
+    }
                 ;
 
 ExitStatement 	: EXIT SEMICOLON
@@ -540,11 +543,11 @@ static void initialize(char* inputFileName) {
 	char* dotChar = rindex(inputFileName,'.');
 	int endIndex = strlen(inputFileName) - strlen(dotChar);
 	char *outputFileName = nssave(2,substr(inputFileName,0,endIndex),".s");
-	// stdout = freopen(outputFileName,"w", stdout);
- //        if (stdout == NULL) {
- //          fprintf(stderr,"Error: Could not open file %s\n",outputFileName);
- //          exit(-1);
- //       } 
+	stdout = freopen(outputFileName,"w", stdout);
+        if (stdout == NULL) {
+          fprintf(stderr,"Error: Could not open file %s\n",outputFileName);
+          exit(-1);
+       } 
 
   symtabStack = symtabStackInit();
 

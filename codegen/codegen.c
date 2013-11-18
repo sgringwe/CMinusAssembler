@@ -38,13 +38,20 @@ void emitProcedurePrologue(DList instList,SymTable symtab, int regIndex) {
 	dlinkAppend(instList,dlinkNodeAlloc(inst));
 	inst = ssave("\tmovq %rsp, %rbp");
 	dlinkAppend(instList,dlinkNodeAlloc(inst));
-
-	// inst = ssave("\tsubq $4, %esp");
-	// dlinkAppend(instList,dlinkNodeAlloc(inst));
-	// inst = ssave("\tpushq %rbp");
-	// dlinkAppend(instList,dlinkNodeAlloc(inst));
-	// inst = ssave("\tpushq %rbp");
-	// dlinkAppend(instList,dlinkNodeAlloc(inst));
+	inst = ssave("\tsubq $16, %rsp");
+	dlinkAppend(instList,dlinkNodeAlloc(inst));
+	inst = ssave("\tpushq %rbx");
+	dlinkAppend(instList,dlinkNodeAlloc(inst));
+	inst = ssave("\tpushq %r12");
+	dlinkAppend(instList,dlinkNodeAlloc(inst));
+	inst = ssave("\tpushq %r13");
+	dlinkAppend(instList,dlinkNodeAlloc(inst));
+	inst = ssave("\tpushq %r14");
+	dlinkAppend(instList,dlinkNodeAlloc(inst));
+	inst = ssave("\tpushq %r15");
+	dlinkAppend(instList,dlinkNodeAlloc(inst));
+	inst = ssave("\tsubq $8, %rsp");
+	dlinkAppend(instList,dlinkNodeAlloc(inst));
 
 	// inst = ssave("\tsubq $SIZE_FOR_LOCALS, %rsp");
 	// dlinkAppend(instList,dlinkNodeAlloc(inst));
@@ -89,6 +96,21 @@ void emitInstructions(DList instList) {
 	dlinkApply(instList,(DLinkApplyFunc)printInstruction);
 }
 
+/**
+ * Add an instruction that performance an assignment.
+ *
+ * @param instList a DList of assembly instructions
+ * @param symtab a symbol table
+ * @param lhsRegIndex the symbol table index of the register for the l-value address
+ * @param rhsRegIndex the symbol table index of the register for the r-value
+ */
+void emitReturnExpression(DList instList,SymTable symtab,int regIndex) {
+	// char* regName = malloc(sizeof(char) * 7); // Assume 7 is largest reg name
+	// get64bitIntegerRegisterName(symtab, regIndex, regName);
+
+	char *inst = nssave(3, "\tmovl ", (char*)SymGetFieldByIndex(symtab,regIndex,SYM_NAME_FIELD), ", %eax");
+	dlinkAppend(instList,dlinkNodeAlloc(inst));
+}
 
 void emitExit(DList instList) {
 
@@ -97,13 +119,18 @@ void emitExit(DList instList) {
 	inst = ssave("\tcall exit");
 	dlinkAppend(instList,dlinkNodeAlloc(inst));*/
 
-	// inst = ssave("\tsubq $SIZE_FOR_LOCALS, %rsp");
-	// dlinkAppend(instList,dlinkNodeAlloc(inst));
-	char *inst = ssave("\tmovq %rbp, %rsp");
+	char *inst = ssave("\taddq $8, %rsp");
 	dlinkAppend(instList,dlinkNodeAlloc(inst));
-  inst = ssave("\tpopq %rbp");
+  inst = ssave("\tpopq %r15");
 	dlinkAppend(instList,dlinkNodeAlloc(inst));
-
+	inst = ssave("\tpopq %r14");
+	dlinkAppend(instList,dlinkNodeAlloc(inst));
+	inst = ssave("\tpopq %r13");
+	dlinkAppend(instList,dlinkNodeAlloc(inst));
+	inst = ssave("\tpopq %r12");
+	dlinkAppend(instList,dlinkNodeAlloc(inst));
+	inst = ssave("\tpopq %rbx");
+	dlinkAppend(instList,dlinkNodeAlloc(inst));
   inst = ssave("\tleave");
   dlinkAppend(instList,dlinkNodeAlloc(inst));
   inst = ssave("\tret");
@@ -688,18 +715,15 @@ int emitLoadVariable(DList instList, SymTable symtab, int regIndex) {
  */
 int emitFunctionCall(DList instList, SymTable symtab, int regIndex) {
 	int newRegIndex = getFreeIntegerRegisterIndex(symtab);
-	// char* newRegName = (char*)SymGetFieldByIndex(symtab,newRegIndex,SYM_NAME_FIELD);
-
-	// char* regName = malloc(sizeof(char) * 7); // Assume 7 is largest reg name
-	// get64bitIntegerRegisterName(symtab, regIndex, regName);
+	char* newRegName = (char*)SymGetFieldByIndex(symtab,newRegIndex,SYM_NAME_FIELD);
 
 	char *inst;
 
 	inst = nssave(1,"\tcall t");
 	dlinkAppend(instList,dlinkNodeAlloc(inst));
 	
-	// inst = nssave(4,"\tmovl (",regName,"), ", newRegName);
-	// dlinkAppend(instList,dlinkNodeAlloc(inst));
+	inst = nssave(4,"\tmovl %eax, ", newRegName);
+	dlinkAppend(instList,dlinkNodeAlloc(inst));
 
 	// freeIntegerRegister((int)SymGetFieldByIndex(symtab,regIndex,SYMTAB_REGISTER_INDEX_FIELD));
 
