@@ -123,7 +123,9 @@ void emitExit(DList instList, SymTable symtab, int regIndex) {
 	inst = ssave("\tcall exit");
 	dlinkAppend(instList,dlinkNodeAlloc(inst));*/
 	char *inst = ssave("\taddq $8, %rsp");
-
+	printf("regIndex is %d\n", regIndex);
+	char *functionName = SymGetFieldByIndex(symtab,regIndex,SYM_NAME_FIELD);
+	printf("function name is %s\n", functionName);
 	if(!isMainFunction(symtab, regIndex)) {
 		dlinkAppend(instList,dlinkNodeAlloc(inst));
 	  inst = ssave("\tpopq %r15");
@@ -723,10 +725,10 @@ int emitLoadVariable(DList instList, SymTable symtab, int regIndex) {
 int emitFunctionCall(DList instList, SymTable symtab, int regIndex) {
 	int newRegIndex = getFreeIntegerRegisterIndex(symtab);
 	char* newRegName = (char*)SymGetFieldByIndex(symtab,newRegIndex,SYM_NAME_FIELD);
-	// char *functionName = (char*)SymGetFieldByIndex(symtab,regIndex,SYM_NAME_FIELD);
+	char *functionName = (char*)SymGetFieldByIndex(symtab,regIndex,SYM_NAME_FIELD);
 
 	char *inst;
-	inst = nssave(1,"\tcall t");
+	inst = nssave(2,"\tcall ", functionName);
 	dlinkAppend(instList,dlinkNodeAlloc(inst));
 	
 	inst = nssave(2,"\tmovl %eax, ", newRegName);
