@@ -695,13 +695,13 @@ int emitFunctionCall(DList instList, SymTable symtab, int regIndex) {
 
 	char *inst;
 
-	inst = nssave(4,"\tmovl (",regName,"), ", newRegName);
+	inst = nssave(1,"\tcall t");
 	dlinkAppend(instList,dlinkNodeAlloc(inst));
 	
 	// inst = nssave(4,"\tmovl (",regName,"), ", newRegName);
 	// dlinkAppend(instList,dlinkNodeAlloc(inst));
 
-	freeIntegerRegister((int)SymGetFieldByIndex(symtab,regIndex,SYMTAB_REGISTER_INDEX_FIELD));
+	// freeIntegerRegister((int)SymGetFieldByIndex(symtab,regIndex,SYMTAB_REGISTER_INDEX_FIELD));
 
 	return newRegIndex;
 
