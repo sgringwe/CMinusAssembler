@@ -168,7 +168,7 @@ ProcedureDecl : ProcedureHead ProcedureBody
 
 ProcedureHead : FunctionDecl DeclList 
 		{
-		// 	printf("ProcedureHead : FunctionDecl DeclList is %i\n", $1);
+			printf("ProcedureHead : FunctionDecl DeclList is %i\n", $1);
 			emitProcedurePrologue(instList,symtab,$1);
 			// symtab = beginScope(symtabStack);
 			// initSymTable();
@@ -543,11 +543,11 @@ static void initialize(char* inputFileName) {
 	char* dotChar = rindex(inputFileName,'.');
 	int endIndex = strlen(inputFileName) - strlen(dotChar);
 	char *outputFileName = nssave(2,substr(inputFileName,0,endIndex),".s");
-	stdout = freopen(outputFileName,"w", stdout);
-        if (stdout == NULL) {
-          fprintf(stderr,"Error: Could not open file %s\n",outputFileName);
-          exit(-1);
-       } 
+	// stdout = freopen(outputFileName,"w", stdout);
+ //        if (stdout == NULL) {
+ //          fprintf(stderr,"Error: Could not open file %s\n",outputFileName);
+ //          exit(-1);
+ //       } 
 
   symtabStack = symtabStackInit();
 
