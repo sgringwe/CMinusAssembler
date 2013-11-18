@@ -19,7 +19,8 @@
 typedef struct AddIdType {
 	int typeIndex;			/**< the symbol table index of the type of a list of variables */
 	int offset;			/**< the current offset in the activation record */
-        SymTable symtab;
+  SymTable symtab;
+  int isLocal;
 } AddIdStruct, *AddIdStructPtr;
 
 EXTERN(int, emitFunctionCall, (DList instList, SymTable symtab, int functionIndex));

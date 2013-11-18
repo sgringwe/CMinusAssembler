@@ -173,8 +173,6 @@ ProcedureHead : FunctionDecl DeclList
 		{
 			// printf("ProcedureHead : FunctionDecl DeclList is %i\n", $1);
 			emitProcedurePrologue(instList,symtab,$1);
-			// symtab = beginScope(symtabStack);
-			// initSymTable();
 			functionOffset = $2;
 
 			$$ = $1;
@@ -183,8 +181,6 @@ ProcedureHead : FunctionDecl DeclList
 		{
 			// printf("ProcedureHead : FunctionDecl is %i\n", $1);
 			emitProcedurePrologue(instList,symtab,$1);
-			// symtab = beginScope(symtabStack);
-			// initSymTable();
 			functionOffset = 0;
 			$$ = $1;
 		}
@@ -217,6 +213,7 @@ DeclList 	: Type IdentifierList  SEMICOLON
 			data->offset = 0;
 			data->symtab = currentSymtab(symtabStack);
       data->typeIndex = $1;
+      data->isLocal = (stackSize(symtabStack) > 1) ? 1 : 0;
 			dlinkApply1($2,(DLinkApply1Func)addIdToSymtab,(Generic)data);
 			$$ = data->offset;
 			dlinkFreeNodes($2);
@@ -229,6 +226,7 @@ DeclList 	: Type IdentifierList  SEMICOLON
 			data->offset = $1;
 			data->typeIndex = $2;
 			data->symtab = currentSymtab(symtabStack);
+      data->isLocal = (stackSize(symtabStack) > 1) ? 1 : 0;
 			dlinkApply1($3,(DLinkApply1Func)addIdToSymtab,(Generic)data);
 			$$ = data->offset;
 			dlinkFreeNodes($3);

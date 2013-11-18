@@ -12,6 +12,7 @@ typedef DList SymtabStack;
 EXTERN(SymtabStack, symtabStackInit, (void));
 EXTERN(SymTable, beginScope, (SymtabStack stack));
 EXTERN(SymTable, endScope, (SymtabStack stack));
+EXTERN(int, stackSize, (SymtabStack stack));
 EXTERN(SymTable, findSymtab, (SymtabStack stack, char* key));
 EXTERN(SymTable, currentSymtab, (SymtabStack stack));
 EXTERN(SymTable, lastSymtab, (SymtabStack stack));

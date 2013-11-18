@@ -39,8 +39,12 @@ void emitProcedurePrologue(DList instList,SymTable symtab, int regIndex) {
 	inst = ssave("\tmovq %rsp, %rbp");
 	dlinkAppend(instList,dlinkNodeAlloc(inst));
 	if(!isMainFunction(symtab, regIndex)) {
-		inst = ssave("\tsubq $16, %rsp");
+		// allocate 48 bytes for local variables
+		// this is to avoid doing math to keep it 16-byte aligned
+		// enought space for 12 local variables per function
+		inst = ssave("\tsubq $48, %rsp");
 		dlinkAppend(instList,dlinkNodeAlloc(inst));
+
 		inst = ssave("\tpushq %rbx");
 		dlinkAppend(instList,dlinkNodeAlloc(inst));
 		inst = ssave("\tpushq %r12");
@@ -50,8 +54,6 @@ void emitProcedurePrologue(DList instList,SymTable symtab, int regIndex) {
 		inst = ssave("\tpushq %r14");
 		dlinkAppend(instList,dlinkNodeAlloc(inst));
 		inst = ssave("\tpushq %r15");
-		dlinkAppend(instList,dlinkNodeAlloc(inst));
-		inst = ssave("\tsubq $8, %rsp");
 		dlinkAppend(instList,dlinkNodeAlloc(inst));
 	}
 
@@ -829,7 +831,12 @@ void addIdToSymtab(DNode node, AddIdStructPtr data) {
         int size = (int)SymGetFieldByIndex(data->symtab,typeIndex,SYMTAB_SIZE_FIELD);
 
         SymPutFieldByIndex(data->symtab,symIndex,SYMTAB_OFFSET_FIELD,(Generic)(data->offset));
-        data->offset += size;
+        if (data->isLocal) {
+        	data->offset -= size;
+				}
+        else {
+        	data->offset += size;
+        }
 }
 
 /**
