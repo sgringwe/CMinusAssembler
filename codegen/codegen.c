@@ -722,7 +722,7 @@ int emitFunctionCall(DList instList, SymTable symtab, int regIndex) {
 	inst = nssave(1,"\tcall t");
 	dlinkAppend(instList,dlinkNodeAlloc(inst));
 	
-	inst = nssave(4,"\tmovl %eax, ", newRegName);
+	inst = nssave(2,"\tmovl %eax, ", newRegName);
 	dlinkAppend(instList,dlinkNodeAlloc(inst));
 
 	// freeIntegerRegister((int)SymGetFieldByIndex(symtab,regIndex,SYMTAB_REGISTER_INDEX_FIELD));
