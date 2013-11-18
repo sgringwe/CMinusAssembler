@@ -210,7 +210,7 @@ DeclList 	: Type IdentifierList  SEMICOLON
 			AddIdStructPtr data = (AddIdStructPtr)malloc(sizeof(AddIdStruct));
 			data->offset = 0;
 			data->symtab = symtab;
-                        data->typeIndex = $1;
+			data->typeIndex = $1;
 			dlinkApply1($2,(DLinkApply1Func)addIdToSymtab,(Generic)data);
 			$$ = data->offset;
 			dlinkFreeNodes($2);
