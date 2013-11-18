@@ -163,7 +163,7 @@ ProcedureDecl : ProcedureHead ProcedureBody
       emitExit(instList,symtab,$1);
 
       SymTable table = endScope(symtabStack);
-      SymKillField(table,SYMTAB_REGISTER_INDEX_FIELD);
+      // SymKillField(table,SYMTAB_REGISTER_INDEX_FIELD);
       SymKillField(table,SYMTAB_OFFSET_FIELD);
       SymKill(table);
     }
@@ -199,9 +199,6 @@ FunctionDecl :  Type IDENTIFIER LPAREN RPAREN LBRACE
 
 ProcedureBody : StatementList RBRACE
     {
-      // symtab = endScope(symtabStack);
-      // deleteSymTable();
-
       // printf("<<ProcedureBody : StatementList RBRACE\n");
     }
 	      ;
@@ -209,8 +206,9 @@ ProcedureBody : StatementList RBRACE
 
 DeclList 	: Type IdentifierList  SEMICOLON 
 		{
+      // printf("Declaration list\n");
 			AddIdStructPtr data = (AddIdStructPtr)malloc(sizeof(AddIdStruct));
-			data->offset = (stackSize(symtabStack) > 1) ? 0 : -4;
+			data->offset = (stackSize(symtabStack) > 1) ? -4 : 0;
 			data->symtab = currentSymtab(symtabStack);
       data->typeIndex = $1;
       data->isLocal = (stackSize(symtabStack) > 1) ? 1 : 0;
@@ -222,6 +220,7 @@ DeclList 	: Type IdentifierList  SEMICOLON
 		}		
 	   	| DeclList Type IdentifierList SEMICOLON
 	 	{
+      // printf("Declearation list long\n");
 			AddIdStructPtr data = (AddIdStructPtr)malloc(sizeof(AddIdStruct));
 			data->offset = $1;
 			data->typeIndex = $2;
