@@ -723,16 +723,14 @@ int emitLoadVariable(DList instList, SymTable symtab, int regIndex) {
 int emitFunctionCall(DList instList, SymTable symtab, int regIndex) {
 	int newRegIndex = getFreeIntegerRegisterIndex(symtab);
 	char* newRegName = (char*)SymGetFieldByIndex(symtab,newRegIndex,SYM_NAME_FIELD);
+	char *functionName = SymGetFieldByIndex(symtab,regIndex,SYM_NAME_FIELD);
 
 	char *inst;
-
-	inst = nssave(1,"\tcall t");
+	inst = nssave(2,"\tcall ", functionName);
 	dlinkAppend(instList,dlinkNodeAlloc(inst));
 	
 	inst = nssave(2,"\tmovl %eax, ", newRegName);
 	dlinkAppend(instList,dlinkNodeAlloc(inst));
-
-	// freeIntegerRegister((int)SymGetFieldByIndex(symtab,regIndex,SYMTAB_REGISTER_INDEX_FIELD));
 
 	return newRegIndex;
 
