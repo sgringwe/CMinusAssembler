@@ -38,7 +38,7 @@ void emitProcedurePrologue(DList instList,SymTable symtab, int regIndex) {
 	dlinkAppend(instList,dlinkNodeAlloc(inst));
 	inst = ssave("\tmovq %rsp, %rbp");
 	dlinkAppend(instList,dlinkNodeAlloc(inst));
-	if(isMainFunction(symtab, regIndex)) {
+	if(!isMainFunction(symtab, regIndex)) {
 		inst = ssave("\tsubq $16, %rsp");
 		dlinkAppend(instList,dlinkNodeAlloc(inst));
 		inst = ssave("\tpushq %rbx");
@@ -114,25 +114,28 @@ void emitReturnExpression(DList instList,SymTable symtab,int regIndex) {
 	dlinkAppend(instList,dlinkNodeAlloc(inst));
 }
 
-void emitExit(DList instList) {
+void emitExit(DList instList, int regIndex) {
 
   /*char *inst = ssave("\tmov dword ptr [%esp], 0");
 	dlinkAppend(instList,dlinkNodeAlloc(inst));
 	inst = ssave("\tcall exit");
 	dlinkAppend(instList,dlinkNodeAlloc(inst));*/
-
 	char *inst = ssave("\taddq $8, %rsp");
-	dlinkAppend(instList,dlinkNodeAlloc(inst));
-  inst = ssave("\tpopq %r15");
-	dlinkAppend(instList,dlinkNodeAlloc(inst));
-	inst = ssave("\tpopq %r14");
-	dlinkAppend(instList,dlinkNodeAlloc(inst));
-	inst = ssave("\tpopq %r13");
-	dlinkAppend(instList,dlinkNodeAlloc(inst));
-	inst = ssave("\tpopq %r12");
-	dlinkAppend(instList,dlinkNodeAlloc(inst));
-	inst = ssave("\tpopq %rbx");
-	dlinkAppend(instList,dlinkNodeAlloc(inst));
+
+	if(!isMainFunction(symtab, regIndex)) {
+		dlinkAppend(instList,dlinkNodeAlloc(inst));
+	  inst = ssave("\tpopq %r15");
+		dlinkAppend(instList,dlinkNodeAlloc(inst));
+		inst = ssave("\tpopq %r14");
+		dlinkAppend(instList,dlinkNodeAlloc(inst));
+		inst = ssave("\tpopq %r13");
+		dlinkAppend(instList,dlinkNodeAlloc(inst));
+		inst = ssave("\tpopq %r12");
+		dlinkAppend(instList,dlinkNodeAlloc(inst));
+		inst = ssave("\tpopq %rbx");
+		dlinkAppend(instList,dlinkNodeAlloc(inst));
+	}
+
   inst = ssave("\tleave");
   dlinkAppend(instList,dlinkNodeAlloc(inst));
   inst = ssave("\tret");
@@ -849,9 +852,7 @@ bool isArrayType(SymTable symtab, int typeIndex) {
  *       */
 int isMainFunction(SymTable symtab, int regIndex) {
     char *functionName = SymGetFieldByIndex(symtab,regIndex,SYM_NAME_FIELD);
-    printf("function name is %s\n", functionName);
     if(strcmp(functionName, "main") == 0) {
-    	printf("returning 1\n");
       return 1;
     }
     else {

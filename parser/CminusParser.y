@@ -163,13 +163,13 @@ Procedures 	: ProcedureDecl Procedures
 ProcedureDecl : ProcedureHead ProcedureBody
     {
       // printf("<<ProcedureDecl : ProcedureHead ProcedureBody\n");
-      emitExit(instList);
+      emitExit(instList,$1);
     }
 	      ;
 
 ProcedureHead : FunctionDecl DeclList 
 		{
-			printf("ProcedureHead : FunctionDecl DeclList is %i\n", $1);
+			// printf("ProcedureHead : FunctionDecl DeclList is %i\n", $1);
 			emitProcedurePrologue(instList,symtab,$1);
 			// symtab = beginScope(symtabStack);
 			// initSymTable();
@@ -179,7 +179,7 @@ ProcedureHead : FunctionDecl DeclList
 		}
 	      | FunctionDecl
 		{
-			printf("ProcedureHead : FunctionDecl is %i\n", $1);
+			// printf("ProcedureHead : FunctionDecl is %i\n", $1);
 			emitProcedurePrologue(instList,symtab,$1);
 			// symtab = beginScope(symtabStack);
 			// initSymTable();
