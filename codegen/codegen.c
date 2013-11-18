@@ -688,10 +688,10 @@ int emitLoadVariable(DList instList, SymTable symtab, int regIndex) {
  */
 int emitFunctionCall(DList instList, SymTable symtab, int regIndex) {
 	int newRegIndex = getFreeIntegerRegisterIndex(symtab);
-	char* newRegName = (char*)SymGetFieldByIndex(symtab,newRegIndex,SYM_NAME_FIELD);
+	// char* newRegName = (char*)SymGetFieldByIndex(symtab,newRegIndex,SYM_NAME_FIELD);
 
-	char* regName = malloc(sizeof(char) * 7); // Assume 7 is largest reg name
-	get64bitIntegerRegisterName(symtab, regIndex, regName);
+	// char* regName = malloc(sizeof(char) * 7); // Assume 7 is largest reg name
+	// get64bitIntegerRegisterName(symtab, regIndex, regName);
 
 	char *inst;
 
