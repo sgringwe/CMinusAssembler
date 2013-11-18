@@ -60,6 +60,6 @@ EXTERN(int, emitLoadIntegerConstant,(DList instList, SymTable symtab, int intInd
 
 EXTERN(void, addIdToSymtab,(DNode node,AddIdStructPtr data));
 EXTERN(bool,  isArrayType, (SymTable symtab, int typeIndex));
-EXTERN(bool,  isMainFunction, (SymTable symtab, int regIndex));
+EXTERN(int,  isMainFunction, (SymTable symtab, int regIndex));
 #endif /*CODEGEN_H_*/
 
