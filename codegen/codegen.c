@@ -38,6 +38,7 @@ void emitProcedurePrologue(DList instList,SymTable symtab, int regIndex) {
 	dlinkAppend(instList,dlinkNodeAlloc(inst));
 	inst = ssave("\tmovq %rsp, %rbp");
 	dlinkAppend(instList,dlinkNodeAlloc(inst));
+	
 	// inst = ssave("\tsubq $4, %esp");
 	// dlinkAppend(instList,dlinkNodeAlloc(inst));
 	// inst = ssave("\tpushq %rbp");
@@ -45,6 +46,8 @@ void emitProcedurePrologue(DList instList,SymTable symtab, int regIndex) {
 	// inst = ssave("\tpushq %rbp");
 	// dlinkAppend(instList,dlinkNodeAlloc(inst));
 
+	// inst = ssave("\tsubq $SIZE_FOR_LOCALS, %rsp");
+	// dlinkAppend(instList,dlinkNodeAlloc(inst));
 }
 
 /**
@@ -93,6 +96,13 @@ void emitExit(DList instList) {
 	dlinkAppend(instList,dlinkNodeAlloc(inst));
 	inst = ssave("\tcall exit");
 	dlinkAppend(instList,dlinkNodeAlloc(inst));*/
+
+	// inst = ssave("\tsubq $SIZE_FOR_LOCALS, %rsp");
+	// dlinkAppend(instList,dlinkNodeAlloc(inst));
+	inst = ssave("\tmovq %rbp, %rsp");
+	dlinkAppend(instList,dlinkNodeAlloc(inst));
+  inst = ssave("\tpopq %rbp");
+	dlinkAppend(instList,dlinkNodeAlloc(inst));
 
   char *inst = ssave("\tleave");
   dlinkAppend(instList,dlinkNodeAlloc(inst));
