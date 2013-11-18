@@ -27,7 +27,7 @@ EXTERN(void,Cminus_error,(char*));
 
 EXTERN(int,Cminus_lex,(void));
 
-// Assigned to be the current symtab stack symbol table
+// Contains core information
 SymTable symtab;
 
 // Grows with scope
@@ -48,9 +48,6 @@ extern union YYSTYPE yylval;
 extern int Cminus_lineno;
 
 static void initSymTable() {
-  SymInitField(symtab,SYMTAB_OFFSET_FIELD,(Generic)-1,NULL);
-  SymInitField(symtab,SYMTAB_REGISTER_INDEX_FIELD,(Generic)-1,NULL);
-
   int intIndex = SymIndex(symtab,SYMTAB_INTEGER_TYPE_STRING);
   int errorIndex = SymIndex(symtab,SYMTAB_ERROR_TYPE_STRING);
   int voidIndex = SymIndex(symtab,SYMTAB_VOID_TYPE_STRING);
@@ -164,6 +161,11 @@ ProcedureDecl : ProcedureHead ProcedureBody
     {
       // printf("<<ProcedureDecl : ProcedureHead ProcedureBody\n");
       emitExit(instList,symtab,$1);
+
+      SymTable table = endScope(symtabStack);
+      SymKillField(table,SYMTAB_REGISTER_INDEX_FIELD);
+      SymKillField(table,SYMTAB_OFFSET_FIELD);
+      SymKill(table);
     }
 	      ;
 
@@ -191,6 +193,10 @@ ProcedureHead : FunctionDecl DeclList
 FunctionDecl :  Type IDENTIFIER LPAREN RPAREN LBRACE 
 		{
 			$$ = SymIndex(symtab,$2);
+
+      SymTable table = beginScope(symtabStack);
+      SymInitField(table,SYMTAB_OFFSET_FIELD,(Generic)-1,NULL);
+      // SymInitField(table,SYMTAB_REGISTER_INDEX_FIELD,(Generic)-1,NULL);
 			// printf("<<FunctionDecl :  Type IDENTIFIER LPAREN RPAREN LBRACE\n");
 		}
 	      	;
@@ -209,8 +215,8 @@ DeclList 	: Type IdentifierList  SEMICOLON
 		{
 			AddIdStructPtr data = (AddIdStructPtr)malloc(sizeof(AddIdStruct));
 			data->offset = 0;
-			data->symtab = symtab;
-			data->typeIndex = $1;
+			data->symtab = currentSymtab(symtabStack);
+      data->typeIndex = $1;
 			dlinkApply1($2,(DLinkApply1Func)addIdToSymtab,(Generic)data);
 			$$ = data->offset;
 			dlinkFreeNodes($2);
@@ -222,7 +228,7 @@ DeclList 	: Type IdentifierList  SEMICOLON
 			AddIdStructPtr data = (AddIdStructPtr)malloc(sizeof(AddIdStruct));
 			data->offset = $1;
 			data->typeIndex = $2;
-			data->symtab = symtab;
+			data->symtab = currentSymtab(symtabStack);
 			dlinkApply1($3,(DLinkApply1Func)addIdToSymtab,(Generic)data);
 			$$ = data->offset;
 			dlinkFreeNodes($3);
@@ -251,19 +257,19 @@ VarDecl 	: IDENTIFIER
 		| IDENTIFIER LBRACKET INTCON RBRACKET
 		{
 			int symIndex = SymIndex(symtab,$3);
-                	char* numElemString = 
-                		(char*)SymGetFieldByIndex(symtab,symIndex,SYM_NAME_FIELD);
-                		
-                	char* typeString = 
-                		nssave(4,SYMTAB_VOID_TYPE_STRING,"[",numElemString,"]");
-                		
-                	int typeIndex = SymIndex(symtab,typeString);
-                	SymPutFieldByIndex(symtab,typeIndex,SYMTAB_BASIC_TYPE_FIELD,(Generic)VOID_TYPE);
-                	
-                	int numElements = atoi(numElemString);
-                	SymPutFieldByIndex(symtab,typeIndex,SYMTAB_SIZE_FIELD,(Generic)(VOID_SIZE*numElements));
-                					   
-                	sfree(typeString);
+    	char* numElemString = 
+    		(char*)SymGetFieldByIndex(symtab,symIndex,SYM_NAME_FIELD);
+    		
+    	char* typeString = 
+    		nssave(4,SYMTAB_VOID_TYPE_STRING,"[",numElemString,"]");
+    		
+    	int typeIndex = SymIndex(symtab,typeString);
+    	SymPutFieldByIndex(symtab,typeIndex,SYMTAB_BASIC_TYPE_FIELD,(Generic)VOID_TYPE);
+    	
+    	int numElements = atoi(numElemString);
+    	SymPutFieldByIndex(symtab,typeIndex,SYMTAB_SIZE_FIELD,(Generic)(VOID_SIZE*numElements));
+    					   
+    	sfree(typeString);
 
 			symIndex = SymIndex(symtab,$1);
                 	SymPutFieldByIndex(symtab,symIndex,SYMTAB_TYPE_INDEX_FIELD,(Generic)typeIndex);
@@ -458,8 +464,6 @@ Factor          : Variable
 		}
                 | IDENTIFIER LPAREN RPAREN
 		{
-			// make the call here and return the return value register
-			//  printf("<<identifier () is %s\n", $1);
 			int symIndex = SymIndex(symtab,$1);
 			$$ = emitFunctionCall(instList,symtab,symIndex);
 		}
@@ -471,6 +475,7 @@ Factor          : Variable
 
 Variable        : IDENTIFIER
 		{
+      // SymTable tab = findSymtab(symtabStack, $1);
 			int symIndex = SymQueryIndex(symtab,$1);
 			$$ = emitComputeVariableAddress(instList,symtab,symIndex);
 		}
