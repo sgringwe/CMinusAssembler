@@ -474,7 +474,7 @@ Factor          : Variable
 Variable        : IDENTIFIER
 		{
       // SymTable tab = findSymtab(symtabStack, $1);
-			int symIndex = SymQueryIndex(symtab,$1);
+			int symIndex = SymQueryIndex(findSymtab(symtabStack, $1),$1);
 			$$ = emitComputeVariableAddress(instList,symtab,symIndex);
 		}
                 | IDENTIFIER LBRACKET Expr RBRACKET    
