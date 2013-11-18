@@ -36,7 +36,7 @@ int output()
 
    i = 0;
    while (i < 10) {
-     write(a[i]);
+     printf("%d\n", a[i]);
      i = i+1;
    }
    return i;
@@ -45,9 +45,10 @@ int output()
 int input()
 {  int i;
    i = 0;
-   write("Enter a[0:9]\n");
+   printf("Enter a[0:9]\n");
    while (i < 10) {
-     scanf("%d",a[i]);
+     // scanf("%d",a[i]);
+    a[i] = 3;
      i = i+1;
    }
    return i;
@@ -68,11 +69,11 @@ int initialize()
 int main()
 {   
   p = input();
-  write("After input\n");
+  printf("After input\n");
   p = output();
   l=0;
   r=9;
   p = sort();
-  write("After sorting\n"); 
+  printf("After sorting\n"); 
   p = output();
 }

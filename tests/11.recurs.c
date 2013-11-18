@@ -16,7 +16,8 @@ int decls() {
 }
 
 int main() {
-  write("Enter a:\n");
-  scanf("%d",a);
+  printf("Enter a:\n");
+  // scanf("%d",a);
+  a = 3;
   printf("%d\n", decls());
 }

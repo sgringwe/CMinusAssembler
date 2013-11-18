@@ -42,9 +42,10 @@ int input()
    s = 3;
    e = 7;
    i = s;
-   write("Enter a[3:7]\n");
+   printf("Enter a[3:7]\n");
    while (i <= e) {
-     scanf("%d",a[i]);
+     // scanf("%d",a[i]);
+     a[i] = 3;
      i = i+1;
    }
    return i;
@@ -65,14 +66,14 @@ int initialize()
 int main()
 { 
   p = initialize();
-  write("After initialization\n");
+  printf("After initialization\n");
   p = output();
   p = input();
-  write("After input\n");
+  printf("After input\n");
   p = output();
   s=0;
   e=20;
   p = sort();
-  write("After sorting\n"); 
+  printf("After sorting\n"); 
   p = output();
 }

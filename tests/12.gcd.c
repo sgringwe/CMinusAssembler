@@ -4,9 +4,9 @@
 int x, y;
 
 int gcd() {
-      int t;
-         if (y==0) {
-            return x;
+   int t;
+   if (y==0) {
+      return x;
 	 }
          else {
 	      t = x;
@@ -17,15 +17,19 @@ int gcd() {
 }
 
 int main() {
-         write("enter x:\n");
-         read (x);
-	 write("enter y:\n");
-         read (y);
-         while ((x != 0) || (y != 0)) {
-	       printf("%d\n", gcd());
-	       write("enter x:\n");
-               read (x);
-	       write("enter y:\n");
-               read (y);
-         }
+   printf("enter x:\n");
+   // scanf("%d", x);
+   x = 3;
+	 printf("enter y:\n");
+   // scanf ("%d",y);
+   y = 3;
+   while ((x != 0) || (y != 0)) {
+    printf("%d\n", gcd());
+    printf("enter x:\n");
+    // scanf("%d", x);
+    x = 3;
+    printf("enter y:\n");
+    // scanf("%d", y);
+    y = 3;
+   }
 }
