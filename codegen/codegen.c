@@ -847,13 +847,14 @@ bool isArrayType(SymTable symtab, int typeIndex) {
  *     * @param typeIndex a symbol table index for a type
  *      * @return see above
  *       */
-bool isMainFunction(SymTable symtab, int regIndex) {
+int isMainFunction(SymTable symtab, int regIndex) {
     char *functionName = SymGetFieldByIndex(symtab,regIndex,SYM_NAME_FIELD);
     printf("function name is %s\n", functionName);
-    if(strcmp(functionName,"main") == 0) {
-      return (bool)1;
+    if(strcmp(functionName, "main") == 0) {
+    	printf("returning 1\n");
+      return 1;
     }
     else {
-      return (bool)0;
+      return 0;
     }
 }
