@@ -616,7 +616,12 @@ int emitComputeVariableAddress(DList instList, SymTable symtab, int varIndex) {
 
 	snprintf(offsetStr,9,"%d",offset);
 
-        inst = nssave(2,"\tmovq $_gp,", regName);
+	if (offset < 0) 
+		inst = nssave(2,"\tmovq %rbp, ",regName);
+	else 
+	 	inst = nssave(2,"\tmovq $_gp, ", regName);
+		 
+  // inst = nssave(2,"\tmovq $_gp,", regName);
 
 	dlinkAppend(instList,dlinkNodeAlloc(inst));
 	inst = nssave(4,"\taddq $", offsetStr, ", ", regName);
