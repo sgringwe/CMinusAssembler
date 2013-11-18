@@ -112,6 +112,8 @@ void emitReturnExpression(DList instList,SymTable symtab,int regIndex) {
 
 	char *inst = nssave(3, "\tmovl ", (char*)SymGetFieldByIndex(symtab,regIndex,SYM_NAME_FIELD), ", %eax");
 	dlinkAppend(instList,dlinkNodeAlloc(inst));
+
+	freeIntegerRegister((int)SymGetFieldByIndex(symtab,regIndex,SYMTAB_REGISTER_INDEX_FIELD));
 }
 
 void emitExit(DList instList, SymTable symtab, int regIndex) {
