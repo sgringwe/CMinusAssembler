@@ -43,19 +43,19 @@ for fn in os.listdir(input_dir):
       call(["./cmc", file_name])
 
       try:
-        print "Compiling assembly file into executable..."
+        print "Compiling cminus assembly file into executable..."
         call(["gcc", "-o", executable_name, assembly_name])
       except:
         execution_failed = True
-        print "gcc call failed"
+        print "gcc cminus call failed"
 
       try:
-        print "Executing executable to output..."
+        print "Executing cminus executable to output..."
         f = open(output_name, "w")
         call(["./" + executable_name], stdout=f)
       except:
         execution_failed = True
-        print "Execution of output failed"
+        print "Execution cminus of output failed"
 
 
       ### Now compile the equivelant c files for correct output
@@ -64,15 +64,15 @@ for fn in os.listdir(input_dir):
         call(["gcc", "-o", test_executable_name, test_file_name])
       except:
         execution_failed = True
-        print "gcc call failed"
+        print "gcc c call failed"
 
       try:
-        print "Executing executable to output..."
+        print "Executing c executable to output..."
         f = open(test_output_name, "w")
         call(["./" + test_executable_name], stdout=f)
       except:
         execution_failed = True
-        print "Execution of output failed"
+        print "Execution c of output failed"
 
 
       same = False

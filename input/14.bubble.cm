@@ -42,7 +42,7 @@ int input()
    i = s;
    write('Enter a[3:7]');
    while (i <= e) {
-     read(a[i]);
+     a[i] = 3;
      i = i+1;
    }
    return i;
