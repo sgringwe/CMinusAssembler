@@ -114,7 +114,7 @@ void emitReturnExpression(DList instList,SymTable symtab,int regIndex) {
 	dlinkAppend(instList,dlinkNodeAlloc(inst));
 }
 
-void emitExit(DList instList, int regIndex) {
+void emitExit(DList instList, SymTable symtab, int regIndex) {
 
   /*char *inst = ssave("\tmov dword ptr [%esp], 0");
 	dlinkAppend(instList,dlinkNodeAlloc(inst));

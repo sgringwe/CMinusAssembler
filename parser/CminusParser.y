@@ -163,7 +163,7 @@ Procedures 	: ProcedureDecl Procedures
 ProcedureDecl : ProcedureHead ProcedureBody
     {
       // printf("<<ProcedureDecl : ProcedureHead ProcedureBody\n");
-      emitExit(instList,$1);
+      emitExit(instList,symtab,$1);
     }
 	      ;
 
