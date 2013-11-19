@@ -206,10 +206,10 @@ ProcedureBody : StatementList RBRACE
 
 DeclList 	: Type IdentifierList  SEMICOLON 
 		{
-      printf("Declaration list with stack size %i\n", (stackSize(symtabStack)));
+      // printf("Declaration list with stack size %i\n", (stackSize(symtabStack)));
 			AddIdStructPtr data = (AddIdStructPtr)malloc(sizeof(AddIdStruct));
 			data->offset = (stackSize(symtabStack) > 1) ? -4 : 0;
-      printf("offset is %i\n", data->offset);
+      // printf("offset is %i\n", data->offset);
 			data->symtab = currentSymtab(symtabStack);
       data->typeIndex = $1;
       data->isLocal = (stackSize(symtabStack) > 1) ? 1 : 0;
@@ -217,10 +217,10 @@ DeclList 	: Type IdentifierList  SEMICOLON
 			$$ = data->offset;
 			dlinkFreeNodes($2);
 			free(data);
-      int index = SymQueryIndex((SymTable)currentSymtab(symtabStack),"b");
-      printf("b index for current is %d\n", index);
-      index = SymQueryIndex((SymTable)currentSymtab(symtabStack),"a");
-      printf("a index for current is %d\n", index);
+      // int index = SymQueryIndex((SymTable)currentSymtab(symtabStack),"b");
+      // printf("b index for current is %d\n", index);
+      // index = SymQueryIndex((SymTable)currentSymtab(symtabStack),"a");
+      // printf("a index for current is %d\n", index);
 
       // index = SymQueryIndex((SymTable)findSymtab(symtabStack, "b"),"b");
       // printf("b in general is is %d\n", index);
@@ -259,7 +259,7 @@ IdentifierList 	: VarDecl
 
 VarDecl 	: IDENTIFIER
 		{ 
-      printf("vardeclaration of %s\n", $1);
+      // printf("vardeclaration of %s\n", $1);
 			$$ = SymIndex(currentSymtab(symtabStack),$1);
 		}
 		| IDENTIFIER LBRACKET INTCON RBRACKET

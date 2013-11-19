@@ -827,26 +827,26 @@ void addIdToSymtab(DNode node, AddIdStructPtr data) {
 
 	int symIndex = (int)dlinkNodeAtom(node);
 	int typeIndex = (int)SymGetFieldByIndex(data->symtab,symIndex,SYMTAB_TYPE_INDEX_FIELD);
-	printf("symIndex is %i\n", symIndex);
+	// printf("symIndex is %i\n", symIndex);
 	if (typeIndex == -1) {
 		SymPutFieldByIndex(data->symtab,symIndex,SYMTAB_TYPE_INDEX_FIELD,(Generic)data->typeIndex);
 		typeIndex = data->typeIndex;
 	}
-	printf("typeIndex is %i\n", typeIndex);
+	// printf("typeIndex is %i\n", typeIndex);
 
 
         int size = (int)SymGetFieldByIndex(data->symtab,typeIndex,SYMTAB_SIZE_FIELD);
-	printf("size is %i\n", size);
+	// printf("size is %i\n", size);
 
         SymPutFieldByIndex(data->symtab,symIndex,SYMTAB_OFFSET_FIELD,(Generic)(data->offset));
         if (data->isLocal) {
         	data->offset -= size;
-	printf("subtracting size\n");
+	// printf("subtracting size\n");
 
 				}
         else {
         	data->offset += size;
-	printf("adding size\n");
+	// printf("adding size\n");
 
         }
 }
