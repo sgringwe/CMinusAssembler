@@ -295,7 +295,7 @@ Statement 	: Assignment
 Assignment      : Variable ASSIGN Expr SEMICOLON
 		{
       // printf("Assigning %i to be %i\n", $1, $3);
-			emitAssignment(instList,currentSymtab(symtabStack),$1,$3);
+			emitAssignment(instList,symtab,$1,$3);
 		}
                 ;
 
@@ -473,8 +473,8 @@ Factor          : Variable
 
 Variable        : IDENTIFIER
 		{
-      SymTable tab = findSymtab(symtabStack, $1);
       printf("Searching for %s\n", $1);
+      SymTable tab = findSymtab(symtabStack, $1);
 			int symIndex = SymQueryIndex(tab,$1);
 			$$ = emitComputeVariableAddress(instList,tab,symIndex);
 		}
