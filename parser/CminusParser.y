@@ -259,11 +259,12 @@ IdentifierList 	: VarDecl
 
 VarDecl 	: IDENTIFIER
 		{ 
-			$$ = SymIndex(symtab,$1);
+      printf("vardeclaration\n");
+			$$ = SymIndex(currentSymtab(symtabStack),$1);
 		}
 		| IDENTIFIER LBRACKET INTCON RBRACKET
 		{
-			int symIndex = SymIndex(symtab,$3);
+			int symIndex = SymIndex(currentSymtab(symtabStack),$3);
     	char* numElemString = 
     		(char*)SymGetFieldByIndex(symtab,symIndex,SYM_NAME_FIELD);
     		
