@@ -6,7 +6,7 @@ int t()
 {
   int b;
 	
-  write("inside function\n");
+  printf("inside function\n");
   b = 10;
   return b+5;
 }
