@@ -620,7 +620,7 @@ int emitComputeVariableAddress(DList instList, SymTable symtab, int varIndex) {
 		inst = nssave(2,"\tmovq %rbp, ",regName);
 	else 
 	 	inst = nssave(2,"\tmovq $_gp, ", regName);
-		 
+
   // inst = nssave(2,"\tmovq $_gp,", regName);
 
 	dlinkAppend(instList,dlinkNodeAlloc(inst));
