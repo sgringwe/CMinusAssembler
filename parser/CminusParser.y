@@ -464,7 +464,7 @@ MulExpr		:  Factor
 				
 Factor          : Variable
 		{ 
-			$$ = emitLoadVariable(instList,symtab,$1);
+			// $$ = emitLoadVariable(instList,symtab,$1);
 		}
                 | Constant
 		{ 
