@@ -219,6 +219,8 @@ DeclList 	: Type IdentifierList  SEMICOLON
 			free(data);
       int index = SymQueryIndex((SymTable)currentSymtab(symtabStack),"b");
       printf("b index for current is %d\n", index);
+      int index = SymQueryIndex((SymTable)currentSymtab(symtabStack),"a");
+      printf("a index for current is %d\n", index);
 
 		}		
 	   	| DeclList Type IdentifierList SEMICOLON
