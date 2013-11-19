@@ -602,7 +602,7 @@ int emitDivideExpression(DList instList, SymTable symtab, int leftOperand, int r
  * @param varIndex the symbol table index for a variable
  * @return the symbol table index of the result register
  */
-int emitComputeVariableAddress(DList instList, SymTable symtab, int varIndex) {
+int emitComputeVariableAddress(DList instList, SymTable symtab, int varIndex, SymTable scope) {
 	
 
 	int regIndex = getFreeIntegerRegisterIndex(symtab);
@@ -610,7 +610,7 @@ int emitComputeVariableAddress(DList instList, SymTable symtab, int varIndex) {
 	char* regName = malloc(sizeof(char) * 7); // Assume 7 is largest reg name
 	get64bitIntegerRegisterName(symtab, regIndex, regName);
 
-	int offset = (int)SymGetFieldByIndex(symtab,varIndex,SYMTAB_OFFSET_FIELD);
+	int offset = (int)SymGetFieldByIndex(scope,varIndex,SYMTAB_OFFSET_FIELD);
 	char offsetStr[10];
 	char *inst; 
 

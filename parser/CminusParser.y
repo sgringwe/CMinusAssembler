@@ -305,7 +305,7 @@ Statement 	: Assignment
 Assignment      : Variable ASSIGN Expr SEMICOLON
 		{
       // printf("Assigning %i to be %i\n", $1, $3);
-			// emitAssignment(instList,symtab,$1,$3);
+			emitAssignment(instList,symtab,$1,$3,currentSymtab(symtabStack));
 		}
                 ;
 
@@ -464,7 +464,7 @@ MulExpr		:  Factor
 				
 Factor          : Variable
 		{ 
-			// $$ = emitLoadVariable(instList,symtab,$1);
+			$$ = emitLoadVariable(instList,symtab,$1);
 		}
                 | Constant
 		{ 
@@ -486,7 +486,7 @@ Variable        : IDENTIFIER
       printf("Searching for %s\n", $1);
       SymTable tab = findSymtab(symtabStack, $1);
 			int symIndex = SymQueryIndex(tab,$1);
-			$$ = emitComputeVariableAddress(instList,tab,symIndex);
+			$$ = emitComputeVariableAddress(instList,symtab,symIndex,tab);
 		}
                 | IDENTIFIER LBRACKET Expr RBRACKET    
 		{
