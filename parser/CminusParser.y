@@ -29,7 +29,6 @@ EXTERN(int,Cminus_lex,(void));
 
 // Contains core information
 SymTable symtab;
-SymTable current;
 
 // Grows with scope
 SymtabStack symtabStack;
@@ -49,27 +48,26 @@ extern union YYSTYPE yylval;
 extern int Cminus_lineno;
 
 static void initSymTable() {
-  SymInitField(current,SYMTAB_OFFSET_FIELD,(Generic)-1,NULL);
-  SymInitField(current,SYMTAB_REGISTER_INDEX_FIELD,(Generic)-1,NULL);
+  SymInitField(currentSymtab(symtabStack),SYMTAB_OFFSET_FIELD,(Generic)-1,NULL);
+  SymInitField(currentSymtab(symtabStack),SYMTAB_REGISTER_INDEX_FIELD,(Generic)-1,NULL);
 
-  int intIndex = SymIndex(current,SYMTAB_INTEGER_TYPE_STRING);
-  int errorIndex = SymIndex(current,SYMTAB_ERROR_TYPE_STRING);
-  int voidIndex = SymIndex(current,SYMTAB_VOID_TYPE_STRING);
+  int intIndex = SymIndex(currentSymtab(symtabStack),SYMTAB_INTEGER_TYPE_STRING);
+  int errorIndex = SymIndex(currentSymtab(symtabStack),SYMTAB_ERROR_TYPE_STRING);
+  int voidIndex = SymIndex(currentSymtab(symtabStack),SYMTAB_VOID_TYPE_STRING);
 
-  SymPutFieldByIndex(current,intIndex,SYMTAB_SIZE_FIELD,(Generic)INTEGER_SIZE);
-  SymPutFieldByIndex(current,errorIndex,SYMTAB_SIZE_FIELD,(Generic)0);
-  SymPutFieldByIndex(current,voidIndex,SYMTAB_SIZE_FIELD,(Generic)0);
+  SymPutFieldByIndex(currentSymtab(symtabStack),intIndex,SYMTAB_SIZE_FIELD,(Generic)INTEGER_SIZE);
+  SymPutFieldByIndex(currentSymtab(symtabStack),errorIndex,SYMTAB_SIZE_FIELD,(Generic)0);
+  SymPutFieldByIndex(currentSymtab(symtabStack),voidIndex,SYMTAB_SIZE_FIELD,(Generic)0);
 
-  SymPutFieldByIndex(current,intIndex,SYMTAB_BASIC_TYPE_FIELD,(Generic)INTEGER_TYPE);
-  SymPutFieldByIndex(current,errorIndex,SYMTAB_BASIC_TYPE_FIELD,(Generic)ERROR_TYPE);
-  SymPutFieldByIndex(current,voidIndex,SYMTAB_BASIC_TYPE_FIELD,(Generic)VOID_TYPE);
+  SymPutFieldByIndex(currentSymtab(symtabStack),intIndex,SYMTAB_BASIC_TYPE_FIELD,(Generic)INTEGER_TYPE);
+  SymPutFieldByIndex(currentSymtab(symtabStack),errorIndex,SYMTAB_BASIC_TYPE_FIELD,(Generic)ERROR_TYPE);
+  SymPutFieldByIndex(currentSymtab(symtabStack),voidIndex,SYMTAB_BASIC_TYPE_FIELD,(Generic)VOID_TYPE);
 }
 
 static void deleteSymTable() {
-    SymKillField(symtab,SYMTAB_REGISTER_INDEX_FIELD);
-    SymKillField(symtab,SYMTAB_OFFSET_FIELD);
-    SymKill(symtab);
-
+    SymKillField(currentSymtab(symtabStack),SYMTAB_REGISTER_INDEX_FIELD);
+    SymKillField(currentSymtab(symtabStack),SYMTAB_OFFSET_FIELD);
+    SymKill(currentSymtab(symtabStack));
 }
 
 %}
@@ -166,8 +164,8 @@ ProcedureDecl : ProcedureHead ProcedureBody
       // printf("<<ProcedureDecl : ProcedureHead ProcedureBody\n");
       emitExit(instList,symtab,$1);
 
-      current = endScope(symtabStack);
-      deleteSymTable(current)
+      deleteSymTable();
+      endScope(symtabStack);
     }
 	      ;
 
@@ -192,8 +190,8 @@ FunctionDecl :  Type IDENTIFIER LPAREN RPAREN LBRACE
 		{
 			$$ = SymIndex(symtab,$2);
 
-      current = beginScope(symtabStack);
-      initSymTable(current);
+      beginScope(symtabStack);
+      initSymTable();
       // SymInitField(table,SYMTAB_REGISTER_INDEX_FIELD,(Generic)-1,NULL);
 			// printf("<<FunctionDecl :  Type IDENTIFIER LPAREN RPAREN LBRACE\n");
 		}
@@ -569,7 +567,6 @@ static void initialize(char* inputFileName) {
 
   // Begin global scope
   symtab = beginScope(symtabStack);
-  current = symtab;
 	initSymTable();
 	
 	initRegisters();
@@ -585,9 +582,8 @@ static void finalize() {
     /*fclose(stdout);*/
     
     // end global scope
-    symtab = endScope(symtabStack);
-    current = symtab;
     deleteSymTable();
+    symtab = endScope(symtabStack);
  
     cleanupRegisters();
     
