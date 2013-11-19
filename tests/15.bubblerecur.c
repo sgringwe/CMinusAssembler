@@ -48,7 +48,7 @@ int input()
    printf("Enter a[0:9]\n");
    while (i < 10) {
      // scanf("%d",a[i]);
-    a[i] = 3;
+    a[i] = i;
      i = i+1;
    }
    return i;

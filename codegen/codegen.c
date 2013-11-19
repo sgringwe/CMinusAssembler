@@ -42,7 +42,7 @@ void emitProcedurePrologue(DList instList,SymTable symtab, int regIndex) {
 		// allocate 48 bytes for local variables
 		// this is to avoid doing math to keep it 16-byte aligned
 		// enought space for 12 local variables per function
-		inst = ssave("\tsubq $16, %rsp");
+		inst = ssave("\tsubq $1600, %rsp");
 		dlinkAppend(instList,dlinkNodeAlloc(inst));
 
 		inst = ssave("\tpushq %rbx");
@@ -644,7 +644,7 @@ int emitComputeVariableAddress(DList instList, SymTable symtab, int varIndex, Sy
  * @return the symbol table index of the register holding the address of the
  * 		   array element.
  */
-int emitComputeArrayAddress(DList instList, SymTable varSymtab, int varIndex, SymTable regSymtab, int subIndex) {
+int emitComputeArrayAddress(DList instList, SymTable varSymtab, int varIndex, SymTable regSymtab, int subIndex, SymTable scope) {
 	int regIndex = getFreeIntegerRegisterIndex(regSymtab);
 	int varTypeIndex = (int)SymGetFieldByIndex(varSymtab,varIndex,SYMTAB_TYPE_INDEX_FIELD);
 	

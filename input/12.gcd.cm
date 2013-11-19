@@ -17,13 +17,13 @@ int gcd() {
 int main() {
          write('enter x:');
          x = 3;
-	 write('enter y:');
+	      write('enter y:');
          y = 3;
          while ((x != 0) || (y != 0)) {
 	       write (gcd());
 	       write('enter x:');
-               read (x);
+          x = 0;
 	       write('enter y:');
-               read (y);
+          y = 0;
          }
 }

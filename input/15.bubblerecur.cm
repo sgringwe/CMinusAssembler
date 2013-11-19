@@ -45,7 +45,7 @@ int input()
    i = 0;
    write('Enter a[0:9]');
    while (i < 10) {
-     read(a[i]);
+     a[i] = i;
      i = i+1;
    }
    return i;

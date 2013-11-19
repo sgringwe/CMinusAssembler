@@ -26,10 +26,10 @@ int main() {
    while ((x != 0) || (y != 0)) {
     printf("%d\n", gcd());
     printf("enter x:\n");
-    scanf("%d", x);
-    // x = 3;
+    // scanf("%d", x);
+    x = 0;
     printf("enter y:\n");
-    scanf("%d", y);
-    // y = 3;
+    // scanf("%d", y);
+    y = 0;
    }
 }
