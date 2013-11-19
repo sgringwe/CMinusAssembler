@@ -217,6 +217,8 @@ DeclList 	: Type IdentifierList  SEMICOLON
 			$$ = data->offset;
 			dlinkFreeNodes($2);
 			free(data);
+      int index = SymQueryIndex((SymTable)currentSymtab(symtabStack),"b");
+      printf("b index for current is %d\n", index);
 
 		}		
 	   	| DeclList Type IdentifierList SEMICOLON

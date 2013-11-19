@@ -616,10 +616,10 @@ int emitComputeVariableAddress(DList instList, SymTable symtab, int varIndex) {
 
 	snprintf(offsetStr,9,"%d",offset);
 
-	// if (offset < 0) 
+	if (offset < 0) 
 		inst = nssave(2,"\tmovq %rbp, ",regName);
-	// else 
-	 	// inst = nssave(2,"\tmovq $_gp, ", regName);
+	else 
+	 	inst = nssave(2,"\tmovq $_gp, ", regName);
 		 
   // inst = nssave(2,"\tmovq $_gp,", regName);
 
