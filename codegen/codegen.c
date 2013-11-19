@@ -644,14 +644,14 @@ int emitComputeVariableAddress(DList instList, SymTable symtab, int varIndex, Sy
  * @return the symbol table index of the register holding the address of the
  * 		   array element.
  */
-int emitComputeArrayAddress(DList instList, SymTable varSymtab, int varIndex, SymTable regSymtab, int subIndex, SymTable scope) {
+int emitComputeArrayAddress(DList instList, SymTable varSymtab, int varIndex, SymTable regSymtab, int subIndex) {
 	int regIndex = getFreeIntegerRegisterIndex(regSymtab);
 	int varTypeIndex = (int)SymGetFieldByIndex(varSymtab,varIndex,SYMTAB_TYPE_INDEX_FIELD);
 	
 	if (isArrayType(regSymtab,varTypeIndex)) {
 		char* regName = malloc(sizeof(char) * 7); // Assume 7 is largest reg name
 		get64bitIntegerRegisterName(regSymtab, regIndex, regName);
-		int offset = (int)SymGetFieldByIndex(scope,varIndex,SYMTAB_OFFSET_FIELD);
+		int offset = (int)SymGetFieldByIndex(varSymtab,varIndex,SYMTAB_OFFSET_FIELD);
 		char offsetStr[10];
 	
 		snprintf(offsetStr,9,"%d",offset);
@@ -686,7 +686,7 @@ int emitComputeArrayAddress(DList instList, SymTable varSymtab, int varIndex, Sy
 		char msg[80];
 
 		snprintf(msg,80,"Scalar variable %s used as an array",
-				(char*)SymGetFieldByIndex(scope,varIndex,SYM_NAME_FIELD));
+				(char*)SymGetFieldByIndex(varSymtab,varIndex,SYM_NAME_FIELD));
 		Cminus_error(msg);
 	}
 	

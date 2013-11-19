@@ -211,6 +211,7 @@ DeclList 	: Type IdentifierList  SEMICOLON
       // printf("Declaration list with stack size %i\n", (stackSize(symtabStack)));
 			AddIdStructPtr data = (AddIdStructPtr)malloc(sizeof(AddIdStruct));
 			data->offset = currentFuncDeclOffset;
+			currentFuncDeclOffset += (int)SymGetFieldByIndex(currentSymtab(symtabStack),$1,SYMTAB_SIZE_FIELD);
       // printf("offset is %i\n", data->offset);
 			data->symtab = currentSymtab(symtabStack);
       data->typeIndex = $1;
@@ -232,9 +233,12 @@ DeclList 	: Type IdentifierList  SEMICOLON
 		}		
 	   	| DeclList Type IdentifierList SEMICOLON
 	 	{
+	 		// printf("Declaration list with stack size %i\n", (stackSize(symtabStack)));
       // printf("Declearation list long\n");
 			AddIdStructPtr data = (AddIdStructPtr)malloc(sizeof(AddIdStruct));
 			data->offset = $1;
+			currentFuncDeclOffset += (int)SymGetFieldByIndex(currentSymtab(symtabStack),$1,SYMTAB_SIZE_FIELD);
+			// printf("offset is %i\n", data->offset);
 			data->typeIndex = $2;
 			data->symtab = currentSymtab(symtabStack);
       data->isLocal = (stackSize(symtabStack) > 1) ? 1 : 0;
@@ -266,7 +270,7 @@ VarDecl 	: IDENTIFIER
 		}
 		| IDENTIFIER LBRACKET INTCON RBRACKET
 		{
-			int symIndex = SymIndex(currentSymtab(symtabStack),$3);
+			int symIndex = SymIndex(symtab,$3);
     	char* numElemString = 
     		(char*)SymGetFieldByIndex(symtab,symIndex,SYM_NAME_FIELD);
     		
@@ -493,7 +497,7 @@ Variable        : IDENTIFIER
 		{
 			SymTable tab = findSymtab(symtabStack, $1);
 			int symIndex = SymQueryIndex(symtab,$1);
-			$$ = emitComputeArrayAddress(instList,symtab,symIndex,symtab,$3,tab);	
+			$$ = emitComputeArrayAddress(instList,symtab,symIndex,symtab,$3);	
 		}
                 ;			       
 
