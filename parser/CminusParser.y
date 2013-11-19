@@ -483,7 +483,6 @@ Factor          : Variable
 
 Variable        : IDENTIFIER
 		{
-      // printf("Searching for %s\n", $1);
       SymTable tab = findSymtab(symtabStack, $1);
 			int symIndex = SymQueryIndex(tab,$1);
 			$$ = emitComputeVariableAddress(instList,symtab,symIndex,tab);
