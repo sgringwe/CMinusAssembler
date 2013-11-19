@@ -77,7 +77,7 @@ void emitDataPrologue(DList dataList) {
 	printf("\t.int_wformat: .string \"%%d\\n\"\n");
 	printf("\t.str_wformat: .string \"%%s\\n\"\n");
 	printf("\t.int_rformat: .string \"%%d\"\n");
-	if (globalOffset != 0)
+	if (globalOffset != 0) 
 		printf("\t.comm _gp, %d, 4\n",globalOffset);  
 		                                              
 	dlinkApply(dataList,(DLinkApplyFunc)printDataDeclaration);
