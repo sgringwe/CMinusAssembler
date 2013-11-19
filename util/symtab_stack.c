@@ -65,12 +65,12 @@ SymTable findSymtab(SymtabStack stack, char* key) {
 
 	DNode node = dlinkHead(stack);
 	while (node != NULL) {
-		printf("Trying a symtable with\n");
+		// printf("Trying a symtable with\n");
 	  if (SymQueryIndex((SymTable)dlinkNodeAtom(node),key) != SYM_INVALID_INDEX)
 	    break;
 	  node = dlinkNext(node);
 	}
-	printf("Symtable found\n");
+	// printf("Symtable found\n");
 
 	if (node != NULL)
 		return (SymTable)dlinkNodeAtom(node);
