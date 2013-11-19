@@ -42,7 +42,7 @@ void emitProcedurePrologue(DList instList,SymTable symtab, int regIndex) {
 		// allocate 48 bytes for local variables
 		// this is to avoid doing math to keep it 16-byte aligned
 		// enought space for 12 local variables per function
-		inst = ssave("\tsubq $48, %rsp");
+		inst = ssave("\tsubq $16, %rsp");
 		dlinkAppend(instList,dlinkNodeAlloc(inst));
 
 		inst = ssave("\tpushq %rbx");
@@ -54,6 +54,9 @@ void emitProcedurePrologue(DList instList,SymTable symtab, int regIndex) {
 		inst = ssave("\tpushq %r14");
 		dlinkAppend(instList,dlinkNodeAlloc(inst));
 		inst = ssave("\tpushq %r15");
+		dlinkAppend(instList,dlinkNodeAlloc(inst));
+
+		inst = ssave("\tsubq $8, %rsp");
 		dlinkAppend(instList,dlinkNodeAlloc(inst));
 	}
 
