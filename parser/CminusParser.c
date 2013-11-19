@@ -114,7 +114,7 @@ char *fileName;
 static int functionOffset;
 int globalOffset = 0;
 static char* functionName;
-static int isMain = 0;
+static int currentFuncDeclOffset = 0;
 
 extern union YYSTYPE yylval;
 
@@ -554,13 +554,13 @@ static const yytype_int8 yyrhs[] =
 /* YYRLINE[YYN] -- source line where rule number YYN was defined.  */
 static const yytype_uint16 yyrline[] =
 {
-       0,   139,   139,   144,   152,   157,   162,   172,   180,   189,
-     200,   207,   231,   247,   253,   260,   265,   289,   293,   296,
-     297,   298,   299,   300,   301,   302,   305,   312,   316,   323,
-     329,   336,   342,   348,   354,   358,   362,   368,   374,   380,
-     383,   385,   389,   393,   397,   401,   407,   411,   415,   419,
-     423,   427,   431,   437,   441,   445,   451,   455,   459,   465,
-     469,   473,   478,   484,   490,   498,   505
+       0,   139,   139,   144,   152,   157,   162,   173,   181,   190,
+     202,   209,   233,   249,   255,   262,   267,   291,   295,   298,
+     299,   300,   301,   302,   303,   304,   307,   314,   318,   325,
+     331,   338,   344,   350,   356,   360,   364,   370,   376,   382,
+     385,   387,   391,   395,   399,   403,   409,   413,   417,   421,
+     425,   429,   433,   439,   443,   447,   453,   457,   461,   467,
+     471,   475,   480,   486,   492,   500,   507
 };
 #endif
 
@@ -1600,13 +1600,14 @@ yyreduce:
 
       deleteSymTable();
       endScope(symtabStack);
+      currentFuncDeclOffset = 0;
     ;}
     break;
 
   case 7:
 
 /* Line 1455 of yacc.c  */
-#line 173 "CminusParser.y"
+#line 174 "CminusParser.y"
     {
 			// printf("ProcedureHead : FunctionDecl DeclList is %i\n", $1);
 			emitProcedurePrologue(instList,symtab,(yyvsp[(1) - (2)].symIndex));
@@ -1619,7 +1620,7 @@ yyreduce:
   case 8:
 
 /* Line 1455 of yacc.c  */
-#line 181 "CminusParser.y"
+#line 182 "CminusParser.y"
     {
 			// printf("ProcedureHead : FunctionDecl is %i\n", $1);
 			emitProcedurePrologue(instList,symtab,(yyvsp[(1) - (1)].symIndex));
@@ -1631,12 +1632,13 @@ yyreduce:
   case 9:
 
 /* Line 1455 of yacc.c  */
-#line 190 "CminusParser.y"
+#line 191 "CminusParser.y"
     {
 			(yyval.symIndex) = SymIndex(symtab,(yyvsp[(2) - (5)].name));
 
       beginScope(symtabStack);
       initSymTable();
+      currentFuncDeclOffset = -4;
       // SymInitField(table,SYMTAB_REGISTER_INDEX_FIELD,(Generic)-1,NULL);
 			// printf("<<FunctionDecl :  Type IDENTIFIER LPAREN RPAREN LBRACE\n");
 		;}
@@ -1645,7 +1647,7 @@ yyreduce:
   case 10:
 
 /* Line 1455 of yacc.c  */
-#line 201 "CminusParser.y"
+#line 203 "CminusParser.y"
     {
       // printf("<<ProcedureBody : StatementList RBRACE\n");
     ;}
@@ -1654,11 +1656,11 @@ yyreduce:
   case 11:
 
 /* Line 1455 of yacc.c  */
-#line 208 "CminusParser.y"
+#line 210 "CminusParser.y"
     {
       // printf("Declaration list with stack size %i\n", (stackSize(symtabStack)));
 			AddIdStructPtr data = (AddIdStructPtr)malloc(sizeof(AddIdStruct));
-			data->offset = (stackSize(symtabStack) > 1) ? -4 : 0;
+			data->offset = currentFuncDeclOffset;
       // printf("offset is %i\n", data->offset);
 			data->symtab = currentSymtab(symtabStack);
       data->typeIndex = (yyvsp[(1) - (3)].symIndex);
@@ -1683,7 +1685,7 @@ yyreduce:
   case 12:
 
 /* Line 1455 of yacc.c  */
-#line 232 "CminusParser.y"
+#line 234 "CminusParser.y"
     {
       // printf("Declearation list long\n");
 			AddIdStructPtr data = (AddIdStructPtr)malloc(sizeof(AddIdStruct));
@@ -1701,7 +1703,7 @@ yyreduce:
   case 13:
 
 /* Line 1455 of yacc.c  */
-#line 248 "CminusParser.y"
+#line 250 "CminusParser.y"
     {
 			(yyval.idList) = dlinkListAlloc(NULL);
 			dlinkAppend((yyval.idList),dlinkNodeAlloc((Generic)(yyvsp[(1) - (1)].symIndex)));
@@ -1711,7 +1713,7 @@ yyreduce:
   case 14:
 
 /* Line 1455 of yacc.c  */
-#line 254 "CminusParser.y"
+#line 256 "CminusParser.y"
     {
 			dlinkAppend((yyvsp[(1) - (3)].idList),dlinkNodeAlloc((Generic)(yyvsp[(3) - (3)].symIndex)));
 			(yyval.idList) = (yyvsp[(1) - (3)].idList);
@@ -1721,7 +1723,7 @@ yyreduce:
   case 15:
 
 /* Line 1455 of yacc.c  */
-#line 261 "CminusParser.y"
+#line 263 "CminusParser.y"
     { 
       // printf("vardeclaration of %s\n", $1);
 			(yyval.symIndex) = SymIndex(currentSymtab(symtabStack),(yyvsp[(1) - (1)].name));
@@ -1731,7 +1733,7 @@ yyreduce:
   case 16:
 
 /* Line 1455 of yacc.c  */
-#line 266 "CminusParser.y"
+#line 268 "CminusParser.y"
     {
 			int symIndex = SymIndex(currentSymtab(symtabStack),(yyvsp[(3) - (4)].name));
     	char* numElemString = 
@@ -1758,7 +1760,7 @@ yyreduce:
   case 17:
 
 /* Line 1455 of yacc.c  */
-#line 290 "CminusParser.y"
+#line 292 "CminusParser.y"
     {
                         (yyval.symIndex) = SymQueryIndex(symtab,SYMTAB_INTEGER_TYPE_STRING);
                 ;}
@@ -1767,7 +1769,7 @@ yyreduce:
   case 26:
 
 /* Line 1455 of yacc.c  */
-#line 306 "CminusParser.y"
+#line 308 "CminusParser.y"
     {
       // printf("Assigning %i to be %i\n", $1, $3);
 			emitAssignment(instList,symtab,(yyvsp[(1) - (4)].symIndex),(yyvsp[(3) - (4)].symIndex));
@@ -1777,7 +1779,7 @@ yyreduce:
   case 27:
 
 /* Line 1455 of yacc.c  */
-#line 313 "CminusParser.y"
+#line 315 "CminusParser.y"
     {
 			emitEndBranchTarget(instList,symtab,(yyvsp[(2) - (4)].symIndex));
 		;}
@@ -1786,7 +1788,7 @@ yyreduce:
   case 28:
 
 /* Line 1455 of yacc.c  */
-#line 317 "CminusParser.y"
+#line 319 "CminusParser.y"
     {
 			emitEndBranchTarget(instList,symtab,(yyvsp[(2) - (2)].symIndex));
 		;}
@@ -1795,7 +1797,7 @@ yyreduce:
   case 29:
 
 /* Line 1455 of yacc.c  */
-#line 324 "CminusParser.y"
+#line 326 "CminusParser.y"
     {
 		   	(yyval.symIndex) = emitThenBranch(instList,symtab,(yyvsp[(1) - (2)].symIndex));
 		;}
@@ -1804,7 +1806,7 @@ yyreduce:
   case 30:
 
 /* Line 1455 of yacc.c  */
-#line 330 "CminusParser.y"
+#line 332 "CminusParser.y"
     {
 			(yyval.symIndex) = emitIfTest(instList,symtab,(yyvsp[(2) - (3)].symIndex));
 		;}
@@ -1813,7 +1815,7 @@ yyreduce:
   case 31:
 
 /* Line 1455 of yacc.c  */
-#line 337 "CminusParser.y"
+#line 339 "CminusParser.y"
     {
 			emitWhileLoopBackBranch(instList,symtab,(yyvsp[(1) - (3)].symIndex),(yyvsp[(2) - (3)].symIndex));
 		;}
@@ -1822,7 +1824,7 @@ yyreduce:
   case 32:
 
 /* Line 1455 of yacc.c  */
-#line 343 "CminusParser.y"
+#line 345 "CminusParser.y"
     {
 			(yyval.symIndex) = emitWhileLoopTest(instList,symtab,(yyvsp[(2) - (3)].symIndex));
 		;}
@@ -1831,7 +1833,7 @@ yyreduce:
   case 33:
 
 /* Line 1455 of yacc.c  */
-#line 349 "CminusParser.y"
+#line 351 "CminusParser.y"
     {
 			(yyval.symIndex) = emitWhileLoopLandingPad(instList,symtab);
 		;}
@@ -1840,7 +1842,7 @@ yyreduce:
   case 34:
 
 /* Line 1455 of yacc.c  */
-#line 355 "CminusParser.y"
+#line 357 "CminusParser.y"
     {
 			emitReadVariable(instList,symtab,(yyvsp[(3) - (5)].symIndex));
 		;}
@@ -1849,7 +1851,7 @@ yyreduce:
   case 35:
 
 /* Line 1455 of yacc.c  */
-#line 359 "CminusParser.y"
+#line 361 "CminusParser.y"
     {
 			emitWriteExpression(instList,symtab,(yyvsp[(3) - (5)].symIndex),SYSCALL_PRINT_INTEGER);
 		;}
@@ -1858,7 +1860,7 @@ yyreduce:
   case 36:
 
 /* Line 1455 of yacc.c  */
-#line 363 "CminusParser.y"
+#line 365 "CminusParser.y"
     {
 			emitWriteExpression(instList,symtab,(yyvsp[(3) - (5)].symIndex),SYSCALL_PRINT_STRING);
 		;}
@@ -1867,7 +1869,7 @@ yyreduce:
   case 37:
 
 /* Line 1455 of yacc.c  */
-#line 369 "CminusParser.y"
+#line 371 "CminusParser.y"
     {
       emitReturnExpression(instList,symtab,(yyvsp[(2) - (3)].symIndex));
     ;}
@@ -1876,7 +1878,7 @@ yyreduce:
   case 38:
 
 /* Line 1455 of yacc.c  */
-#line 375 "CminusParser.y"
+#line 377 "CminusParser.y"
     {
 			emitExit(instList);
 		;}
@@ -1885,7 +1887,7 @@ yyreduce:
   case 42:
 
 /* Line 1455 of yacc.c  */
-#line 390 "CminusParser.y"
+#line 392 "CminusParser.y"
     {
 			(yyval.symIndex) = (yyvsp[(1) - (1)].symIndex); 
 		;}
@@ -1894,7 +1896,7 @@ yyreduce:
   case 43:
 
 /* Line 1455 of yacc.c  */
-#line 394 "CminusParser.y"
+#line 396 "CminusParser.y"
     {
 			(yyval.symIndex) = emitOrExpression(instList,symtab,(yyvsp[(1) - (3)].symIndex),(yyvsp[(3) - (3)].symIndex));
 		;}
@@ -1903,7 +1905,7 @@ yyreduce:
   case 44:
 
 /* Line 1455 of yacc.c  */
-#line 398 "CminusParser.y"
+#line 400 "CminusParser.y"
     {
 			(yyval.symIndex) = emitAndExpression(instList,symtab,(yyvsp[(1) - (3)].symIndex),(yyvsp[(3) - (3)].symIndex));
 		;}
@@ -1912,7 +1914,7 @@ yyreduce:
   case 45:
 
 /* Line 1455 of yacc.c  */
-#line 402 "CminusParser.y"
+#line 404 "CminusParser.y"
     {
 			(yyval.symIndex) = emitNotExpression(instList,symtab,(yyvsp[(2) - (2)].symIndex));
 		;}
@@ -1921,7 +1923,7 @@ yyreduce:
   case 46:
 
 /* Line 1455 of yacc.c  */
-#line 408 "CminusParser.y"
+#line 410 "CminusParser.y"
     {
 			(yyval.symIndex) = (yyvsp[(1) - (1)].symIndex); 
 		;}
@@ -1930,7 +1932,7 @@ yyreduce:
   case 47:
 
 /* Line 1455 of yacc.c  */
-#line 412 "CminusParser.y"
+#line 414 "CminusParser.y"
     {
 			(yyval.symIndex) = emitEqualExpression(instList,symtab,(yyvsp[(1) - (3)].symIndex),(yyvsp[(3) - (3)].symIndex));
 		;}
@@ -1939,7 +1941,7 @@ yyreduce:
   case 48:
 
 /* Line 1455 of yacc.c  */
-#line 416 "CminusParser.y"
+#line 418 "CminusParser.y"
     {
 			(yyval.symIndex) = emitNotEqualExpression(instList,symtab,(yyvsp[(1) - (3)].symIndex),(yyvsp[(3) - (3)].symIndex));
 		;}
@@ -1948,7 +1950,7 @@ yyreduce:
   case 49:
 
 /* Line 1455 of yacc.c  */
-#line 420 "CminusParser.y"
+#line 422 "CminusParser.y"
     {
 			(yyval.symIndex) = emitLessEqualExpression(instList,symtab,(yyvsp[(1) - (3)].symIndex),(yyvsp[(3) - (3)].symIndex));
 		;}
@@ -1957,7 +1959,7 @@ yyreduce:
   case 50:
 
 /* Line 1455 of yacc.c  */
-#line 424 "CminusParser.y"
+#line 426 "CminusParser.y"
     {
 			(yyval.symIndex) = emitLessThanExpression(instList,symtab,(yyvsp[(1) - (3)].symIndex),(yyvsp[(3) - (3)].symIndex));
 		;}
@@ -1966,7 +1968,7 @@ yyreduce:
   case 51:
 
 /* Line 1455 of yacc.c  */
-#line 428 "CminusParser.y"
+#line 430 "CminusParser.y"
     {
 			(yyval.symIndex) = emitGreaterEqualExpression(instList,symtab,(yyvsp[(1) - (3)].symIndex),(yyvsp[(3) - (3)].symIndex));
 		;}
@@ -1975,7 +1977,7 @@ yyreduce:
   case 52:
 
 /* Line 1455 of yacc.c  */
-#line 432 "CminusParser.y"
+#line 434 "CminusParser.y"
     {
 			(yyval.symIndex) = emitGreaterThanExpression(instList,symtab,(yyvsp[(1) - (3)].symIndex),(yyvsp[(3) - (3)].symIndex));
 		;}
@@ -1984,7 +1986,7 @@ yyreduce:
   case 53:
 
 /* Line 1455 of yacc.c  */
-#line 438 "CminusParser.y"
+#line 440 "CminusParser.y"
     {
 			(yyval.symIndex) = (yyvsp[(1) - (1)].symIndex); 
 		;}
@@ -1993,7 +1995,7 @@ yyreduce:
   case 54:
 
 /* Line 1455 of yacc.c  */
-#line 442 "CminusParser.y"
+#line 444 "CminusParser.y"
     {
 			(yyval.symIndex) = emitAddExpression(instList,symtab,(yyvsp[(1) - (3)].symIndex),(yyvsp[(3) - (3)].symIndex));
 		;}
@@ -2002,7 +2004,7 @@ yyreduce:
   case 55:
 
 /* Line 1455 of yacc.c  */
-#line 446 "CminusParser.y"
+#line 448 "CminusParser.y"
     {
 			(yyval.symIndex) = emitSubtractExpression(instList,symtab,(yyvsp[(1) - (3)].symIndex),(yyvsp[(3) - (3)].symIndex));
 		;}
@@ -2011,7 +2013,7 @@ yyreduce:
   case 56:
 
 /* Line 1455 of yacc.c  */
-#line 452 "CminusParser.y"
+#line 454 "CminusParser.y"
     {
 			(yyval.symIndex) = (yyvsp[(1) - (1)].symIndex); 
 		;}
@@ -2020,7 +2022,7 @@ yyreduce:
   case 57:
 
 /* Line 1455 of yacc.c  */
-#line 456 "CminusParser.y"
+#line 458 "CminusParser.y"
     {
 			(yyval.symIndex) = emitMultiplyExpression(instList,symtab,(yyvsp[(1) - (3)].symIndex),(yyvsp[(3) - (3)].symIndex));
 		;}
@@ -2029,7 +2031,7 @@ yyreduce:
   case 58:
 
 /* Line 1455 of yacc.c  */
-#line 460 "CminusParser.y"
+#line 462 "CminusParser.y"
     {
 			(yyval.symIndex) = emitDivideExpression(instList,symtab,(yyvsp[(1) - (3)].symIndex),(yyvsp[(3) - (3)].symIndex));
 		;}
@@ -2038,7 +2040,7 @@ yyreduce:
   case 59:
 
 /* Line 1455 of yacc.c  */
-#line 466 "CminusParser.y"
+#line 468 "CminusParser.y"
     { 
 			(yyval.symIndex) = emitLoadVariable(instList,symtab,(yyvsp[(1) - (1)].symIndex));
 		;}
@@ -2047,7 +2049,7 @@ yyreduce:
   case 60:
 
 /* Line 1455 of yacc.c  */
-#line 470 "CminusParser.y"
+#line 472 "CminusParser.y"
     { 
 			(yyval.symIndex) = (yyvsp[(1) - (1)].symIndex);
 		;}
@@ -2056,7 +2058,7 @@ yyreduce:
   case 61:
 
 /* Line 1455 of yacc.c  */
-#line 474 "CminusParser.y"
+#line 476 "CminusParser.y"
     {
 			int symIndex = SymIndex(symtab,(yyvsp[(1) - (3)].name));
 			(yyval.symIndex) = emitFunctionCall(instList,symtab,symIndex);
@@ -2066,7 +2068,7 @@ yyreduce:
   case 62:
 
 /* Line 1455 of yacc.c  */
-#line 479 "CminusParser.y"
+#line 481 "CminusParser.y"
     {
 			(yyval.symIndex) = (yyvsp[(2) - (3)].symIndex);
 		;}
@@ -2075,7 +2077,7 @@ yyreduce:
   case 63:
 
 /* Line 1455 of yacc.c  */
-#line 485 "CminusParser.y"
+#line 487 "CminusParser.y"
     {
 			SymTable tab = findSymtab(symtabStack, (yyvsp[(1) - (1)].name));
 			int symIndex = SymQueryIndex(tab,(yyvsp[(1) - (1)].name)); 
@@ -2086,7 +2088,7 @@ yyreduce:
   case 64:
 
 /* Line 1455 of yacc.c  */
-#line 491 "CminusParser.y"
+#line 493 "CminusParser.y"
     {
 			SymTable tab = findSymtab(symtabStack, (yyvsp[(1) - (4)].name));
 			int symIndex = SymQueryIndex(symtab,(yyvsp[(1) - (4)].name));
@@ -2097,7 +2099,7 @@ yyreduce:
   case 65:
 
 /* Line 1455 of yacc.c  */
-#line 499 "CminusParser.y"
+#line 501 "CminusParser.y"
     { 
 			int symIndex = SymIndex(symtab,(yyvsp[(1) - (1)].name));
 			(yyval.symIndex) = emitLoadStringConstantAddress(instList,dataList,symtab,symIndex); 
@@ -2107,7 +2109,7 @@ yyreduce:
   case 66:
 
 /* Line 1455 of yacc.c  */
-#line 506 "CminusParser.y"
+#line 508 "CminusParser.y"
     { 
 			int symIndex = SymIndex(symtab,(yyvsp[(1) - (1)].name));
 			(yyval.symIndex) = emitLoadIntegerConstant(instList,symtab,symIndex); 
@@ -2117,7 +2119,7 @@ yyreduce:
 
 
 /* Line 1455 of yacc.c  */
-#line 2121 "CminusParser.c"
+#line 2123 "CminusParser.c"
       default: break;
     }
   YY_SYMBOL_PRINT ("-> $$ =", yyr1[yyn], &yyval, &yyloc);
@@ -2329,7 +2331,7 @@ yyreturn:
 
 
 /* Line 1675 of yacc.c  */
-#line 512 "CminusParser.y"
+#line 514 "CminusParser.y"
 
 
 

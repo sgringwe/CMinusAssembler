@@ -41,7 +41,7 @@ char *fileName;
 static int functionOffset;
 int globalOffset = 0;
 static char* functionName;
-static int isMain = 0;
+static int currentFuncDeclOffset = 0;
 
 extern union YYSTYPE yylval;
 
@@ -166,6 +166,7 @@ ProcedureDecl : ProcedureHead ProcedureBody
 
       deleteSymTable();
       endScope(symtabStack);
+      currentFuncDeclOffset = 0;
     }
 	      ;
 
@@ -192,6 +193,7 @@ FunctionDecl :  Type IDENTIFIER LPAREN RPAREN LBRACE
 
       beginScope(symtabStack);
       initSymTable();
+      currentFuncDeclOffset = -4;
       // SymInitField(table,SYMTAB_REGISTER_INDEX_FIELD,(Generic)-1,NULL);
 			// printf("<<FunctionDecl :  Type IDENTIFIER LPAREN RPAREN LBRACE\n");
 		}
@@ -208,7 +210,7 @@ DeclList 	: Type IdentifierList  SEMICOLON
 		{
       // printf("Declaration list with stack size %i\n", (stackSize(symtabStack)));
 			AddIdStructPtr data = (AddIdStructPtr)malloc(sizeof(AddIdStruct));
-			data->offset = (stackSize(symtabStack) > 1) ? -4 : 0;
+			data->offset = currentFuncDeclOffset;
       // printf("offset is %i\n", data->offset);
 			data->symtab = currentSymtab(symtabStack);
       data->typeIndex = $1;
