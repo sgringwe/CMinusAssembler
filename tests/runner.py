@@ -45,7 +45,7 @@ for fn in os.listdir(input_dir):
       call(["rm", test_executable_name])
       call(["rm", test_output_name])
 
-      if fn.startswith(sys.argv[1]):
+      if fn.startswith(sys.argv[1]) or sys.argv[1] == "all":
         ### First compile the cminus files
         print "Compiling cminus file into assembly..."
         call(["./cmc", file_name])
