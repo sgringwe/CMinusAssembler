@@ -305,7 +305,7 @@ Statement 	: Assignment
 Assignment      : Variable ASSIGN Expr SEMICOLON
 		{
       // printf("Assigning %i to be %i\n", $1, $3);
-			emitAssignment(instList,symtab,$1,$3,currentSymtab(symtabStack));
+			emitAssignment(instList,symtab,$1,$3);
 		}
                 ;
 
